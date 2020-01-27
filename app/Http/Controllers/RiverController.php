@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use GuzzleHttp\Client;
 use App\River;
+use App\Speed;
 use Illuminate\Http\Request;
 
 class RiverController extends Controller
@@ -69,7 +70,16 @@ class RiverController extends Controller
     public function details($id)
     {
         $river = River::find($id);
+        // $client = new Client();
+        // $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=2
+        // ');
+        // dd(json_decode($res->getBody()->getContents(),true));
+        Speed::create(['speed' => rand(30,70)]);
 
-        return view('rivers.riverDetails',compact('river'));
+        $speeds = Speed::latest()->take(30)->get()->sortBy('id');
+        $labels = $speeds->pluck('id');
+        $data = $speeds->pluck('speed');
+
+        return view('rivers.riverDetails',compact('river','labels','data'));
     }
 }

@@ -1,6 +1,7 @@
 @extends('base')
 @include('layouts.app')
 @section('main')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <div class="row">
 <div class="col-sm-12">
     <h1 class="display-3">{{$river->name}}</h1> 
@@ -20,6 +21,7 @@
             <h2>Hydrograph</h2>            
             <img src="hydrograph.png">
           </div>
+          <canvas id="myChart"></canvas>
           <div class="col-6 text-center">
             <h2>Water Level vs. Time</h2>            
             <img src="hydrograph.png">
@@ -48,8 +50,8 @@
 
         <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31"><br>
         <a class="rotate-button">
-          <span class="rotate-button-face">Enter</span>
-          <span class="rotate-button-face-back">Cool</span>
+          <span class="rotate-button-face">Enter</s
+          pan>
         </a>
       </form>
     </content>
@@ -134,4 +136,55 @@
 
 
 </div>
+
+<script>
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Speed',
+        data: [],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [],
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+  var updateChart = function() {
+    $.ajax({
+      url: "{{ route('api.chart') }}",
+      type: 'GET',
+      dataType: 'json',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function(data) {
+        myChart.data.labels = data.labels;
+        myChart.data.datasets[0].data = data.data;
+        myChart.update();
+      },
+      error: function(data){
+        console.log( data.labels);
+        console.log( data.data);
+        console.log(data);
+      }
+    });
+  }
+  
+  updateChart();
+  setInterval(() => {
+    updateChart();
+  }, 1000);
+</script>
+
 @endsection
