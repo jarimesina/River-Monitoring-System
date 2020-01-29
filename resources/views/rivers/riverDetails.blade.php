@@ -9,9 +9,30 @@
     <div class="container d-flex flex-column text-center">
       <div class="row">
         <div class="col-lg-12 d-flex flex-column text-center">
-          <h2>Water Level: 24.8 mm</h2>
-          <h2>Water Current Velocity: 24.8 mm/s</h2>
-          <h2>Water Temperature: 27 &#x2103;</h2>
+        <script> 
+          async function getData() {
+
+            var data = await axios.get("{{ route('api.chartDetails') }}");
+
+            // const reader = data.body.getReader();
+            // console.log(data.data[29]);
+
+            // console.log(data.data.field1[29]);
+            // console.log(data.data.field2[29]);
+            // console.log(data.data.field3[29]);
+            // console.log(data.data.field4[29]);
+            document.getElementById('waterLevel').innerHTML = data.data.field2[29];
+            document.getElementById('waterCurrent').innerHTML = data.data.field1[29];
+            document.getElementById('waterTemp').innerHTML = data.data.field3[29];
+          }
+
+          setInterval(() => {
+            getData();
+          }, 500);
+        </script>
+          <h2>Water Level:<span id="waterLevel"> 0</span> m</h2>
+          <h2>Water Current Velocity:<span id="waterCurrent"> 0 </span> m/s</h2>
+          <h2>Water Temperature:<span id="waterTemp"> 0 </span> &#x2103;</h2>
         </div>
       </div>
     </br>
@@ -19,12 +40,11 @@
       <div class="row">
           <div class="col-6 text-center">
             <h2>Hydrograph</h2>            
-            <img src="hydrograph.png">
+            <canvas id="myChart"></canvas>
           </div>
-          <canvas id="myChart"></canvas>
           <div class="col-6 text-center">
             <h2>Water Level vs. Time</h2>            
-            <img src="hydrograph.png">
+            <!-- <img src="hydrograph.png"> -->
           </div>
       </div>
     </br>
@@ -133,10 +153,7 @@
     </div>
   </section>
 <div>
-
-
 </div>
-
 <script>
   var ctx = document.getElementById("myChart");
   var myChart = new Chart(ctx, {
@@ -184,7 +201,7 @@
   updateChart();
   setInterval(() => {
     updateChart();
-  }, 1000);
+  }, 500);
 </script>
 
 @endsection

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use App\River;
-use App\Speed;
+use App\Field;
 use Illuminate\Http\Request;
 
 class RiverController extends Controller
@@ -70,15 +70,18 @@ class RiverController extends Controller
     public function details($id)
     {
         $river = River::find($id);
-        // $client = new Client();
-        // $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=2
-        // ');
-        // dd(json_decode($res->getBody()->getContents(),true));
-        Speed::create(['speed' => rand(30,70)]);
+        $client = new Client();
+        $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=5
+        ');
+        $temp = json_decode($res->getBody()->getContents());
+        $temp=$temp->feeds;
+        
+        $result = end($temp);
+        Field::create(['field1' =>$result->field1,'field2' =>$result->field2,'field3' =>$result->field3,'field4' =>$result->field4]);
 
-        $speeds = Speed::latest()->take(30)->get()->sortBy('id');
-        $labels = $speeds->pluck('id');
-        $data = $speeds->pluck('speed');
+        $fields = Field::latest()->take(30)->get()->sortBy('id');
+        $labels = $fields->pluck('id');
+        $data = $fields->pluck("field1");
 
         return view('rivers.riverDetails',compact('river','labels','data'));
     }

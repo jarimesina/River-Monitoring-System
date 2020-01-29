@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 Route::get('chart', 'ChartsApiController@index')->name('api.chart');
 
+Route::get('chartDetails', 'ChartsApiController@getDetails')->name('api.chartDetails');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
