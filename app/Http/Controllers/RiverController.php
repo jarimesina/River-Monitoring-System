@@ -69,6 +69,11 @@ class RiverController extends Controller
 
     public function details($id)
     {
+        $counter =0;
+        $d = 0.14;
+        $constants = 9770.60;
+        $initial = 100200.00;
+
         $river = River::find($id);
         $client = new Client();
         $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=5
@@ -81,8 +86,14 @@ class RiverController extends Controller
 
         $fields = Field::latest()->take(30)->get()->sortBy('id');
         $labels = $fields->pluck('id');
-        $data = $fields->pluck("field1");
-
+        $data = $fields->pluck("field2");
+        
+        for($i=0;$i<30;$i++){
+            $a = $data[$i] - $initial;
+            $a = $a/$constants;
+            $b = $a + $d;
+            $data[$i] = $b;
+        }
         return view('rivers.riverDetails',compact('river','labels','data'));
     }
 }

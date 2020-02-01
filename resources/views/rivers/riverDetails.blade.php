@@ -39,12 +39,12 @@
     </br>
       <div class="row">
           <div class="col-6 text-center">
-            <h2>Hydrograph</h2>            
+            <h2>Water Level vs. Time</h2>            
             <canvas id="myChart"></canvas>
           </div>
           <div class="col-6 text-center">
-            <h2>Water Level vs. Time</h2>            
-            <!-- <img src="hydrograph.png"> -->
+            <h2>Hydrograph</h2>            
+            <canvas id="myChart2"></canvas>
           </div>
       </div>
     </br>
@@ -156,12 +156,34 @@
 </div>
 <script>
   var ctx = document.getElementById("myChart");
+  var ctx2 = document.getElementById("myChart2");
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: [],
       datasets: [{
-        label: 'Speed',
+        label: 'Water Level',
+        data: [],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [],
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+  var myChart2 = new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Flow Rate',
         data: [],
         borderWidth: 1
       }]
@@ -197,10 +219,32 @@
       }
     });
   }
+  var updateChart2 = function() {
+    $.ajax({
+      url: "{{ route('api.getFlowRate') }}",
+      type: 'GET',
+      dataType: 'json',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function(data) {
+        myChart2.data.labels = data.labels;
+        myChart2.data.datasets[0].data = data.data;
+        myChart2.update();
+      },
+      error: function(data){
+        console.log( data.labels);
+        console.log( data.data);
+        console.log(data);
+      }
+    });
+  }
   
   updateChart();
+  updateChart2();
   setInterval(() => {
     updateChart();
+    updateChart2();
   }, 500);
 </script>
 
