@@ -7,15 +7,35 @@
             <div class="card">
                 <div class="card-header">Dashboard</div>
                 <div class="card-body">
-                    You are Admin.
+                   
+                    <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Water Level</th>
+                            <th>Water Velocity</th>
+                            <th>Temperature</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($fields as $field)
+                            <tr>
+                            <td >{{$field->id}}</td>
+                            <td scope="row">{{$field->field1}}</td>
+                            <td >{{$field->field2}}</td>
+                            <td >{{$field->field3}}</td>
+                        @endforeach
+                    </tbody>
+                </table>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 
 <!-- Modal HTML Markup -->
-<div id="ModalLoginForm" class="modal fade">
+<!-- <div id="ModalLoginForm" class="modal fade">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -45,14 +65,24 @@
                     </div>
                 </form>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div> -->
 
-<script>
+<!-- <script>
 
 function createRiver(){
     document.getElementById('durationDiv').style.display = 'flex';
 }
-</script>
+</script> -->
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready( function () {
+
+    $('.table').DataTable();
+} );
+</script>
+
+@endpush

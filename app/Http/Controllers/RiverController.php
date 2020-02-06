@@ -5,6 +5,7 @@ use GuzzleHttp\Client;
 use App\River;
 use App\Field;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class RiverController extends Controller
 {
@@ -69,31 +70,51 @@ class RiverController extends Controller
 
     public function details($id)
     {
-        $counter =0;
-        $d = 0.14;
-        $constants = 9770.60;
-        $initial = 100200.00;
-
         $river = River::find($id);
-        $client = new Client();
-        $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=5
-        ');
-        $temp = json_decode($res->getBody()->getContents());
-        $temp=$temp->feeds;
-        
-        $result = end($temp);
-        Field::create(['field1' =>$result->field1,'field2' =>$result->field2,'field3' =>$result->field3,'field4' =>$result->field4]);
 
-        $fields = Field::latest()->take(30)->get()->sortBy('id');
-        $labels = $fields->pluck('id');
-        $data = $fields->pluck("field2");
-        
-        for($i=0;$i<30;$i++){
-            $a = $data[$i] - $initial;
-            $a = $a/$constants;
-            $b = $a + $d;
-            $data[$i] = $b;
-        }
-        return view('rivers.riverDetails',compact('river','labels','data'));
+
+        $client = new Client();
+        //-----------------------------------------------//
+        // $response = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=5
+        // '); //--original
+        // $temp = json_decode($response->getBody()->getContents()); //--original
+        // $temp=$temp->feeds;
+        // $result = end($temp);
+        // $fields = Field::latest()->take(30)->get()->sortBy('id');
+
+        // $labels = $fields->pluck('id');
+        // $data = $fields->pluck("field2");
+        // dump($data);
+        //-----------------------------------------------//
+        //-----------------------------------------------//
+        // $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&results=30');
+        // $temp2 = json_decode($res2->getBody()->getContents()); 
+        // $temp2=$temp2->feeds;
+        // dump($temp2);
+
+        // $cart = array();
+        // $id = array();
+
+        // foreach($temp2 as $element){
+        //     array_push($cart, (float)$element->field2);
+        //     array_push($id, $element->entry_id);
+        // }
+
+        // dump($cart);
+        // dd($id);
+        // $cart2 = new Collection();
+        // $id2 = new Collection();
+        // $cart2 = collect($cart);
+        // $id2 = collect($id);
+        // dump($cart2);
+        // dd($id2);
+        //-----------------------------------------------//
+        //-----------------------------------------------//
+        // $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');        $temp = json_decode($res->getBody()->getContents()); //--original
+
+        // $temp = $temp->feeds;
+        // dump($temp);
+        //-----------------------------------------------//
+        return view('rivers.riverDetails',compact('river'));
     }
 }
