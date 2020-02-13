@@ -51,6 +51,10 @@
           <div class="col-6 text-center">
             <h2>Water Level vs. Time</h2>            
             <canvas id="myChart"></canvas>
+            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/1?days=3&bgcolor=%23ffc0cb&color=%23add8e6&dynamic=true&results=1440&title=Water+Velocity+%28m%2Fs%29&type=line&xaxis=Date&yaxis=Velocity+%28m%2Fs%29&update=60"></iframe>
+            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&title=Water+Level+%28m%29&type=line&xaxis=Date&yaxis=Water+Level+%28m%29&start=2019-12-29&end=2020-02-04"></iframe>
+            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/329340"></iframe>
+
           </div>
           <div class="col-6 text-center">
             <h2>Hydrograph</h2>            
@@ -61,23 +65,16 @@
     </br>
     <div>
     <content>
-      <form>
-        <!-- Enter day:
-        <input type="text"><br><br>
-        Enter month:
-        <input type="text"><br><br>
-        Enter year:
-        <input type="text"><br><br>
-        <button type="submit">Enter Date</button> -->
+      <form method="post" action="/dateRange">
+        @csrf
         Date Picker:
         <br>
         <label for="start">Start date:</label>
-        <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31"><br><br>
+        <input type="date" id="start" name="start" value="" min="2020-01-01" max="2020-12-31"><br><br>
         <label for="start">End date:</label>
-        <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31"><br>
+        <input type="date" id="end" name="end" value="" min="2020-01-01" max="2020-12-31"><br>
         <a class="rotate-button">
-          <span class="rotate-button-face">Enter</s
-          pan>
+          <button class="rotate-button-face" type="submit">Enter</button>
         </a>
       </form>
     </content>

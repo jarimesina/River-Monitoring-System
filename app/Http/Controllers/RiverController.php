@@ -110,10 +110,19 @@ class RiverController extends Controller
         // dd($id2);
         //-----------------------------------------------//
         //-----------------------------------------------//
-        // $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');        $temp = json_decode($res->getBody()->getContents()); //--original
+        // $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');        
+        // $temp = json_decode($res->getBody()->getContents()); //--original
 
         // $temp = $temp->feeds;
         // dump($temp);
+        //-----------------------------------------------//
+        //-----------------------------------------------//
+        // $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start=2020-02-04&end=2020-02-07');
+        // $temp = json_decode($res2->getBody()); //--original
+        
+        
+        // $temp = $temp->feeds;
+        // dd($temp);
         //-----------------------------------------------//
         return view('rivers.riverDetails',compact('river'));
     }

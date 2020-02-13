@@ -12,6 +12,7 @@
 */
 // Route::get('/display', 'RiverController@show');
 // Route::post('admin/river/store', 'RiverController@store');
+Route::post('dateRange', 'apiController@index')->name('api.dateRange');;
 Route::get('/rivers/{river}/details', 'RiverController@details');
 Route::resource('rivers', 'RiverController');
 Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('is_admin');
