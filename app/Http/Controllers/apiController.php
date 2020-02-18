@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use App\Dates;
 
 class apiController extends Controller
 {
@@ -13,19 +15,11 @@ class apiController extends Controller
      */
     public function index(Request $request)
     {
-        $client = new Client();
-        $start = explode('-', $request->start);
-        $end = explode('-', $request->end);
-        // dump($end);
-        // $url = 'https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start='.$start[0].'-'.$start[2].'-'.$start[1].'&end=2020-02-07';
 
-        $url = 'https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start='.$start[0].'-'.$start[2].'-'.$start[1].'&end='.$end[0].'-'.$end[2].'-'.$end[1];
-        // dump($url);
-        $res2 = $client->request('GET',$url);
-        // dump($res2->getBody());
-        $temp = json_decode($res2->getBody()->getContents()); //--original
-        $temp = $temp->feeds;
-        // dd($temp);
+        Dates::create(['start' =>$request->start,'end' =>$request->end]);
+
+      
+        return redirect()->back();
     }
 
     /**
@@ -33,9 +27,45 @@ class apiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function process(Request $request)
     {
-        
+
+        Dates::create(['start' => $request->start,'end' =>$request->end]);
+
+        $client = new Client();
+        $date = Dates::latest()->first();
+        $start = explode('-', $date->start);
+        $end = explode('-', $date->end);
+        // dump($start);
+        // dump($end);
+        // dd($date);
+        // dump($start[0]);
+        // dump($start[1]);
+        // dump($start[2]);
+        // dump($end[0]);
+        // dump($end[1]);
+        // dump($end[2]);
+        $url = 'https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start='.$start[0].'-'.$start[1].'-'.$start[2].'&end='.$end[0].'-'.$end[1].'-'.$end[2];
+        // dump($url);
+        $res2 = $client->request('GET',$url);
+        $temp = json_decode($res2->getBody()->getContents()); //--original
+        $temp = $temp->feeds;
+
+        $cart = array();
+        $id = array();
+
+        foreach($temp as $element){
+            array_push($cart, (float)$element->field2);
+            array_push($id, $element->entry_id);
+        }
+
+        $cart2 = new Collection();
+        $id2 = new Collection();
+        $data = collect($cart);
+        $labels = collect($id);
+        //try passing a view with compact labels and data
+        return response()->json(compact('labels', 'data'));
+          
     }
 
     /**

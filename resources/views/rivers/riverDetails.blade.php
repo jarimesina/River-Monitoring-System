@@ -38,7 +38,7 @@
 
           setInterval(() => {
             getData();
-          }, 500);
+          }, 1000);
         </script>
           <h2>Water Level:<span id="waterLevel"> 0</span> m</h2>
           <h2>Water Current Velocity:<span id="waterCurrent"> 0 </span> m/s</h2>
@@ -65,42 +65,59 @@
     </br>
     <div>
     <content>
-      <form method="post" action="/dateRange">
-        @csrf
-        Date Picker:
+      <form>
+        <!-- @csrf -->
+        Date Picker(day/month/year):
         <br>
         <label for="start">Start date:</label>
-        <input type="date" id="start" name="start" value="" min="2020-01-01" max="2020-12-31"><br><br>
+        <input type="date" id="start" name="start" value="" ><br><br>
         <label for="start">End date:</label>
-        <input type="date" id="end" name="end" value="" min="2020-01-01" max="2020-12-31"><br>
+        <input type="date" id="end" name="end" value="" ><br>
         <a class="rotate-button">
-          <button class="rotate-button-face" type="submit">Enter</button>
+          <!-- <button class="rotate-button-face" onclick="getData()">Enter Date</button> -->
+          <!-- <button type="button" onclick="window.location='{{ route('dataRange') }}'">Button</button> -->
+          <!-- <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button> -->
         </a>
       </form>
+      <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button>
     </content>
+    <canvas id="myChart3"></canvas>
     </div>
     <br>
-    <!-- <div class="row">
-      <div class="myBox">
-        <table id = "myTable" style="width:100%">
-          <tr>
-            <th>Time(minutes)</th>
-            <th>Velocity(m/s)</th>
-            <th>Liquid Level(mm)</th>
-            <th>Temperature(&#x2103;)</th>
-          </tr>
-        </table>
-        <table id="example" class="display" width="100%"></table>
-      </div>
-    </div> -->
-
     </div>
   </section>
 <div>
 </div>
 <script>
+  function processInput(){
+    // console.log(document.getElementById("start").value);
+    // console.log(document.getElementById("end").value);
+
+    var start= document.getElementById("start").value.split('-');
+    var end= document.getElementById("end").value.split('-');
+    // console.log(start[0]);
+    // console.log(start[1]);
+    // console.log(start[2]);
+
+    // console.log(end[0]);
+    // console.log(end[1]);
+    // console.log(end[2]);
+    // var url = 'https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start='+start[0]+'-'+start[1]+'-'+start[2]+'&end='+end[0]+'-'+end[1]+'-'+end[2];
+    // console.log(url);
+    // var data = axios.get(url);
+    // console.log(data.response);
+    // var data = axios.get(url)
+    //   .then((response) => {
+    //     console.log(response.data.feeds); 
+    //     return response.data.feeds;
+    //   });
+    // console.log(data);
+    updateChart3();
+
+  }
   var ctx = document.getElementById("myChart");
   var ctx2 = document.getElementById("myChart2");
+  var ctx3 = document.getElementById("myChart3");
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -129,6 +146,28 @@
       labels: [],
       datasets: [{
         label: 'Flow Rate',
+        data: [],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [],
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+
+  var myChart3 = new Chart(ctx3, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Data from start to end',
         data: [],
         borderWidth: 1
       }]
@@ -185,16 +224,44 @@
       }
     });
   }
+
+  var updateChart3 = function() {
+
+    var start= document.getElementById("start").value;
+    var end= document.getElementById("end").value;
+
+    $.ajax({
+      url: "{{ route('api.process') }}",
+      type: 'POST',
+      dataType: 'json',
+      data: { start: start, end : end},
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function(data) {
+
+        myChart3.data.labels = data.labels;
+        myChart3.data.datasets[0].data = data.data;
+        myChart3.update();
+
+      },
+      error: function(data){
+        console.log("FUCK3");
+        // console.log(data.data);
+      }
+    });
+  }
   
-  updateChart();
-  updateChart2();
-  setInterval(() => {
-    updateChart();
-    updateChart2();
-  }, 100);
+  // updateChart();
+  // updateChart2();
+  // setInterval(() => {
+  //   updateChart();
+  //   updateChart2();
+  // }, 1000);
+
 </script>
 
-<div class="container-fluid">
+<!-- <div class="container-fluid">
  <div class="row">
   <div class="col-12">
    <div class="card">
@@ -213,7 +280,7 @@
    </div>
   </div>
  </div>	
-</div>
+</div> -->
 
 <script>
 var highlightNumbers = function(xhr) {
@@ -266,21 +333,21 @@ document.getElementById("add").addEventListener("click", function(e) {
 	});
 });
 
-setInterval(() => {
-  datatable.refresh();
-  console.log("hi");
-}, 1000);
+// setInterval(() => {
+//   datatable.refresh();
+//   console.log("hi");
+// }, 1000);
 </script>
 @endsection
 
 @push('scripts')
 <script>
-setInterval(function(){ 
-  $(document).ready( function () {
+// setInterval(function(){ 
+//   $(document).ready( function () {
 
-    $('.table').DataTable();
-  });
-}, 1000);
+//     $('.table').DataTable();
+//   });
+// }, 1000);
 
 </script>
 @endpush

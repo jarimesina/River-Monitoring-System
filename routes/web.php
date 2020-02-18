@@ -10,9 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/display', 'RiverController@show');
-// Route::post('admin/river/store', 'RiverController@store');
-Route::post('dateRange', 'apiController@index')->name('api.dateRange');;
+
+// Route::post('dateRange', 'apiController@index')->name('api.dateRange');
+// Route::get('dataRange', 'apiController@index')->name('dataRange');
+Route::post('dataRange', 'apiController@index')->name('dataRange');
+Route::get('process', 'apiController@process')->name('process');
+// Route::post('process', 'apiController@process')->name('process');
 Route::get('/rivers/{river}/details', 'RiverController@details');
 Route::resource('rivers', 'RiverController');
 Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('is_admin');
@@ -22,5 +25,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::group(['middleware'=>['preventbackbutton']], function(){
+//     Auth::routes();
+//     Route::get('/home', 'HomeController@index')->name('home');
+// });
