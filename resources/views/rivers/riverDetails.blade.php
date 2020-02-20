@@ -12,18 +12,25 @@
         <script> 
           
           async function getData() {
+            // console.log("HI");
             var data = await axios.get("{{ route('api.chartDetails') }}");
+            // console.log("FUCK");
             var table = document.getElementById("myTable");
             // const reader = data.body.getReader();
-            // console.log(data.data[29]);
+            // console.log(data.data);
+            
 
             // console.log(data.data.field1[29]);
             // console.log(data.data.field2[29]);
             // console.log(data.data.field3[29]);
             // console.log(data.data.field4[29]);
-            document.getElementById('waterLevel').innerHTML = data.data.field2[29];
-            document.getElementById('waterCurrent').innerHTML = data.data.field1[29];
-            document.getElementById('waterTemp').innerHTML = data.data.field3[29];
+            // document.getElementById('waterLevel').innerHTML = data.data.field2[29];
+            // document.getElementById('waterCurrent').innerHTML = data.data.field1[29];
+            // document.getElementById('waterTemp').innerHTML = data.data.field3[29];
+
+            document.getElementById('waterLevel').innerHTML = data.data.data[1];
+            document.getElementById('waterCurrent').innerHTML = data.data.data[0];
+            document.getElementById('waterTemp').innerHTML = data.data.data[2];
 
             // var row = table.insertRow(1);
             // var cell1 = row.insertCell(0);
@@ -51,9 +58,9 @@
           <div class="col-6 text-center">
             <h2>Water Level vs. Time</h2>            
             <canvas id="myChart"></canvas>
-            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/1?days=3&bgcolor=%23ffc0cb&color=%23add8e6&dynamic=true&results=1440&title=Water+Velocity+%28m%2Fs%29&type=line&xaxis=Date&yaxis=Velocity+%28m%2Fs%29&update=60"></iframe>
+            <!-- <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/1?days=3&bgcolor=%23ffc0cb&color=%23add8e6&dynamic=true&results=1440&title=Water+Velocity+%28m%2Fs%29&type=line&xaxis=Date&yaxis=Velocity+%28m%2Fs%29&update=60"></iframe>
             <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&title=Water+Level+%28m%29&type=line&xaxis=Date&yaxis=Water+Level+%28m%29&start=2019-12-29&end=2020-02-04"></iframe>
-            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/329340"></iframe>
+            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/329340"></iframe> -->
 
           </div>
           <div class="col-6 text-center">
@@ -112,6 +119,7 @@
     //     return response.data.feeds;
     //   });
     // console.log(data);
+    console.log("HI");
     updateChart3();
 
   }
@@ -193,14 +201,14 @@
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       success: function(data) {
-        console.log(data);
+        // console.log(data);
         myChart.data.labels = data.labels;
         myChart.data.datasets[0].data = data.data;
         myChart.update();
       },
       error: function(data){
         console.log("FUCK");
-        console.log(data);
+        // console.log(data);
       }
     });
   }
@@ -220,7 +228,7 @@
       },
       error: function(data){
         console.log("FUCK2");
-        console.log(data);
+        // console.log(data);
       }
     });
   }
@@ -252,12 +260,12 @@
     });
   }
   
-  // updateChart();
-  // updateChart2();
-  // setInterval(() => {
-  //   updateChart();
-  //   updateChart2();
-  // }, 1000);
+  updateChart();
+  updateChart2();
+  setInterval(() => {
+    updateChart();
+    updateChart2();
+  }, 1000);
 
 </script>
 

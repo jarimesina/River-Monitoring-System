@@ -117,12 +117,36 @@ class RiverController extends Controller
         // dump($temp);
         //-----------------------------------------------//
         //-----------------------------------------------//
-        // $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start=2020-02-04&end=2020-02-07');
+        // $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');
         // $temp = json_decode($res2->getBody()); //--original
-        
-        
         // $temp = $temp->feeds;
-        // dd($temp);
+        // dd(end($temp)->field2);
+        //-----------------------------------------------//
+        // $fields = Field::latest()->take(30)->get()->sortBy('id');
+        // $field1 = $fields->pluck("field1");
+        // $field2 = $fields->pluck("field2");
+        // $field3 = $fields->pluck("field3");
+        // $field4 = $fields->pluck("field4");
+
+        // dump($field1);
+        // $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');
+        // $temp = json_decode($res2->getBody()); //--original
+        // $temp = $temp->feeds;
+        // $field1 = end($temp)->field1;
+        // $field2 = end($temp)->field2;
+        // $field3 = end($temp)->field3;
+        // $field4 = end($temp)->field4;
+        
+        // $cart = array();
+        // array_push($cart, (float)end($temp)->field1);
+        // array_push($cart, (float)end($temp)->field2);
+        // array_push($cart, (float)end($temp)->field3);
+        // array_push($cart, (float)end($temp)->field4);
+
+        // $cart2 = new Collection();
+        // $data = collect($cart);
+
+        // dd($data);
         //-----------------------------------------------//
         return view('rivers.riverDetails',compact('river'));
     }

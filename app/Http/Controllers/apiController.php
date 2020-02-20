@@ -63,7 +63,7 @@ class apiController extends Controller
         $id2 = new Collection();
         $data = collect($cart);
         $labels = collect($id);
-        //try passing a view with compact labels and data
+ 
         return response()->json(compact('labels', 'data'));
           
     }

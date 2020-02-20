@@ -52,14 +52,30 @@ class ChartsApiController extends Controller
 
     public function getDetails()
     {
+        $client = new Client();
+        // $fields = Field::latest()->take(30)->get()->sortBy('id');
+        // $field1 = $fields->pluck("field1");
+        // $field2 = $fields->pluck("field2");
+        // $field3 = $fields->pluck("field3");
+        // $field4 = $fields->pluck("field4");
+        $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');
+        $temp = json_decode($res2->getBody()); //--original
+        $temp = $temp->feeds;
+        $field1 = end($temp)->field1;
+        $field2 = end($temp)->field2;
+        $field3 = end($temp)->field3;
+        $field4 = end($temp)->field4;
         
-        $fields = Field::latest()->take(30)->get()->sortBy('id');
-        $field1 = $fields->pluck("field1");
-        $field2 = $fields->pluck("field2");
-        $field3 = $fields->pluck("field3");
-        $field4 = $fields->pluck("field4");
-       
-        return response()->json(compact('field1', 'field2','field3','field4'));
+        $cart = array();
+        array_push($cart, (float)end($temp)->field1);
+        array_push($cart, (float)end($temp)->field2);
+        array_push($cart, (float)end($temp)->field3);
+        array_push($cart, (float)end($temp)->field4);
+
+        $cart2 = new Collection();
+        $data = collect($cart);
+        return response()->json(compact('data'));
+        // return response()->json(compact('field1','field2','field3','field4'));
     }
 
     public function getFields()
@@ -76,6 +92,7 @@ class ChartsApiController extends Controller
 
     public function getFlowRate()
     {
+        $client = new Client();
         $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/fields/4.json?api_key=RGBK34NEJJV41DY7&results=30');
         $temp2 = json_decode($res2->getBody()->getContents()); 
         $temp2=$temp2->feeds;
@@ -85,7 +102,7 @@ class ChartsApiController extends Controller
         $id = array();
 
         foreach($temp2 as $element){
-            array_push($cart, (float)$element->field2);
+            array_push($cart, (float)$element->field4);
             array_push($id, $element->entry_id);
         }
 
