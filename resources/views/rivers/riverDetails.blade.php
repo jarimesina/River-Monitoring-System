@@ -13,34 +13,15 @@
           
           async function getData() {
             // console.log("HI");
-            var data = await axios.get("{{ route('api.chartDetails') }}");
+            var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
             // console.log("FUCK");
             var table = document.getElementById("myTable");
             // const reader = data.body.getReader();
             // console.log(data.data);
-            
-
-            // console.log(data.data.field1[29]);
-            // console.log(data.data.field2[29]);
-            // console.log(data.data.field3[29]);
-            // console.log(data.data.field4[29]);
-            // document.getElementById('waterLevel').innerHTML = data.data.field2[29];
-            // document.getElementById('waterCurrent').innerHTML = data.data.field1[29];
-            // document.getElementById('waterTemp').innerHTML = data.data.field3[29];
 
             document.getElementById('waterLevel').innerHTML = data.data.data[1];
             document.getElementById('waterCurrent').innerHTML = data.data.data[0];
             document.getElementById('waterTemp').innerHTML = data.data.data[2];
-
-            // var row = table.insertRow(1);
-            // var cell1 = row.insertCell(0);
-            // var cell2 = row.insertCell(1);
-            // var cell3 = row.insertCell(2);
-            // var cell4 = row.insertCell(3);
-            // cell1.innerHTML = data.data.field2[29];
-            // cell2.innerHTML = data.data.field2[29];
-            // cell3.innerHTML = data.data.field2[29];
-            // cell4.innerHTML = data.data.field2[29];
           }
 
           setInterval(() => {
@@ -73,7 +54,6 @@
     <div>
     <content>
       <form>
-        <!-- @csrf -->
         Date Picker(day/month/year):
         <br>
         <label for="start">Start date:</label>
@@ -81,9 +61,6 @@
         <label for="start">End date:</label>
         <input type="date" id="end" name="end" value="" ><br>
         <a class="rotate-button">
-          <!-- <button class="rotate-button-face" onclick="getData()">Enter Date</button> -->
-          <!-- <button type="button" onclick="window.location='{{ route('dataRange') }}'">Button</button> -->
-          <!-- <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button> -->
         </a>
       </form>
       <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button>
@@ -119,7 +96,6 @@
     //     return response.data.feeds;
     //   });
     // console.log(data);
-    console.log("HI");
     updateChart3();
 
   }
@@ -194,28 +170,27 @@
 
   var updateChart = function() {
     $.ajax({
-      url: "{{ route('api.chart') }}",
+      url: "{{ route('api.chart',$river->id) }}",
       type: 'GET',
       dataType: 'json',
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       success: function(data) {
-        // console.log(data);
+        // console.log("JARI");
         myChart.data.labels = data.labels;
         myChart.data.datasets[0].data = data.data;
         myChart.update();
       },
       error: function(data){
-        console.log("FUCK");
-        // console.log(data);
+        console.log("ERROR");
       }
     });
   }
 
   var updateChart2 = function() {
     $.ajax({
-      url: "{{ route('api.getFlowRate') }}",
+      url: "{{ route('api.getFlowRate',$river->id) }}",
       type: 'GET',
       dataType: 'json',
       headers: {
@@ -227,7 +202,7 @@
         myChart2.update();
       },
       error: function(data){
-        console.log("FUCK2");
+        console.log("ERROR2");
         // console.log(data);
       }
     });
@@ -242,7 +217,7 @@
       url: "{{ route('api.process') }}",
       type: 'POST',
       dataType: 'json',
-      data: { start: start, end : end},
+      data: { start: start, end : end, id: {{$river->id}}},
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
@@ -254,7 +229,7 @@
 
       },
       error: function(data){
-        console.log("FUCK3");
+        console.log("ERROR3");
         // console.log(data.data);
       }
     });

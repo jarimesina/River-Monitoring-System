@@ -23,10 +23,12 @@ class RiverController extends Controller
 
     public function store(Request $request)
     {
-        
+        //check first if the information entered is not redundant
         $river = new River;
         $river->name = $request->name;
         $river->location = $request->location;
+        $river->key = $request->key;
+        $river->channel = $request->channel;
         $river->save();
         // return redirect('admin/home')->with('success', 'River saved!');
         return redirect('/rivers')->with('success', 'River saved!');
@@ -49,10 +51,15 @@ class RiverController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'location'=>'required'
+            'location'=>'required',
+            'key'=>'required',
+            'channel'=>'required'
         ]);
 
+        //check if input is not redundant
         $river = River::find($id);
+        $river->name =  $request->get('name');
+        $river->location = $request->get('location');
         $river->name =  $request->get('name');
         $river->location = $request->get('location');
         $river->save();
@@ -147,6 +154,8 @@ class RiverController extends Controller
         // $data = collect($cart);
 
         // dd($data);
+        //-----------------------------------------------//
+
         //-----------------------------------------------//
         return view('rivers.riverDetails',compact('river'));
     }

@@ -4,11 +4,14 @@
 <div class="row">
 <div class="col-sm-12">
     <h1 class="page-title">Device Locations</h1> 
+    
     @if(auth()->user()->is_admin==1)
-    <div>
-    <a style="margin: 19px;" href="{{ route('rivers.create')}}" class="btn btn-primary ml-0">Add New Location</a>
-    </div>     
+      <div>
+      <a style="margin: 19px;" href="{{ route('rivers.create')}}" class="btn btn-primary ml-0">Add New Location</a>
+      </div>     
     @else
+      <div>
+      </div> 
     @endif
   <table class="table table-striped">
     <thead class="font-bold">
@@ -30,7 +33,7 @@
                   <a href="{{ route('rivers.edit',$river->id)}}" class="btn btn-primary">Edit</a>
               </td>
               <td>
-                  <form action="{{ route('rivers.destroy', $river->id)}}" method="post">
+                  <form class="delete" action="{{ route('rivers.destroy', $river->id)}}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger" type="submit">Delete</button>
@@ -50,4 +53,9 @@
   </table>
 <div>
 </div>
+<script>
+    $(".delete").on("submit", function(){
+        return confirm("Are you sure?");
+    });
+</script>
 @endsection

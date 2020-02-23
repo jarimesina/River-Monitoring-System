@@ -18,11 +18,19 @@
           @csrf
           <div class="form-group">    
               <label for="name">River Name:</label>
-              <input type="text" class="form-control" name="name"/>
+              <input type="text" class="form-control" name="name" required/>
           </div>
           <div class="form-group">
               <label for="location">Location:</label>
-              <input type="text" class="form-control" name="location"/>
+              <input type="text" class="form-control" name="location" required/>
+          </div>
+          <div class="form-group">
+              <label for="location">Api key:</label>
+              <input type="text" class="form-control" name="key" required/>
+          </div>
+          <div class="form-group">
+              <label for="location">Channel ID:</label>
+              <input type="text" class="form-control" name="channel" required/>
           </div>
           <button type="submit" class="btn btn-primary-outline">Add river</button>
       </form>

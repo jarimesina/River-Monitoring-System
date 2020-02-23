@@ -29,6 +29,16 @@
                 <input type="text" class="form-control" name="location" value={{ $rivers->location }} />
             </div>
 
+            <div class="form-group">
+                <label for="location">Api Key:</label>
+                <input type="text" class="form-control" name="location" value={{ $rivers->key }} />
+            </div>
+
+            <div class="form-group">
+                <label for="location">Channel:</label>
+                <input type="text" class="form-control" name="location" value={{ $rivers->channel }} />
+            </div>
+
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>

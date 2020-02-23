@@ -11,8 +11,9 @@ use Illuminate\Http\Request;
 
 class ChartsApiController extends Controller
 {
-    public function index()
+    public function index($id)
     {
+        $river = River::find($id);
         $client = new Client();
         // $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=5
         // '); //--original
@@ -26,7 +27,7 @@ class ChartsApiController extends Controller
         // $labels = $fields->pluck('id');
         // $data = $fields->pluck("field2");
         
-        $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&results=30');
+        $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/fields/2.json?api_key=' . $river->key . '&results=30');
         $temp2 = json_decode($res2->getBody()->getContents()); 
         $temp2=$temp2->feeds;
         // dump($temp2);
@@ -50,15 +51,16 @@ class ChartsApiController extends Controller
         return response()->json(compact('labels', 'data'));
     }
 
-    public function getDetails()
+    public function getDetails($id)
     {
+        $river = River::find($id);
         $client = new Client();
         // $fields = Field::latest()->take(30)->get()->sortBy('id');
         // $field1 = $fields->pluck("field1");
         // $field2 = $fields->pluck("field2");
         // $field3 = $fields->pluck("field3");
         // $field4 = $fields->pluck("field4");
-        $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');
+        $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/feeds.json?api_key=' . $river->key);
         $temp = json_decode($res2->getBody()); //--original
         $temp = $temp->feeds;
         $field1 = end($temp)->field1;
@@ -90,10 +92,11 @@ class ChartsApiController extends Controller
         return response()->json(compact('temp'));
     }
 
-    public function getFlowRate()
+    public function getFlowRate($id)
     {
+        $river = River::find($id);
         $client = new Client();
-        $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/fields/4.json?api_key=RGBK34NEJJV41DY7&results=30');
+        $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/fields/4.json?api_key=' . $river->key . '&results=30');
         $temp2 = json_decode($res2->getBody()->getContents()); 
         $temp2=$temp2->feeds;
         // dump($temp2);

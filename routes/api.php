@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('chart', 'ChartsApiController@index')->name('api.chart');
-Route::get('getFlowRate', 'ChartsApiController@getFlowRate')->name('api.getFlowRate');
-Route::get('chartDetails', 'ChartsApiController@getDetails')->name('api.chartDetails');
+Route::get('chart/{id}', 'ChartsApiController@index')->name('api.chart');
+Route::get('getFlowRate/{id}', 'ChartsApiController@getFlowRate')->name('api.getFlowRate');
+Route::get('chartDetails/{id}', 'ChartsApiController@getDetails')->name('api.chartDetails');
 Route::get('getFields', 'ChartsApiController@getFields')->name('api.getFields');
 Route::get('dataRange', 'ChartsApiController@getDataRange')->name('api.getDataRange');
 

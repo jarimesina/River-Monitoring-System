@@ -16,7 +16,7 @@ class River extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'location'
+        'name', 'location', 'key','channel'
     ];
 
 }

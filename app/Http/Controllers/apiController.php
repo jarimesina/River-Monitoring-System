@@ -5,6 +5,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Dates;
+use App\Rivers;
 
 class apiController extends Controller
 {
@@ -16,7 +17,7 @@ class apiController extends Controller
     public function index(Request $request)
     {
 
-        Dates::create(['start' =>$request->start,'end' =>$request->end]);
+        //Dates::create(['start' =>$request->start,'end' =>$request->end]);
 
       
         return redirect()->back();
@@ -29,7 +30,7 @@ class apiController extends Controller
      */
     public function process(Request $request)
     {
-
+        $key = River:: $request->id;
         Dates::create(['start' => $request->start,'end' =>$request->end]);
 
         $client = new Client();
