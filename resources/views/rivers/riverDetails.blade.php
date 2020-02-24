@@ -26,7 +26,7 @@
 
           setInterval(() => {
             getData();
-          }, 1000);
+          }, 180000);
         </script>
           <h2>Water Level:<span id="waterLevel"> 0</span> m</h2>
           <h2>Water Current Velocity:<span id="waterCurrent"> 0 </span> m/s</h2>
@@ -214,10 +214,10 @@
     var end= document.getElementById("end").value;
 
     $.ajax({
-      url: "{{ route('api.process') }}",
+      url: "{{ route('api.process')}}",
       type: 'POST',
       dataType: 'json',
-      data: { start: start, end : end, id: {{$river->id}}},
+      data: { start: start, end : end,id: {{$river->id}}},
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
@@ -240,7 +240,7 @@
   setInterval(() => {
     updateChart();
     updateChart2();
-  }, 1000);
+  }, 180000);
 
 </script>
 

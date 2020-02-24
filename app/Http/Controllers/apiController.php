@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Dates;
-use App\Rivers;
+use App\River;
 
 class apiController extends Controller
 {
@@ -30,7 +30,8 @@ class apiController extends Controller
      */
     public function process(Request $request)
     {
-        $key = River:: $request->id;
+        $river= River::find($request->id);
+        // $key = River:: $request->id;
         Dates::create(['start' => $request->start,'end' =>$request->end]);
 
         $client = new Client();
@@ -46,7 +47,9 @@ class apiController extends Controller
         // dump($end[0]);
         // dump($end[1]);
         // dump($end[2]);
-        $url = 'https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start='.$start[0].'-'.$start[1].'-'.$start[2].'&end='.$end[0].'-'.$end[1].'-'.$end[2];
+        $url = 'https://api.thingspeak.com/channels/'.$river->channel.'/fields/2.json?api_key='.$river->key.'&start='.$start[0].'-'.$start[1].'-'.$start[2].'&end='.$end[0].'-'.$end[1].'-'.$end[2];
+
+        // $url = 'https://api.thingspeak.com/channels/' . $river->channel . '/fields/2.json?api_key=' . $river->key . '&start='.$start[0].'-'.$start[1].'-'.$start[2].'&end='.$end[0].'-'.$end[1].'-'.$end[2];
         // dump($url);
         $res2 = $client->request('GET',$url);
         $temp = json_decode($res2->getBody()->getContents()); //--original
