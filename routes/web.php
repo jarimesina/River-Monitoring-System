@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('index', 'apiController@index')->name('index');
 // Route::post('dateRange', 'apiController@index')->name('api.dateRange');
 // Route::get('dataRange', 'apiController@index')->name('dataRange');
 Route::post('dataRange', 'apiController@index')->name('dataRange');

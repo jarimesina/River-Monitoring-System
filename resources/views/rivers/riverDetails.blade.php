@@ -9,28 +9,26 @@
     <div class="container d-flex flex-column text-center">
       <div class="row">
         <div class="col-lg-12 d-flex flex-column text-center">
-        <script> 
-          
+        <script>
           async function getData() {
             // console.log("HI");
             var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
-            // console.log("FUCK");
             var table = document.getElementById("myTable");
-            // const reader = data.body.getReader();
-            // console.log(data.data);
 
             document.getElementById('waterLevel').innerHTML = data.data.data[1];
             document.getElementById('waterCurrent').innerHTML = data.data.data[0];
             document.getElementById('waterTemp').innerHTML = data.data.data[2];
           }
 
+          getData();
           setInterval(() => {
             getData();
-          }, 180000);
+          }, 60000);
         </script>
-          <h2>Water Level:<span id="waterLevel"> 0</span> m</h2>
-          <h2>Water Current Velocity:<span id="waterCurrent"> 0 </span> m/s</h2>
-          <h2>Water Temperature:<span id="waterTemp"> 0 </span> &#x2103;</h2>
+          <h2>Water Level:&nbsp;<span id="waterLevel">0</span> m</h2>
+          <h2>Water Current Velocity:&nbsp;<span id="waterCurrent"> 0 </span> m/s</h2>
+          <h2>Water Temperature:&nbsp;<span id="waterTemp"> 0 </span> &#x2103;</h2>
+          <!-- <button onclick="refresh()">Refresh</button> -->
         </div>
       </div>
     </br>
@@ -64,6 +62,7 @@
         </a>
       </form>
       <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button>
+      <!-- <href href="{{URL::route('index')}}" >Enter</href> -->
     </content>
     <canvas id="myChart3"></canvas>
     </div>
@@ -73,35 +72,22 @@
 <div>
 </div>
 <script>
-  function processInput(){
-    // console.log(document.getElementById("start").value);
-    // console.log(document.getElementById("end").value);
-
-    var start= document.getElementById("start").value.split('-');
-    var end= document.getElementById("end").value.split('-');
-    // console.log(start[0]);
-    // console.log(start[1]);
-    // console.log(start[2]);
-
-    // console.log(end[0]);
-    // console.log(end[1]);
-    // console.log(end[2]);
-    // var url = 'https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start='+start[0]+'-'+start[1]+'-'+start[2]+'&end='+end[0]+'-'+end[1]+'-'+end[2];
-    // console.log(url);
-    // var data = axios.get(url);
-    // console.log(data.response);
-    // var data = axios.get(url)
-    //   .then((response) => {
-    //     console.log(response.data.feeds); 
-    //     return response.data.feeds;
-    //   });
-    // console.log(data);
-    updateChart3();
-
+  function refresh(){
+    getData();
+    updateChart();
+    updateChart2();
   }
+
+  function processInput(){
+    // var start= document.getElementById("start").value.split('-');
+    // var end= document.getElementById("end").value.split('-');
+    updateChart3();
+  }
+
   var ctx = document.getElementById("myChart");
   var ctx2 = document.getElementById("myChart2");
   var ctx3 = document.getElementById("myChart3");
+
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -168,44 +154,26 @@
     }
   });
 
-  var updateChart = function() {
-    $.ajax({
-      url: "{{ route('api.chart',$river->id) }}",
-      type: 'GET',
-      dataType: 'json',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function(data) {
-        // console.log("JARI");
-        myChart.data.labels = data.labels;
-        myChart.data.datasets[0].data = data.data;
-        myChart.update();
-      },
-      error: function(data){
-        console.log("ERROR");
-      }
-    });
+  async function updateChart(){  
+    try {
+      var response = await axios.get("{{ route('api.chart',$river->id) }}");
+      myChart.data.labels = response.data.labels;
+      myChart.data.datasets[0].data = response.data.data;
+      myChart.update();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-  var updateChart2 = function() {
-    $.ajax({
-      url: "{{ route('api.getFlowRate',$river->id) }}",
-      type: 'GET',
-      dataType: 'json',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function(data) {
-        myChart2.data.labels = data.labels;
-        myChart2.data.datasets[0].data = data.data;
-        myChart2.update();
-      },
-      error: function(data){
-        console.log("ERROR2");
-        // console.log(data);
-      }
-    });
+  async function updateChart2(){
+    try {
+      var response = await axios.get("{{ route('api.chart',$river->id) }}");
+      myChart2.data.labels = response.data.labels;
+      myChart2.data.datasets[0].data = response.data.data;
+      myChart2.update();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   var updateChart3 = function() {
@@ -222,15 +190,12 @@
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       success: function(data) {
-
         myChart3.data.labels = data.labels;
         myChart3.data.datasets[0].data = data.data;
         myChart3.update();
-
       },
       error: function(data){
         console.log("ERROR3");
-        // console.log(data.data);
       }
     });
   }
@@ -240,7 +205,7 @@
   setInterval(() => {
     updateChart();
     updateChart2();
-  }, 180000);
+  }, 60000);
 
 </script>
 
@@ -325,12 +290,8 @@ document.getElementById("add").addEventListener("click", function(e) {
 
 @push('scripts')
 <script>
-// setInterval(function(){ 
 //   $(document).ready( function () {
-
 //     $('.table').DataTable();
 //   });
-// }, 1000);
-
 </script>
 @endpush
