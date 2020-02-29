@@ -6,6 +6,8 @@ use App\River;
 use App\Field;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use App\Days;
+use DB;
 
 class RiverController extends Controller
 {
@@ -78,7 +80,6 @@ class RiverController extends Controller
     public function details($id)
     {
         $river = River::find($id);
-
 
         $client = new Client();
         //-----------------------------------------------//
@@ -155,8 +156,93 @@ class RiverController extends Controller
 
         // dd($data);
         //-----------------------------------------------//
+        //unhighlight entire block to view code
+        // $i = 0;
+        // // $river= River::find($request->id);
+        // // Dates::create(['start' => $request->start,'end' =>$request->end]);
+        // // $client = new Client();
+        // // $date = Dates::latest()->first();
+        // // $start = explode('-', $date->start);
+        // // $end = explode('-', $date->end);
+        // $start = "2020-02-22";
+        // $end = "2020-02-25";
+        // //get all days in db
+        $days = Days::all();
+        // //check if start date or end date are in database
+        // if($days->contains('date',$start)!=true)
+        // {
+        //     Days::create(['date' => "2020-02-21"]);
+        // }
+        // else
+        // {
+        //     //query from fields in db that have the same date as input
+        // }
 
+        // if($days->contains('date',$end)!=true)
+        // {
+        //     Days::create(['date' => "2020-02-21"]);
+        //     // $url = 'https://api.thingspeak.com/channels/'.$river->channel.'/fields/2.json?api_key='.$river->key.'&start='.$start[0].'-'.$start[1].'-'.$start[2].'&end='.$end[0].'-'.$end[1].'-'.$end[2];
+        //     // $res2 = $client->request('GET',$url);
+        //     // $temp = json_decode($res2->getBody()->getContents()); //--original
+        //     // $temp = $temp->feeds;
+        //     //uncomment above when ready
+        // }
+        // else
+        // {
+        //     //query from fields in db that have the same end date as input
+        // }    
+
+        // foreach ($results as $result)
+        // {
+        //     Field::create(['field1' =>$result->field1,'field2' =>$result->field2,'field3' =>$result->field3,'field4' =>$result->field4]);
+        // }
+
+        // $url = 'https://api.thingspeak.com/channels/'.$river->channel.'/fields/2.json?api_key='.$river->key.'&start='.$start[0].'-'.$start[1].'-'.$start[2].'&end='.$end[0].'-'.$end[1].'-'.$end[2];
+        // $res2 = $client->request('GET',$url);
+        // $temp = json_decode($res2->getBody()->getContents()); //--original
+        // $temp = $temp->feeds;
+
+        // $cart = array();
+        // $id = array();
+
+        // foreach($temp as $element){
+        //     array_push($cart, (float)$element->field2);
+        //     array_push($id, $element->entry_id);
+        // }
+
+        // $cart2 = new Collection();
+        // $id2 = new Collection();
+        // $data = collect($cart);
+        // $labels = collect($id);
+ 
+        // // return response()->json(compact('labels', 'data'));
         //-----------------------------------------------//
+
+        $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30
+        '); //--original
+        $temp = json_decode($res2->getBody()->getContents()); //--original
+        $temp=$temp->feeds;
+        $results = $temp;
+      
+        // foreach($results as $result){
+        //     Field::create(['field1' =>$result->field1,'field2' =>$result->field2,'field3' =>$result->field3,'field4' =>$result->field4]);
+        // }
+
+        if(request()->ajax()){
+            if(!empty($request->from_date)){
+                $data = DB::table('fields')
+                        ->whereBetween('order_date', array($request->from_date, $request->to_date))
+                        ->get();
+                Days::create(['date' => $request->from_date]);
+                //get data from thingspeak
+                //manipulate
+            }
+            else{
+                $data = DB::table('fields')->get();
+            }
+            return datatables()->of($data)->make(true);
+        }
         return view('rivers.riverDetails',compact('river'));
+        // return view('rivers.riverDetails',compact('river'));
     }
 }

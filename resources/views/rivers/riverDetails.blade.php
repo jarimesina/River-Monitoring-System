@@ -2,6 +2,16 @@
 @extends('base')
 @section('main')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 <div class="row">
 <div class="col-sm-12">
     <h1 class="display-3">{{$river->name}}</h1> 
@@ -167,7 +177,7 @@
 
   async function updateChart2(){
     try {
-      var response = await axios.get("{{ route('api.chart',$river->id) }}");
+      var response = await axios.get("{{ route('api.getFlowRate',$river->id) }}");
       myChart2.data.labels = response.data.labels;
       myChart2.data.datasets[0].data = response.data.data;
       myChart2.update();
@@ -208,90 +218,110 @@
   }, 60000);
 
 </script>
-
-<!-- <div class="container-fluid">
- <div class="row">
-  <div class="col-12">
-   <div class="card">
-    <div class="card-block">
-     <table></table>
-    </div>
-   </div>
+<div class="container">    
+  <br />
+  <h3 align="center">Table</h3>
+  <br/>
+  <br/>
+  <div class="row input-daterange">
+      <div class="col-md-4">
+          <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" readonly />
+      </div>
+      <div class="col-md-4">
+          <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
+      </div>
+      <div class="col-md-4">
+          <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>
+          <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
+      </div>
   </div>
- </div>
- <div class="row">
-  <div class="col-12">
-   <div class="card">
-    <div class="card-block">
-     <button class="btn btn-primary" id="add">Add 1000 Rows</button>
-    </div>
-   </div>
+  <br />
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped" id="order_table">
+      <thead>
+      <tr>
+          <th>Created At</th>
+          <th>Entry ID</th>
+          <th>Water Level</th>
+          <th>Water Velocity</th>
+          <th>Temperature</th>
+      </tr>
+      </thead>
+    </table>
   </div>
- </div>	
-</div> -->
-
+</div>
 <script>
-var highlightNumbers = function(xhr) {
-    // Parse the JSON string
-    var data = JSON.parse(xhr.responseText);
-    data = data.temp;
-    console.log(data);
-    var obj = {
-      // Quickly get the headings
-      headings: Object.keys(data[0]),
-      // data array
-      data: []
-    };
+  $(document).ready(function(){
+  $('.input-daterange').datepicker({
+    todayBtn:'linked',
+    format:'yyyy-mm-dd',
+    autoclose:true
+  });
 
-    // Loop over the objects to get the values
-    for ( var i = 0; i < data.length; i++ ) {
-        obj.data[i] = [];
-        for (var p in data[i]) {
-            if( data[i].hasOwnProperty(p) ) {
-                obj.data[i].push(data[i][p]);
-            }
-        }
-    }
-    // Return the formatted data	
-    return JSON.stringify(obj.data);
-}
+  load_data();
 
-var datatable = new DataTable('table', {
-  ajax: {
-    url:"{{ route('api.getFields') }}",
-    load: highlightNumbers
-  },
-	perPageSelect: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000],
-	perPage: 10,
-	data: {
-		"headings": [
-      "Created_at",
-			"Entry ID",
-			"Water Level",
-			"Water Velocity",
-			"Temperature"
-		],
-		"data": []
-	},	
+  function load_data(from_date = '', to_date = '')
+  {
+    $('#order_table').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url:'{{ route("details",$river->id) }}',
+        data:{from_date:from_date, to_date:to_date}
+      },
+      columns: [
+        {
+        data:'created_at',
+        name:'created_at'
+        },
+        {
+        data:'id',
+        name:'id'
+        },
+        {
+        data:'field1',
+        name:'field1'
+        },
+        {
+        data:'field2',
+        name:'field2'
+        },
+        {
+        data:'field3',
+        name:'field3'
+        },
+      ]
+    });
+ }
+
+  $('#filter').click(function(){
+  var from_date = $('#from_date').val();
+  var to_date = $('#to_date').val();
+  if(from_date != '' &&  to_date != '')
+  {
+    $('#order_table').DataTable().destroy();
+    load_data(from_date, to_date);
+  }
+  else
+  {
+    alert('Both Date is required');
+  }
+  });
+
+  $('#refresh').click(function(){
+  $('#from_date').val('');
+  $('#to_date').val('');
+  $('#order_table').DataTable().destroy();
+  load_data();
+ });
 });
-
-document.getElementById("add").addEventListener("click", function(e) {
-	datatable.insert({
-		data: datatable.options.data.data
-	});
-});
-
-// setInterval(() => {
-//   datatable.refresh();
-//   console.log("hi");
-// }, 1000);
 </script>
 @endsection
 
 @push('scripts')
-<script>
-//   $(document).ready( function () {
-//     $('.table').DataTable();
-//   });
-</script>
+<!-- <script>
+  $(document).ready( function () {
+    $('.table').DataTable();
+  });
+</script> -->
 @endpush
