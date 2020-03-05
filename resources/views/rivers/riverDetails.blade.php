@@ -241,7 +241,6 @@
       <thead>
       <tr>
           <th>Created At</th>
-          <th>Entry ID</th>
           <th>Water Level</th>
           <th>Water Velocity</th>
           <th>Temperature</th>
@@ -250,6 +249,24 @@
     </table>
   </div>
 </div>
+<!-- Pusher -->
+<!-- <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+
+<script>
+  // Enable pusher logging - don't include this in production
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('9d370124fc2b8ba7d2f8', {
+    cluster: 'ap1',
+    forceTLS: true
+  });
+
+  var channel = pusher.subscribe('my-channel');
+  channel.bind('my-event', function(data) {
+    console.log('test')
+  });
+</script> -->
+
 <script>
   $(document).ready(function(){
   $('.input-daterange').datepicker({
@@ -266,29 +283,25 @@
       processing: true,
       serverSide: true,
       ajax: {
-        url:'{{ route("details",$river->id) }}',
+        url:'{{ route("meta",$river->id) }}',
         data:{from_date:from_date, to_date:to_date}
       },
       columns: [
         {
-        data:'created_at',
-        name:'created_at'
+        data:'date_taken',
+        name:'date_taken'
         },
         {
-        data:'id',
-        name:'id'
+        data:'level',
+        name:'level'
         },
         {
-        data:'field1',
-        name:'field1'
+        data:'velocity',
+        name:'velocity'
         },
         {
-        data:'field2',
-        name:'field2'
-        },
-        {
-        data:'field3',
-        name:'field3'
+        data:'temperature',
+        name:'temperature'
         },
       ]
     });

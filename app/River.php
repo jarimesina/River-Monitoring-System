@@ -19,4 +19,8 @@ class River extends Authenticatable
         'name', 'location', 'key','channel'
     ];
 
+    public function waterLevels()
+    {
+        return $this->hasMany('App\WaterLevel');
+    }
 }

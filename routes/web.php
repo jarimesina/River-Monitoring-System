@@ -1,5 +1,12 @@
 <?php
 
+use App\Dates;
+use App\WaterLevel;
+use App\Events\WaterLevel as LevelNotification;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +38,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 //     Auth::routes();
 //     Route::get('/home', 'HomeController@index')->name('home');
 // });
+
+Route::get('/sample', function(){
+	event(new LevelNotification('hello world'));
+});
+
+Route::post('/webhook', 'WaterLevelController@store');
+Route::get('/rivers/{id}/levels', 'WaterLevelController@getWaterLevel')->name('meta');

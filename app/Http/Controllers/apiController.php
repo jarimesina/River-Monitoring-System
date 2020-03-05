@@ -83,6 +83,8 @@ class apiController extends Controller
         $temp = json_decode($res2->getBody()->getContents()); //--original
         $temp = $temp->feeds;
 
+        return $temp;
+
         $cart = array();
         $id = array();
 

@@ -20,6 +20,8 @@ Route::get('dataRange', 'ChartsApiController@getDataRange')->name('api.getDataRa
 
 Route::post('process', 'apiController@process')->name('api.process');
 
+Route::get('/rivers/{id}/levels', 'WaterLevelController@getWaterLevel');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
