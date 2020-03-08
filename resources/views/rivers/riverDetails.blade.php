@@ -74,7 +74,7 @@
       </form>
       <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button>
     </content> -->
-    <canvas id="myChart3"></canvas>
+    <!-- <canvas id="myChart3"></canvas> -->
     </div>
     <br>
     </div>
