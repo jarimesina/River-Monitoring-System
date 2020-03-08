@@ -73,12 +73,12 @@
         </a>
       </form>
       <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button>
-    </content>
+    </content> -->
     <canvas id="myChart3"></canvas>
     </div>
     <br>
     </div>
-  </section> -->
+  </section>
 <div>
 </div>
 <script>
