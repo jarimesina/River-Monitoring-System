@@ -63,16 +63,16 @@ class ChartsApiController extends Controller
         $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/feeds.json?api_key=' . $river->key);
         $temp = json_decode($res2->getBody()); //--original
         $temp = $temp->feeds;
-        $field1 = end($temp)->field1;
-        $field2 = end($temp)->field2;
-        $field3 = end($temp)->field3;
-        $field4 = end($temp)->field4;
+        // $field1 = end($temp)->field1;
+        // $field2 = end($temp)->field2;
+        // $field3 = end($temp)->field3;
+        // $field4 = end($temp)->field6;
         
         $cart = array();
         array_push($cart, (float)end($temp)->field1);
         array_push($cart, (float)end($temp)->field2);
         array_push($cart, (float)end($temp)->field3);
-        array_push($cart, (float)end($temp)->field4);
+        array_push($cart, (float)end($temp)->field6);
 
         $cart2 = new Collection();
         $data = collect($cart);

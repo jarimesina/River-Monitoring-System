@@ -219,7 +219,7 @@ class RiverController extends Controller
         //-----------------------------------------------//
 
         $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30
-        '); //--original
+        '); //<=== fix this!!!
         $temp = json_decode($res2->getBody()->getContents()); //--original
         $temp=$temp->feeds;
         $results = $temp;
@@ -243,6 +243,6 @@ class RiverController extends Controller
             return datatables()->of($data)->make(true);
         }
         return view('rivers.riverDetails',compact('river'));
-        // return view('rivers.riverDetails',compact('river'));
+        //-----------------------------------------------//
     }
 }

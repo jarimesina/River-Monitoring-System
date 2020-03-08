@@ -24,10 +24,10 @@
             // console.log("HI");
             var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
             var table = document.getElementById("myTable");
-
+            console.log(data.data);
             document.getElementById('waterLevel').innerHTML = data.data.data[1];
             document.getElementById('waterCurrent').innerHTML = data.data.data[0];
-            document.getElementById('waterTemp').innerHTML = data.data.data[2];
+            document.getElementById('waterTemp').innerHTML = data.data.data[3];
           }
 
           getData();
@@ -140,27 +140,27 @@
     }
   });
 
-  var myChart3 = new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [{
-        label: 'Data from start to end',
-        data: [],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        xAxes: [],
-        yAxes: [{
-          ticks: {
-            beginAtZero:true
-          }
-        }]
-      }
-    }
-  });
+  // var myChart3 = new Chart(ctx3, {
+  //   type: 'line',
+  //   data: {
+  //     labels: [],
+  //     datasets: [{
+  //       label: 'Data from start to end',
+  //       data: [],
+  //       borderWidth: 1
+  //     }]
+  //   },
+  //   options: {
+  //     scales: {
+  //       xAxes: [],
+  //       yAxes: [{
+  //         ticks: {
+  //           beginAtZero:true
+  //         }
+  //       }]
+  //     }
+  //   }
+  // });
 
   async function updateChart(){  
     try {
