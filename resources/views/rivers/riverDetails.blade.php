@@ -34,6 +34,7 @@
           setInterval(() => {
             getData();
           }, 60000);
+
         </script>
           <h2>Water Level:&nbsp;<span id="waterLevel">0</span> m</h2>
           <h2>Water Current Velocity:&nbsp;<span id="waterCurrent"> 0 </span> m/s</h2>
@@ -60,7 +61,7 @@
     </br>
     </br>
     <div>
-    <content>
+    <!-- <content>
       <form>
         Date Picker(day/month/year):
         <br>
@@ -72,13 +73,12 @@
         </a>
       </form>
       <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button>
-      <!-- <href href="{{URL::route('index')}}" >Enter</href> -->
     </content>
     <canvas id="myChart3"></canvas>
     </div>
     <br>
     </div>
-  </section>
+  </section> -->
 <div>
 </div>
 <script>
@@ -88,11 +88,9 @@
     updateChart2();
   }
 
-  function processInput(){
-    // var start= document.getElementById("start").value.split('-');
-    // var end= document.getElementById("end").value.split('-');
-    updateChart3();
-  }
+  // function processInput(){
+  //   updateChart3();
+  // }
 
   var ctx = document.getElementById("myChart");
   var ctx2 = document.getElementById("myChart2");
@@ -186,29 +184,29 @@
     }
   }
 
-  var updateChart3 = function() {
+  // var updateChart3 = function() {
 
-    var start= document.getElementById("start").value;
-    var end= document.getElementById("end").value;
+  //   var start= document.getElementById("start").value;
+  //   var end= document.getElementById("end").value;
 
-    $.ajax({
-      url: "{{ route('api.process')}}",
-      type: 'POST',
-      dataType: 'json',
-      data: { start: start, end : end,id: {{$river->id}}},
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function(data) {
-        myChart3.data.labels = data.labels;
-        myChart3.data.datasets[0].data = data.data;
-        myChart3.update();
-      },
-      error: function(data){
-        console.log("ERROR3");
-      }
-    });
-  }
+  //   $.ajax({
+  //     url: "{{ route('api.process')}}",
+  //     type: 'POST',
+  //     dataType: 'json',
+  //     data: { start: start, end : end,id: {{$river->id}}},
+  //     headers: {
+  //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //     },
+  //     success: function(data) {
+  //       myChart3.data.labels = data.labels;
+  //       myChart3.data.datasets[0].data = data.data;
+  //       myChart3.update();
+  //     },
+  //     error: function(data){
+  //       console.log("ERROR3");
+  //     }
+  //   });
+  // }
   
   updateChart();
   updateChart2();
@@ -249,23 +247,6 @@
     </table>
   </div>
 </div>
-<!-- Pusher -->
-<!-- <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
-
-<script>
-  // Enable pusher logging - don't include this in production
-  Pusher.logToConsole = true;
-
-  var pusher = new Pusher('9d370124fc2b8ba7d2f8', {
-    cluster: 'ap1',
-    forceTLS: true
-  });
-
-  var channel = pusher.subscribe('my-channel');
-  channel.bind('my-event', function(data) {
-    console.log('test')
-  });
-</script> -->
 
 <script>
   $(document).ready(function(){

@@ -19,11 +19,8 @@ use Illuminate\Http\Request;
 */
 
 Route::get('index', 'apiController@index')->name('index');
-// Route::post('dateRange', 'apiController@index')->name('api.dateRange');
-// Route::get('dataRange', 'apiController@index')->name('dataRange');
 Route::post('dataRange', 'apiController@index')->name('dataRange');
 Route::get('process', 'apiController@process')->name('process');
-// Route::post('process', 'apiController@process')->name('process');
 Route::get('/rivers/{river}/details', 'RiverController@details')->name('details');
 Route::resource('rivers', 'RiverController');
 Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('is_admin');
