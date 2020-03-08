@@ -169,6 +169,7 @@
       myChart.data.datasets[0].data = response.data.data;
       myChart.update();
     } catch (e) {
+      console.log("ERROR1");
       console.error(e);
     }
   }
@@ -180,6 +181,7 @@
       myChart2.data.datasets[0].data = response.data.data;
       myChart2.update();
     } catch (e) {
+      console.log("ERROR2");
       console.error(e);
     }
   }
