@@ -32,6 +32,10 @@
               <label for="location">Channel ID:</label>
               <input type="text" class="form-control" name="channel" required/>
           </div>
+          <div class="form-group">
+              <label for="location">Width:</label>
+              <input type="text" class="form-control" name="width" required/>
+          </div>
           <button type="submit" class="btn btn-primary-outline">Add river</button>
       </form>
   </div>

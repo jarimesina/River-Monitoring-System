@@ -94,19 +94,25 @@ class ChartsApiController extends Controller
 
     public function getFlowRate($id)
     {
+
         $river = River::find($id);
+        $width = (float)$river->width;
         $client = new Client();
-        $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/fields/4.json?api_key=' . $river->key . '&results=30');
-        $temp2 = json_decode($res2->getBody()->getContents()); 
-        $temp2=$temp2->feeds;
-        // dump($temp2);
+        $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30');
+        $temp = json_decode($res->getBody()->getContents()); 
+        $temp=$temp->feeds;
+
+        // dump($temp);
 
         $cart = array();
         $id = array();
 
-        foreach($temp2 as $element){
-            array_push($cart, (float)$element->field4);
+        foreach($temp as $element){
+            $var = $width * $element->field1 * $element->field2;
+            //multiply width,velocity and water level here
+            array_push($cart, (float)$var);
             array_push($id, $element->entry_id);
+
         }
 
         // dump($cart);

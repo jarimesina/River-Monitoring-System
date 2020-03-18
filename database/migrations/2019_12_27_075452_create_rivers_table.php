@@ -19,6 +19,7 @@ class CreateRiversTable extends Migration
             $table->string('location');
             $table->string('key');
             $table->string('channel');
+            $table->string('width');
             $table->timestamps();
         });
     }

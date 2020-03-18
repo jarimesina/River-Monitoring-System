@@ -31,12 +31,17 @@
 
             <div class="form-group">
                 <label for="location">Api Key:</label>
-                <input type="text" class="form-control" name="location" value={{ $rivers->key }} />
+                <input type="text" class="form-control" name="key" value={{ $rivers->key }} />
             </div>
 
             <div class="form-group">
                 <label for="location">Channel:</label>
-                <input type="text" class="form-control" name="location" value={{ $rivers->channel }} />
+                <input type="text" class="form-control" name="channel" value={{ $rivers->channel }} />
+            </div>
+
+            <div class="form-group">
+                <label for="location">Width:</label>
+                <input type="text" class="form-control" name="width" value={{ $rivers->width }} />
             </div>
 
             <button type="submit" class="btn btn-primary">Update</button>

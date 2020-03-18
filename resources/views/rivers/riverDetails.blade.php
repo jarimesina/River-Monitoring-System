@@ -288,29 +288,29 @@
         },
       ]
     });
- }
+  }
 
-  $('#filter').click(function(){
-  var from_date = $('#from_date').val();
-  var to_date = $('#to_date').val();
-  if(from_date != '' &&  to_date != '')
-  {
-    $('#order_table').DataTable().destroy();
-    load_data(from_date, to_date);
-  }
-  else
-  {
-    alert('Both Date is required');
-  }
+    $('#filter').click(function(){
+    var from_date = $('#from_date').val();
+    var to_date = $('#to_date').val();
+    if(from_date != '' &&  to_date != '')
+    {
+      $('#order_table').DataTable().destroy();
+      load_data(from_date, to_date);
+    }
+    else
+    {
+      alert('Both Date is required');
+    }
+    });
+
+    $('#refresh').click(function(){
+      $('#from_date').val('');
+      $('#to_date').val('');
+      $('#order_table').DataTable().destroy();
+      load_data();
+    });
   });
-
-  $('#refresh').click(function(){
-  $('#from_date').val('');
-  $('#to_date').val('');
-  $('#order_table').DataTable().destroy();
-  load_data();
- });
-});
 </script>
 @endsection
 
