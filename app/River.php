@@ -16,7 +16,7 @@ class River extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'location', 'key','channel'
+        'name', 'location', 'key','channel','width'
     ];
 
     public function waterLevels()

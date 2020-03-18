@@ -8,7 +8,7 @@
                 <div class="card-header">Dashboard</div>
                 <div class="card-body">
                    
-                    <table class="table">
+                    <!-- <table class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -26,7 +26,7 @@
                             <td >{{$field->field3}}</td>
                         @endforeach
                     </tbody>
-                </table>
+                </table> -->
                 </div>
             </div>
         </div>
@@ -42,11 +42,11 @@ function createRiver(){
 @endsection
 
 @push('scripts')
-<script>
+<!-- <script>
 $(document).ready( function () {
 
     $('.table').DataTable();
 } );
-</script>
+</script> -->
 
 @endpush

@@ -31,6 +31,7 @@ class RiverController extends Controller
         $river->location = $request->location;
         $river->key = $request->key;
         $river->channel = $request->channel;
+        $river->width = $request->width;
         $river->save();
         // return redirect('admin/home')->with('success', 'River saved!');
         return redirect('/rivers')->with('success', 'River saved!');
@@ -55,15 +56,17 @@ class RiverController extends Controller
             'name'=>'required',
             'location'=>'required',
             'key'=>'required',
-            'channel'=>'required'
+            'channel'=>'required',
+            'width'=>'required'
         ]);
 
         //check if input is not redundant
         $river = River::find($id);
         $river->name =  $request->get('name');
         $river->location = $request->get('location');
-        $river->name =  $request->get('name');
-        $river->location = $request->get('location');
+        $river->key =  $request->get('key');
+        $river->channel = $request->get('channel');
+        $river->width = $request->get('width');
         $river->save();
 
         return redirect('/rivers')->with('success', 'River updated!');
@@ -218,8 +221,10 @@ class RiverController extends Controller
         // // return response()->json(compact('labels', 'data'));
         //-----------------------------------------------//
 
+        //-----------------------------------------------//
+
         $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30
-        '); //--original
+        '); //<=== fix this!!!
         $temp = json_decode($res2->getBody()->getContents()); //--original
         $temp=$temp->feeds;
         $results = $temp;
@@ -234,8 +239,6 @@ class RiverController extends Controller
                         ->whereBetween('order_date', array($request->from_date, $request->to_date))
                         ->get();
                 Days::create(['date' => $request->from_date]);
-                //get data from thingspeak
-                //manipulate
             }
             else{
                 $data = DB::table('fields')->get();
@@ -243,6 +246,6 @@ class RiverController extends Controller
             return datatables()->of($data)->make(true);
         }
         return view('rivers.riverDetails',compact('river'));
-        // return view('rivers.riverDetails',compact('river'));
+        //-----------------------------------------------//
     }
 }

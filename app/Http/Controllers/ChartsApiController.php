@@ -63,16 +63,16 @@ class ChartsApiController extends Controller
         $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/feeds.json?api_key=' . $river->key);
         $temp = json_decode($res2->getBody()); //--original
         $temp = $temp->feeds;
-        $field1 = end($temp)->field1;
-        $field2 = end($temp)->field2;
-        $field3 = end($temp)->field3;
-        $field4 = end($temp)->field4;
+        // $field1 = end($temp)->field1;
+        // $field2 = end($temp)->field2;
+        // $field3 = end($temp)->field3;
+        // $field4 = end($temp)->field6;
         
         $cart = array();
         array_push($cart, (float)end($temp)->field1);
         array_push($cart, (float)end($temp)->field2);
         array_push($cart, (float)end($temp)->field3);
-        array_push($cart, (float)end($temp)->field4);
+        array_push($cart, (float)end($temp)->field6);
 
         $cart2 = new Collection();
         $data = collect($cart);
@@ -94,19 +94,25 @@ class ChartsApiController extends Controller
 
     public function getFlowRate($id)
     {
+
         $river = River::find($id);
+        $width = (float)$river->width;
         $client = new Client();
-        $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/fields/4.json?api_key=' . $river->key . '&results=30');
-        $temp2 = json_decode($res2->getBody()->getContents()); 
-        $temp2=$temp2->feeds;
-        // dump($temp2);
+        $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30');
+        $temp = json_decode($res->getBody()->getContents()); 
+        $temp=$temp->feeds;
+
+        // dump($temp);
 
         $cart = array();
         $id = array();
 
-        foreach($temp2 as $element){
-            array_push($cart, (float)$element->field4);
+        foreach($temp as $element){
+            $var = $width * $element->field1 * $element->field2;
+            //multiply width,velocity and water level here
+            array_push($cart, (float)$var);
             array_push($id, $element->entry_id);
+
         }
 
         // dump($cart);

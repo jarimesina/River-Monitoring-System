@@ -24,16 +24,17 @@
             // console.log("HI");
             var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
             var table = document.getElementById("myTable");
-
+            console.log(data.data);
             document.getElementById('waterLevel').innerHTML = data.data.data[1];
             document.getElementById('waterCurrent').innerHTML = data.data.data[0];
-            document.getElementById('waterTemp').innerHTML = data.data.data[2];
+            document.getElementById('waterTemp').innerHTML = data.data.data[3];
           }
 
           getData();
           setInterval(() => {
             getData();
           }, 60000);
+
         </script>
           <h2>Water Level:&nbsp;<span id="waterLevel">0</span> m</h2>
           <h2>Water Current Velocity:&nbsp;<span id="waterCurrent"> 0 </span> m/s</h2>
@@ -60,7 +61,7 @@
     </br>
     </br>
     <div>
-    <content>
+    <!-- <content>
       <form>
         Date Picker(day/month/year):
         <br>
@@ -72,9 +73,8 @@
         </a>
       </form>
       <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button>
-      <!-- <href href="{{URL::route('index')}}" >Enter</href> -->
-    </content>
-    <canvas id="myChart3"></canvas>
+    </content> -->
+    <!-- <canvas id="myChart3"></canvas> -->
     </div>
     <br>
     </div>
@@ -88,11 +88,9 @@
     updateChart2();
   }
 
-  function processInput(){
-    // var start= document.getElementById("start").value.split('-');
-    // var end= document.getElementById("end").value.split('-');
-    updateChart3();
-  }
+  // function processInput(){
+  //   updateChart3();
+  // }
 
   var ctx = document.getElementById("myChart");
   var ctx2 = document.getElementById("myChart2");
@@ -142,27 +140,27 @@
     }
   });
 
-  var myChart3 = new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [{
-        label: 'Data from start to end',
-        data: [],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        xAxes: [],
-        yAxes: [{
-          ticks: {
-            beginAtZero:true
-          }
-        }]
-      }
-    }
-  });
+  // var myChart3 = new Chart(ctx3, {
+  //   type: 'line',
+  //   data: {
+  //     labels: [],
+  //     datasets: [{
+  //       label: 'Data from start to end',
+  //       data: [],
+  //       borderWidth: 1
+  //     }]
+  //   },
+  //   options: {
+  //     scales: {
+  //       xAxes: [],
+  //       yAxes: [{
+  //         ticks: {
+  //           beginAtZero:true
+  //         }
+  //       }]
+  //     }
+  //   }
+  // });
 
   async function updateChart(){  
     try {
@@ -171,6 +169,7 @@
       myChart.data.datasets[0].data = response.data.data;
       myChart.update();
     } catch (e) {
+      console.log("ERROR1");
       console.error(e);
     }
   }
@@ -182,33 +181,34 @@
       myChart2.data.datasets[0].data = response.data.data;
       myChart2.update();
     } catch (e) {
+      console.log("ERROR2");
       console.error(e);
     }
   }
 
-  var updateChart3 = function() {
+  // var updateChart3 = function() {
 
-    var start= document.getElementById("start").value;
-    var end= document.getElementById("end").value;
+  //   var start= document.getElementById("start").value;
+  //   var end= document.getElementById("end").value;
 
-    $.ajax({
-      url: "{{ route('api.process')}}",
-      type: 'POST',
-      dataType: 'json',
-      data: { start: start, end : end,id: {{$river->id}}},
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function(data) {
-        myChart3.data.labels = data.labels;
-        myChart3.data.datasets[0].data = data.data;
-        myChart3.update();
-      },
-      error: function(data){
-        console.log("ERROR3");
-      }
-    });
-  }
+  //   $.ajax({
+  //     url: "{{ route('api.process')}}",
+  //     type: 'POST',
+  //     dataType: 'json',
+  //     data: { start: start, end : end,id: {{$river->id}}},
+  //     headers: {
+  //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //     },
+  //     success: function(data) {
+  //       myChart3.data.labels = data.labels;
+  //       myChart3.data.datasets[0].data = data.data;
+  //       myChart3.update();
+  //     },
+  //     error: function(data){
+  //       console.log("ERROR3");
+  //     }
+  //   });
+  // }
   
   updateChart();
   updateChart2();
@@ -249,23 +249,6 @@
     </table>
   </div>
 </div>
-<!-- Pusher -->
-<!-- <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
-
-<script>
-  // Enable pusher logging - don't include this in production
-  Pusher.logToConsole = true;
-
-  var pusher = new Pusher('9d370124fc2b8ba7d2f8', {
-    cluster: 'ap1',
-    forceTLS: true
-  });
-
-  var channel = pusher.subscribe('my-channel');
-  channel.bind('my-event', function(data) {
-    console.log('test')
-  });
-</script> -->
 
 <script>
   $(document).ready(function(){
@@ -305,29 +288,29 @@
         },
       ]
     });
- }
+  }
 
-  $('#filter').click(function(){
-  var from_date = $('#from_date').val();
-  var to_date = $('#to_date').val();
-  if(from_date != '' &&  to_date != '')
-  {
-    $('#order_table').DataTable().destroy();
-    load_data(from_date, to_date);
-  }
-  else
-  {
-    alert('Both Date is required');
-  }
+    $('#filter').click(function(){
+    var from_date = $('#from_date').val();
+    var to_date = $('#to_date').val();
+    if(from_date != '' &&  to_date != '')
+    {
+      $('#order_table').DataTable().destroy();
+      load_data(from_date, to_date);
+    }
+    else
+    {
+      alert('Both Date is required');
+    }
+    });
+
+    $('#refresh').click(function(){
+      $('#from_date').val('');
+      $('#to_date').val('');
+      $('#order_table').DataTable().destroy();
+      load_data();
+    });
   });
-
-  $('#refresh').click(function(){
-  $('#from_date').val('');
-  $('#to_date').val('');
-  $('#order_table').DataTable().destroy();
-  load_data();
- });
-});
 </script>
 @endsection
 
