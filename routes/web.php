@@ -18,23 +18,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('index', 'apiController@index')->name('index');
-Route::post('dataRange', 'apiController@index')->name('dataRange');
-Route::get('process', 'apiController@process')->name('process');
-Route::get('/rivers/{river}/details', 'RiverController@details')->name('details');
-Route::resource('rivers', 'RiverController');
-Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('is_admin');
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+
+
 // Route::group(['middleware'=>['preventbackbutton']], function(){
 //     Auth::routes();
 //     Route::get('/home', 'HomeController@index')->name('home');
 // });
+
+Route::group(['middleware' => 'preventBackHistory'], function()
+{
+    Auth::routes();
+    Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('is_admin');
+    Route::get('/home', 'HomeController@index')->name('home');
+});
 
 Route::get('/sample', function(){
 	event(new LevelNotification('hello world'));

@@ -3,13 +3,12 @@
 @section('main')
 <div class="row">
 <div class="col-sm-12">
-    <h1 class="page-title">Device Locations</h1> 
-    
+    <h1 class="page-title">Device Locations</h1>
     @if(auth()->user()->is_admin==1)
       <div>
       <a style="margin: 19px;" href="{{ route('rivers.create')}}" class="btn btn-primary ml-0">Add New Location</a>
       </div>     
-    @else
+    @elseif(auth()->user()->is_admin==0)
       <div>
       </div> 
     @endif
@@ -42,7 +41,7 @@
               <td>
                 <button onclick="window.location='{{ url("/rivers/{$river->id}/details") }}'" class="btn btn-success" type="submit">View Properties</button>
               </td>
-            @else
+            @else(auth()->user()->is_admin==0)
               <td>
                 <button onclick="window.location='{{ url("/rivers/{$river->id}/details") }}'" class="btn btn-success" type="submit">View Properties</button>
               </td>
