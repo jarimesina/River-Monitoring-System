@@ -36,7 +36,7 @@
               <label for="location">Width:</label>
               <input type="text" class="form-control" name="width" required/>
           </div>
-          <button type="submit" class="btn btn-primary-outline">Add river</button>
+          <button type="submit" class="btn btn-primary">Add river</button>
       </form>
   </div>
 </div>
