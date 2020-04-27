@@ -30,14 +30,17 @@
             <td>{{$river->name}}</td>
             @if(auth()->user()->is_admin==1)
               <td>
-                  <a href="{{ route('rivers.edit',$river->id)}}" class="btn btn-primary">Edit</a>
+                <a href="{{ route('sections.show',$river->id)}}" class="btn btn-primary">Add Sections</a>
               </td>
               <td>
-                  <form class="delete" action="{{ route('rivers.destroy', $river->id)}}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
-                  </form>
+                <a href="{{ route('rivers.edit',$river->id)}}" class="btn btn-primary">Edit</a>
+              </td>
+              <td>
+                <form class="delete" action="{{ route('rivers.destroy', $river->id)}}" method="post">
+                  @csrf
+                  @method('DELETE')
+                  <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
               </td>
               <td>
                 <button onclick="window.location='{{ url("/rivers/{$river->id}/details") }}'" class="btn btn-success" type="submit">View Properties</button>

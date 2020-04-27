@@ -32,6 +32,7 @@ class RiverController extends Controller
         $river->key = $request->key;
         $river->channel = $request->channel;
         $river->width = $request->width;
+        $river->sections = $request->sections;
         $river->save();
         // return redirect('admin/home')->with('success', 'River saved!');
         return redirect('/rivers')->with('success', 'River saved!');

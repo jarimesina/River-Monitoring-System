@@ -25,16 +25,20 @@
               <input type="text" class="form-control" name="location" required/>
           </div>
           <div class="form-group">
-              <label for="location">Api key:</label>
+              <label for="key">Api key:</label>
               <input type="text" class="form-control" name="key" required/>
           </div>
           <div class="form-group">
-              <label for="location">Channel ID:</label>
+              <label for="channel">Channel ID:</label>
               <input type="text" class="form-control" name="channel" required/>
           </div>
           <div class="form-group">
-              <label for="location">Width:</label>
+              <label for="width">Width:</label>
               <input type="text" class="form-control" name="width" required/>
+          </div>
+          <div class="form-group">
+              <label for="sections">Sections:</label>
+              <input type="text" class="form-control" name="sections" required/>
           </div>
           <button type="submit" class="btn btn-primary">Add river</button>
       </form>
