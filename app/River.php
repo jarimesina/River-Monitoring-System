@@ -16,11 +16,16 @@ class River extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'location', 'key','channel','width'
+        'name', 'location', 'key','channel','width','sections'
     ];
 
     public function waterLevels()
     {
         return $this->hasMany('App\WaterLevel');
+    }
+
+    public function section()
+    {
+        return $this->hasMany('App\Sections');
     }
 }

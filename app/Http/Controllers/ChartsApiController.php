@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use App\River;
 use App\Field;
+use App\Sections;
 use App\Http\Controllers\Controller;
 use App\Speed;
 use Illuminate\Support\Collection;
@@ -94,6 +95,16 @@ class ChartsApiController extends Controller
 
     public function getFlowRate($id)
     {
+        $surfaceVelocities = array();
+        $coefficents = array();
+        //1.) query sections 
+        $sections = Sections::where('river_id',$id)->get();
+        //2.) extract velocities and coefficients
+        foreach($sections as $section){
+            array_push($surfaceVelocities, (float)$section->value);
+            array_push($coefficents, (float)$section->percentage);
+        }
+        //3.) 
 
         $river = River::find($id);
         $width = (float)$river->width;
@@ -102,15 +113,19 @@ class ChartsApiController extends Controller
         $temp = json_decode($res->getBody()->getContents()); 
         $temp=$temp->feeds;
 
+        // $area = $depth *
+        // $velocityMean = //get each section coefficient and its surface velocity
+        // $discharge = $velocityMean * $area
         // dump($temp);
 
         $cart = array();
         $id = array();
 
         foreach($temp as $element){
-            $var = $width * $element->field1 * $element->field2;
+            // $discharge = $width * $element->field1 * $element->field2;
+            $discharge = $width * $element->field1 * $element->field2;
             //multiply width,velocity and water level here
-            array_push($cart, (float)$var);
+            array_push($cart, (float)$discharge);
             array_push($id, $element->entry_id);
 
         }
@@ -124,34 +139,34 @@ class ChartsApiController extends Controller
         return response()->json(compact('data','labels'));
     }
 
-    public function getDataRange(Request $request)
-    {
-        $client = new Client();
-        $start = explode('-', $request->start);
-        $end = explode('-', $request->end);
+    // public function getDataRange(Request $request)
+    // {
+    //     $client = new Client();
+    //     $start = explode('-', $request->start);
+    //     $end = explode('-', $request->end);
 
         
-        $url = 'https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start='.$start[0].'-'.$start[1].'-'.$start[2].'&end='.$end[0].'-'.$end[1].'-'.$end[2];
-        //ibalhin nalang sa apiController.php
-        //ang problem kay basin sa date na gi select 
-        $res2 = $client->request('GET',$url);
+    //     $url = 'https://api.thingspeak.com/channels/952196/fields/2.json?api_key=RGBK34NEJJV41DY7&start='.$start[0].'-'.$start[1].'-'.$start[2].'&end='.$end[0].'-'.$end[1].'-'.$end[2];
+    //     //ibalhin nalang sa apiController.php
+    //     //ang problem kay basin sa date na gi select 
+    //     $res2 = $client->request('GET',$url);
         
-        $temp = json_decode($res2->getBody()->getContents()); //--original
-        $temp = $temp->feeds;
+    //     $temp = json_decode($res2->getBody()->getContents()); //--original
+    //     $temp = $temp->feeds;
 
-        $cart = array();
-        $id = array();
+    //     $cart = array();
+    //     $id = array();
 
-        foreach($temp as $element){
-            array_push($cart, (float)$element->field2);
-            array_push($id, $element->entry_id);
-        }
+    //     foreach($temp as $element){
+    //         array_push($cart, (float)$element->field2);
+    //         array_push($id, $element->entry_id);
+    //     }
 
-        $cart2 = new Collection();
-        $id2 = new Collection();
-        $data = collect($cart);
-        $labels = collect($id);
+    //     $cart2 = new Collection();
+    //     $id2 = new Collection();
+    //     $data = collect($cart);
+    //     $labels = collect($id);
 
-        return response()->json(compact('labels', 'data'));
-    }
+    //     return response()->json(compact('labels', 'data'));
+    // }
 }

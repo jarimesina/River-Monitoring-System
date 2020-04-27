@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/display/{id}', 'SectionsController@test')->name('display');
+Route::resource('sections', 'SectionsController');
 Route::get('index', 'apiController@index')->name('index');
 Route::post('dataRange', 'apiController@index')->name('dataRange');
 Route::get('process', 'apiController@process')->name('process');
