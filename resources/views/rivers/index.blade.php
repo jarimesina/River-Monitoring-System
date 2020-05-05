@@ -19,8 +19,8 @@
           <td>River ID</td>
           <td>Location</td>
           <td>River Name</td>
-          <td>River Width</td>
-          <td>River Height</td>
+          <td>River Width (m)</td>
+          <td>River Height (m)</td>
           <td>Actions</td>
         </tr>
     </thead>

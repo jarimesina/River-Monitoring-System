@@ -16,10 +16,6 @@
     @endif
     <form method="post" action="{{ route('sections.store') }}">
         @csrf
-        <div class="form-group">    
-            <label for="velocity">Velocity:</label>
-            <input type="text" class="form-control" name="velocity" required/>
-        </div>
 
         <div class="form-group">
             <label for="sections">River:</label>

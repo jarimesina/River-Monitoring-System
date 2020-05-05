@@ -149,6 +149,7 @@ class ChartsApiController extends Controller
                 if($counter == $count){
                     array_push($dischargeArray, (float)$totalDischarge);
                     $counter = 0;
+                    $totalDischarge = 0.0;
                 }
                 
             }

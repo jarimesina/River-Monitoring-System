@@ -37,10 +37,6 @@
               <input type="text" class="form-control" name="width" required/>
           </div>
           <div class="form-group">
-              <label for="sections">Sections:</label>
-              <input type="text" class="form-control" name="sections" required/>
-          </div>
-          <div class="form-group">
               <label for="height">Height:</label>
               <input type="text" class="form-control" name="height" required/>
           </div>

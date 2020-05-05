@@ -21,7 +21,6 @@ class CreateRiversTable extends Migration
             $table->string('channel');
             $table->string('width');
             $table->double('height',15,8);
-            $table->integer('sections');
             $table->timestamps();
         });
     }

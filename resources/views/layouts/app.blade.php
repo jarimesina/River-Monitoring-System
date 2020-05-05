@@ -46,7 +46,7 @@
                     @auth
                     
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             @if(auth()->user()->is_admin == 1)
                                 <a class="nav-link" href="{{ url('admin/home') }}">Home <span class="sr-only">(current)</span></a>
                             @else

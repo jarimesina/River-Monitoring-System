@@ -30,11 +30,6 @@
             </div>
 
             <div class="form-group">
-                <label for="velocity">Velocity:</label>
-                <input type="text" class="form-control" name="velocity" value={{ $sections->velocity }} />
-            </div>
-
-            <div class="form-group">
                 <label for="coefficient">Coefficient:</label>
                 <input type="text" class="form-control" name="coefficient" value={{ $sections->coefficient }} />
             </div>
