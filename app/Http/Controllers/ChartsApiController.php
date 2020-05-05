@@ -84,6 +84,7 @@ class ChartsApiController extends Controller
     public function getFields()
     {
         $client = new Client();
+        //change to allow different channel and apikey
         $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');
 
         $temp = json_decode($res->getBody()->getContents()); //--original
@@ -95,47 +96,108 @@ class ChartsApiController extends Controller
 
     public function getFlowRate($id)
     {
-        $surfaceVelocities = array();
-        $coefficents = array();
-        //1.) query sections 
-        $sections = Sections::where('river_id',$id)->get();
-        //2.) extract velocities and coefficients
-        foreach($sections as $section){
-            array_push($surfaceVelocities, (float)$section->value);
-            array_push($coefficents, (float)$section->percentage);
-        }
-        //3.) 
-
-        $river = River::find($id);
-        $width = (float)$river->width;
+        $labels = array();
+        $dischargeArray = array();
+        $temp = River::where('id','=',$id)->first();
         $client = new Client();
-        $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30');
-        $temp = json_decode($res->getBody()->getContents()); 
-        $temp=$temp->feeds;
 
-        // $area = $depth *
-        // $velocityMean = //get each section coefficient and its surface velocity
-        // $discharge = $velocityMean * $area
-        // dump($temp);
+        //query the water levels and velocities
+        $waterLevels = $client->request('GET','https://api.thingspeak.com/channels/' . $temp->channel . '/feeds.json?api_key=' . $temp->key . '&results=30');
+        $waterLevels = json_decode($waterLevels->getBody()->getContents()); 
+        $waterLevels = $waterLevels->feeds;
+        // dd($waterLevels);
+        $discharge = 0.00;
+        $totalDischarge = 0.00;
+        $sections = Sections::where('river_id','=',$id)->get();
+        $count = $sections->count();
+        $width = $temp->width;
+        $height = $temp->height;
+        $counter = 0; 
 
-        $cart = array();
-        $id = array();
-
-        foreach($temp as $element){
-            // $discharge = $width * $element->field1 * $element->field2;
-            $discharge = $width * $element->field1 * $element->field2;
-            //multiply width,velocity and water level here
-            array_push($cart, (float)$discharge);
-            array_push($id, $element->entry_id);
-
+        foreach($waterLevels as $waterLevel){
+            foreach ($sections as $section){
+                if ($section->shape==1){
+                    $ratio = $section->width*($height - $section->vertical_distance);
+                    //change to height from device?
+                    $area = (($ratio * $waterLevel->field2 * $waterLevel->field2 ) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
+                    // $discharge = $area * $section->coefficient * $section->velocity;
+                    $discharge = $area * $section->coefficient * $waterLevel->field1;
+                    // dd($discharge);
+                }
+                elseif($section->shape==2){
+                    $area = ($section->width * $waterLevel->field2 ) - ($section->width * $section->vertical_distance);
+                    // $discharge = $area * $section->coefficient * $section->velocity;
+                    $discharge = $area * $section->coefficient * $waterLevel->field1;
+                }
+                elseif($section->shape==3){
+                    if($height <= $section->triangleHeight){
+                        // $ratio = $width/$waterLevel->field2;
+                        $ratio = $width * ($section->triangleHeight - $section->vertical_distance);
+                        $area = (($ratio * $waterLevel->field2 * $waterLevel->field2) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
+                        
+                        $discharge = $area * $section->coefficient * $waterLevel->field1;
+                    }
+                    elseif($height > $section->triangleHeight){
+                        //change to height from device
+                        $area = ((0.5 * $section->$width * $section->triangleHeight) + ($waterLevel->field2 * $width))- ($section->triangleHeight + $section->vertical_distance);
+                        $discharge = $area * $section->coefficient * $waterLevel->field1;
+                    }
+                }
+                
+                $counter = $counter + 1;
+                $totalDischarge = $totalDischarge + $discharge;
+                if($counter == $count){
+                    array_push($dischargeArray, (float)$totalDischarge);
+                    $counter = 0;
+                }
+                
+            }
+            array_push($labels, $waterLevel->entry_id);
         }
+        $data = collect($dischargeArray);
+        $labels = collect($labels);
+        //---------------------------------------------------//
+        // $surfaceVelocities = array();
+        // $coefficents = array();
+        // //1.) query sections 
+        // $sections = Sections::where('river_id',$id)->get();
+        // //2.) extract velocities and coefficients
+        // foreach($sections as $section){
+        //     array_push($surfaceVelocities, (float)$section->value);
+        //     array_push($coefficents, (float)$section->percentage);
+        // }
+        // //3.)
+        // $river = River::find($id);
+        // $width = (float)$river->width;
+        // $client = new Client();
+        // //change to allow different channel and apikey
+        // $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30');
+        // $temp = json_decode($res->getBody()->getContents()); 
+        // $temp = $temp->feeds;
 
-        // dump($cart);
-        // dd($id);
-        $cart2 = new Collection();
-        $id2 = new Collection();
-        $data = collect($cart);
-        $labels = collect($id);
+        // // $area = $depth *
+        // // $velocityMean = //get each section coefficient and its surface velocity
+        // // $discharge = $velocityMean * $area
+        // // dump($temp);
+
+        // $cart = array();
+        // $id = array();
+
+        // foreach($temp as $element){
+        //     // $discharge = $width * $element->field1 * $element->field2;
+        //     $discharge = $width * $element->field1 * $element->field2;
+        //     //multiply width,velocity and water level here
+        //     array_push($cart, (float)$discharge);
+        //     array_push($id, $element->entry_id);
+
+        // }
+
+        // // dump($cart);
+        // // dd($id);
+        // // $cart2 = new Collection();
+        // // $id2 = new Collection();
+        // $data = collect($cart);
+        // $labels = collect($id);
         return response()->json(compact('data','labels'));
     }
 

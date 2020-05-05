@@ -44,6 +44,11 @@
                 <input type="text" class="form-control" name="width" value={{ $rivers->width }} />
             </div>
 
+            <div class="form-group">
+                <label for="height">Height:</label>
+                <input type="text" class="form-control" name="hegiht" value={{ $rivers->hegiht }} />
+            </div>
+
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>

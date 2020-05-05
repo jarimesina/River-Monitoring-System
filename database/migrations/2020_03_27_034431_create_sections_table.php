@@ -18,6 +18,9 @@ class CreateSectionsTable extends Migration
             $table->double('velocity',15,8);
             $table->double('coefficient',15,8);
             $table->double('width',15,8);
+            $table->integer('shape');
+            $table->double('triangleHeight',15,8)->nullable();
+            $table->double('vertical_distance',15,8);
             $table->unsignedBigInteger('river_id');
             $table->foreign('river_id')->references('id')->on('rivers')->onDelete('cascade');
             $table->timestamps();

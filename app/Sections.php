@@ -13,7 +13,7 @@ class Sections extends Model
      * @var array
      */
     protected $fillable = [
-        'velocity', 'river_id','coefficient','width'
+        'velocity', 'river_id','coefficient','width','shape','vertical_distance','triangleHeight'
     ];
 
     public function river()
