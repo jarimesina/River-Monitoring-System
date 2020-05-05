@@ -33,6 +33,7 @@ class RiverController extends Controller
         $river->channel = $request->channel;
         $river->width = $request->width;
         $river->sections = $request->sections;
+        $river->height = $request->height;
         $river->save();
         // return redirect('admin/home')->with('success', 'River saved!');
         return redirect('/rivers')->with('success', 'River saved!');
@@ -58,7 +59,8 @@ class RiverController extends Controller
             'location'=>'required',
             'key'=>'required',
             'channel'=>'required',
-            'width'=>'required'
+            'width'=>'required',
+            'height'=>'required'
         ]);
 
         //check if input is not redundant
@@ -68,6 +70,7 @@ class RiverController extends Controller
         $river->key =  $request->get('key');
         $river->channel = $request->get('channel');
         $river->width = $request->get('width');
+        $river->height = $request->get('height');
         $river->save();
 
         return redirect('/rivers')->with('success', 'River updated!');

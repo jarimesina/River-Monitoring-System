@@ -19,6 +19,8 @@
           <td>River ID</td>
           <td>Location</td>
           <td>River Name</td>
+          <td>River Width</td>
+          <td>River Height</td>
           <td>Actions</td>
         </tr>
     </thead>
@@ -28,6 +30,8 @@
             <td>{{$river->id}}</td>
             <td>{{$river->location}}</td>
             <td>{{$river->name}}</td>
+            <td>{{$river->width}}</td>
+            <td>{{$river->height}}</td>
             @if(auth()->user()->is_admin==1)
               <td>
                 <a href="{{ route('sections.show',$river->id)}}" class="btn btn-primary">Add Sections</a>

@@ -25,6 +25,11 @@
             </div>
 
             <div class="form-group">
+                <label for="width">Width:</label>
+                <input type="text" class="form-control" name="width" value={{ $sections->width }} />
+            </div>
+
+            <div class="form-group">
                 <label for="velocity">Velocity:</label>
                 <input type="text" class="form-control" name="velocity" value={{ $sections->velocity }} />
             </div>
@@ -32,6 +37,22 @@
             <div class="form-group">
                 <label for="coefficient">Coefficient:</label>
                 <input type="text" class="form-control" name="coefficient" value={{ $sections->coefficient }} />
+            </div>
+
+            <div class="form-group">
+                <label for="verticalDistance">Vertical Distance:</label>
+                <input type="text" class="form-control" name="verticalDistance" value={{ $sections->vertical_distance }} />
+            </div>
+
+            <div class="form-group">
+                <label for="shapes">Shapes:</label>
+                <select id = "shapeList" name="shapes">
+                    @for($i = 0; $i<count($shapes); $i++)
+                        <option name="shapes" value = "{{ $sections->shape }}" required>
+                        {{$shapes[$i]}}
+                        </option>
+                    @endfor
+                </select>
             </div>
 
             <button type="submit" class="btn btn-primary">Update</button>

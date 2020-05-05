@@ -40,6 +40,10 @@
               <label for="sections">Sections:</label>
               <input type="text" class="form-control" name="sections" required/>
           </div>
+          <div class="form-group">
+              <label for="height">Height:</label>
+              <input type="text" class="form-control" name="height" required/>
+          </div>
           <button type="submit" class="btn btn-primary">Add river</button>
       </form>
   </div>

@@ -22,7 +22,7 @@ class WaterLevelController extends Controller
             'level'       => trim(preg_replace('/\s+/', ' ', $data[1])),
             'temperature' => trim(preg_replace('/\s+/', ' ', $data[2])),
             'velocity'   => trim(preg_replace('/\s+/', ' ', $data[0])),
-            'date_taken' =>$data[3],
+            'date_taken' => $data[3],
             'river_id'   => $river->id
         ]);
 

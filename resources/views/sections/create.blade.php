@@ -41,6 +41,27 @@
             <label for="width">Width:</label>
             <input type="text" class="form-control" name="width" required/>
         </div>
+
+        <div class="form-group">    
+            <label for="shape">Shape:</label>
+            <select id = "shapeList" name="shapes">
+                
+                @for($i = 0; $i<count($shapes); $i++)
+                    <option name="shapes" value = "{{$i + 1}}" required>{{$shapes[$i]}}</option>
+                @endfor
+            </select>
+        </div>
+
+        <div class="form-group">    
+            <label for="vertical">Vertical Distance:</label>
+            <input type="text" class="form-control" name="vertical_distance" required/>
+        </div>
+
+        <div class="form-group">    
+            <label for="triangleHeight">If Trapezoid, please inpput Triangle Height:</label>
+            <input type="hidden" class="form-control" name="triangleHeight" value='null'/>
+            <input type="text" class="form-control" name="triangleHeight"/>
+        </div>
         <button type="submit" class="btn btn-primary">Add section</button>
     </form>
   </div>

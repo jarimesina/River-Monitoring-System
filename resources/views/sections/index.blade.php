@@ -18,8 +18,11 @@
         <tr>
           <td>Section ID</td>
           <td>Velocity</td>
-          <td>Percentage</td>
+          <td>Coefficient</td>
+          <td>Shape</td>
+          <td>Width</td>
           <td>River</td>
+          <td>Vertical Distance</td>
           <td>Actions</td>
         </tr>
     </thead>
@@ -29,7 +32,16 @@
             <td>{{$section->id}}</td>
             <td>{{$section->velocity}}</td>
             <td>{{$section->coefficient}}</td>
+            @if($section->shape == 1)
+            <td>Triangle</td>
+            @elseif($section->shape == 2)
+            <td>Rectangle</td>
+            @elseif($section->shape == 3)
+            <td>Trapezoid</td>
+            @endif
+            <td>{{$section->width}}</td>
             <td>{{$section->river->name}}</td>
+            <td>{{$section->vertical_distance}}</td>
             <td>
               <a href="{{ route('sections.edit',$section->id)}}" class="btn btn-primary">Edit</a>
             </td>
