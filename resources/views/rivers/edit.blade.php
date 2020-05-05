@@ -40,13 +40,13 @@
             </div>
 
             <div class="form-group">
-                <label for="location">Width:</label>
+                <label for="location">Width (m):</label>
                 <input type="text" class="form-control" name="width" value={{ $rivers->width }} />
             </div>
 
             <div class="form-group">
-                <label for="height">Height:</label>
-                <input type="text" class="form-control" name="hegiht" value={{ $rivers->hegiht }} />
+                <label for="height">Height (m):</label>
+                <input type="text" class="form-control" name="hegiht" value={{ $rivers->height }} />
             </div>
 
             <button type="submit" class="btn btn-primary">Update</button>

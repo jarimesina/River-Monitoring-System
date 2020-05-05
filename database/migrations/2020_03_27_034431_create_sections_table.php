@@ -15,7 +15,6 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->double('velocity',15,8);
             $table->double('coefficient',15,8);
             $table->double('width',15,8);
             $table->integer('shape');

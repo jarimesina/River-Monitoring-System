@@ -17,12 +17,11 @@
     <thead class="font-bold">
         <tr>
           <td>Section ID</td>
-          <td>Velocity</td>
           <td>Coefficient</td>
           <td>Shape</td>
-          <td>Width</td>
+          <td>Width (m)</td>
           <td>River</td>
-          <td>Vertical Distance</td>
+          <td>Vertical Distance (m)</td>
           <td>Actions</td>
         </tr>
     </thead>
@@ -30,7 +29,6 @@
       @foreach($sections as $section)
         <tr>
             <td>{{$section->id}}</td>
-            <td>{{$section->velocity}}</td>
             <td>{{$section->coefficient}}</td>
             @if($section->shape == 1)
             <td>Triangle</td>

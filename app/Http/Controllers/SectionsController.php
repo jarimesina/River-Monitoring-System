@@ -49,7 +49,6 @@ class SectionsController extends Controller
     public function store(Request $request)
     {
         $section = new Sections;
-        $section->velocity = $request->velocity;
         $section->river_id = $request->sections;
         $section->coefficient = $request->coefficient;
         $section->width = $request->width;
@@ -79,7 +78,7 @@ class SectionsController extends Controller
         // $waterLevels = $client->request('GET','https://api.thingspeak.com/channels/' . $temp->channel . '/feeds.json?api_key=' . $temp->key . '&results=30');
         // $waterLevels = json_decode($waterLevels->getBody()->getContents()); 
         // $waterLevels = $waterLevels->feeds;
-        // // dd($waterLevels);
+        // dump($waterLevels);
         // $discharge = 0.00;
         // $totalDischarge = 0.00;
         // $count = $sections->count();
@@ -98,18 +97,20 @@ class SectionsController extends Controller
         //     foreach ($sections as $section){
         //         if ($section->shape==1){
         //             $ratio = $section->width*($height - $section->vertical_distance);
+        //             // dump($ratio);
         //             //change to height from device?
+        //             // dump($waterLevel->field2);
         //             $area = (($ratio * $waterLevel->field2 * $waterLevel->field2 ) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
         //             dump($area);
         //             // $discharge = $area * $section->coefficient * $section->velocity;
         //             $discharge = $area * $section->coefficient * $waterLevel->field1;
-        //             // dd($discharge);
+        //             // dump($discharge);
         //         }
         //         elseif($section->shape==2){
         //             $area = ($section->width * $waterLevel->field2 ) - ($section->width * $section->vertical_distance);
         //             // $discharge = $area * $section->coefficient * $section->velocity;
         //             $discharge = $area * $section->coefficient * $waterLevel->field1;
-        //             dump($discharge);
+        //             // dump($discharge);
         //         }
         //         elseif($section->shape==3){
         //             if($height <= $section->triangleHeight){
@@ -118,13 +119,13 @@ class SectionsController extends Controller
         //                 $area = (($ratio * $waterLevel->field2 * $waterLevel->field2) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
                         
         //                 $discharge = $area * $section->coefficient * $waterLevel->field1;
-        //                 dump($discharge);
+        //                 // dump($discharge);
         //             }
         //             elseif($height > $section->triangleHeight){
         //                 //change to height from device
         //                 $area = ((0.5 * $section->$width * $section->triangleHeight) + ($waterLevel->field2 * $width))- ($section->triangleHeight + $section->vertical_distance);
         //                 $discharge = $area * $section->coefficient * $waterLevel->field1;
-        //                 dump($discharge);
+        //                 // dump($discharge);
         //             }
         //         }
                 
@@ -136,10 +137,11 @@ class SectionsController extends Controller
         //             dump($totalDischarge);
         //             array_push($dischargeArray, (float)$totalDischarge);
         //             $counter = 0;
+        //             $totalDischarge = 0.0;
         //         }
                 
         //     }
-        //     dump("HI");
+        //     // dump("HI");
         //     array_push($labels, $waterLevel->entry_id);
         // }
         // $data = collect($dischargeArray);
@@ -174,7 +176,6 @@ class SectionsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'velocity'=>'required',
             'coefficient'=>'required',
             'shapes'=>'required',
             'width'=>'required',
@@ -183,7 +184,6 @@ class SectionsController extends Controller
 
         //check if input is not redundant
         $section = Sections::find($id);
-        $section->velocity =  $request->get('velocity');
         $section->coefficient = $request->get('coefficient');
         $section->shapes =  $request->get('shapes');
         $section->width = $request->get('width');
