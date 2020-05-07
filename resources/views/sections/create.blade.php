@@ -19,13 +19,12 @@
 
         <div class="form-group">
             <label for="sections">River:</label>
-            <!-- <input type="text" class="form-control" name="sections" required/> -->
-            <select id = "riverList" name="sections">
-                
-                @for($i = 0; $i<count($array1); $i++)
-                    <option name="sections" value = "{{$i + 1}}" required>{{$array1[$i]}}</option>
-                @endfor
-            </select>
+            @foreach($rivers as $river)
+                @if($river->id==$riverId)
+                    <input type="hidden" name="sections" value="{{$riverId}}"/>
+                    <input type="text" class="form-control" name="sections" placeholder= "{{$river->name}}" disabled/>
+                @endif
+            @endforeach
         </div>
 
         <div class="form-group">
@@ -34,7 +33,7 @@
         </div>
 
         <div class="form-group">    
-            <label for="width">Width:</label>
+            <label for="width">Width (m):</label>
             <input type="text" class="form-control" name="width" required/>
         </div>
 
@@ -49,12 +48,12 @@
         </div>
 
         <div class="form-group">    
-            <label for="vertical">Vertical Distance:</label>
+            <label for="vertical">Vertical Distance (m):</label>
             <input type="text" class="form-control" name="vertical_distance" required/>
         </div>
 
         <div class="form-group">    
-            <label for="triangleHeight">If Trapezoid, please input Triangle Height:</label>
+            <label for="triangleHeight">If Trapezoid, please inpput Triangle Height (m):</label>
             <input type="hidden" class="form-control" name="triangleHeight" value='null'/>
             <input type="text" class="form-control" name="triangleHeight"/>
         </div>

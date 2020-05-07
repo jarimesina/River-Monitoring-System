@@ -24,21 +24,40 @@ class SectionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function add($riverId)
     {
         $rivers = River::all();
         
-        $array1 = array();
+        // $array1 = array();
         $shapes = array('Triangle','Rectangle','Trapezoid');
 
 
-        foreach($rivers as $river){
-            array_push($array1, $river->name);
-        }
+        // foreach($rivers as $river){
+        //     array_push($array1, $river->name);
+        //     array_push($array1, "butuanon");
+        // }
 
-        // dd($array1);
-        return view('sections.create',compact('array1','shapes'));
+        // dd($rivers);
+        // return view('sections.create',compact('array1','shapes','riverId'));
+        return view('sections.create',compact('rivers','shapes','riverId'));
+
     }
+
+    // public function create()
+    // {
+    //     $rivers = River::all();
+        
+    //     $array1 = array();
+    //     $shapes = array('Triangle','Rectangle','Trapezoid');
+
+
+    //     foreach($rivers as $river){
+    //         array_push($array1, $river->name);
+    //     }
+
+    //     // dd($array1);
+    //     return view('sections.create',compact('array1','shapes'));
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -68,6 +87,7 @@ class SectionsController extends Controller
      */
     public function show($id)
     {
+        $riverId = $id;
         $sections = Sections::where('river_id','=',$id)->get();
         // $labels = array();
         // $dischargeArray = array();
@@ -148,8 +168,8 @@ class SectionsController extends Controller
         // $labels = collect($labels);
         // dump($data);
         // dd($labels);
-        
-        return view('sections.index', compact('sections'));
+        // dd($riverId);
+        return view('sections.index', compact('sections','riverId'));
     }
 
     /**

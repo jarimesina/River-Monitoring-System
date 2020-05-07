@@ -6,7 +6,7 @@
     
     @if(auth()->user()->is_admin==1)
       <div>
-      <a style="margin: 19px;" href="{{ route('sections.create')}}" class="btn btn-primary ml-0">Add New Section</a>
+      <a style="margin: 19px;" href="{{ route('sections.add',$riverId)}}" class="btn btn-primary ml-0">Add New Section</a>
       </div>     
     @else
       <div>
