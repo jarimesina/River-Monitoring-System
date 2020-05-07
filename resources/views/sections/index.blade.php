@@ -1,7 +1,6 @@
-@extends('base')
-@include('layouts.app')
-@section('main')
-<div class="row">
+@extends('layouts.app')
+@section('content')
+<div class="row" id="row1">
 <div class="col-sm-12">
     <h1 class="page-title">Sections</h1> 
     

@@ -1,24 +1,9 @@
-@extends('base')
-@include('layouts.app')
-@section('main')
-<!-- original -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script> -->
+@extends('layouts.app')
+@section('content')
 
 <!-- new -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
 
 <div class="row">
 <style>
@@ -38,32 +23,32 @@
     margin-top:10px;
    }
    th.sorting,th.sorting_desc,th.sorting_asc{
-     width: 200px;
+    width: 200px;
    }
-  </style>
+</style>
 <div class="col-sm-12">
     <h1 class="display-3">{{$river->name}}</h1> 
     <section id="contact">
     <div class="container d-flex flex-column text-center">
       <div class="row">
         <div class="col-lg-12 d-flex flex-column text-center">
-        <script>
-          async function getData() {
-            // console.log("HI");
-            var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
-            var table = document.getElementById("myTable");
-            console.log(data.data);
-            document.getElementById('waterLevel').innerHTML = data.data.data[1];
-            document.getElementById('waterCurrent').innerHTML = data.data.data[0];
-            document.getElementById('waterTemp').innerHTML = data.data.data[3];
-          }
+          <script>
+            async function getData() {
+              // console.log("HI");
+              var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
+              var table = document.getElementById("myTable");
+              console.log(data.data);
+              document.getElementById('waterLevel').innerHTML = data.data.data[1];
+              document.getElementById('waterCurrent').innerHTML = data.data.data[0];
+              document.getElementById('waterTemp').innerHTML = data.data.data[3];
+            }
 
-          getData();
-          setInterval(() => {
             getData();
-          }, 60000);
+            setInterval(() => {
+              getData();
+            }, 60000);
 
-        </script>
+          </script>
           <h2>Water Level:&nbsp;<span id="waterLevel">0</span> m</h2>
           <h2>Water Current Velocity:&nbsp;<span id="waterCurrent"> 0 </span> m/s</h2>
           <h2>Water Temperature:&nbsp;<span id="waterTemp"> 0 </span> &#x2103;</h2>
@@ -86,24 +71,6 @@
             <canvas id="myChart2"></canvas>
           </div>
       </div>
-    </br>
-    </br>
-    <div>
-    <!-- <content>
-      <form>
-        Date Picker(day/month/year):
-        <br>
-        <label for="start">Start date:</label>
-        <input type="date" id="start" name="start" value="" ><br><br>
-        <label for="start">End date:</label>
-        <input type="date" id="end" name="end" value="" ><br>
-        <a class="rotate-button">
-        </a>
-      </form>
-      <button class="rotate-button-face" onclick="processInput()" type="submit">Enter</button>
-    </content> -->
-    <!-- <canvas id="myChart3"></canvas> -->
-    </div>
     <br>
     </div>
   </section>
@@ -250,7 +217,7 @@
   <br />
   <h3 align="center">Data in Table Format</h3>
   <br/>
-  <div class="row input-daterange">
+  <div class="row input-daterange" style="width:100%">
       <div class="col-md-4">
           <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" readonly />
       </div>
@@ -263,8 +230,8 @@
       </div>
   </div>
   <br />
-  <div class="table-responsive" style="width:800px">
-    <table class="table table-bordered table-striped " id="order_table" style="width:800px">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped " id="order_table">
       <thead>
       <tr>
           <th>Created At</th>
@@ -277,11 +244,7 @@
   </div>
 </div>
  
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css"/>
- 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>
+
 <script>
   $(document).ready(function(){
   $('.input-daterange').datepicker({
@@ -348,6 +311,8 @@
     });
   });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 @endsection
 
 @push('scripts')
