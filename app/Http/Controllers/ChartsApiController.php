@@ -116,7 +116,7 @@ class ChartsApiController extends Controller
 
         foreach($waterLevels as $waterLevel){
             foreach ($sections as $section){
-                if ($section->shape==1){
+                if ($section->shape==0){
                     $ratio = $section->width*($height - $section->vertical_distance);
                     //change to height from device?
                     $area = (($ratio * $waterLevel->field2 * $waterLevel->field2 ) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
@@ -124,22 +124,21 @@ class ChartsApiController extends Controller
                     $discharge = $area * $section->coefficient * $waterLevel->field1;
                     // dd($discharge);
                 }
-                elseif($section->shape==2){
+                elseif($section->shape==1){
                     $area = ($section->width * $waterLevel->field2 ) - ($section->width * $section->vertical_distance);
                     // $discharge = $area * $section->coefficient * $section->velocity;
                     $discharge = $area * $section->coefficient * $waterLevel->field1;
                 }
-                elseif($section->shape==3){
+                elseif($section->shape==2){
                     if($height <= $section->triangleHeight){
-                        // $ratio = $width/$waterLevel->field2;
-                        $ratio = $width * ($section->triangleHeight - $section->vertical_distance);
-                        $area = (($ratio * $waterLevel->field2 * $waterLevel->field2) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
-                        
+                        $ratio = ($section->triangleHeight - $section->vertical_distance)* $section->width;
+                        $area = (($ratio * pow($waterLevel->field2,2)) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
                         $discharge = $area * $section->coefficient * $waterLevel->field1;
                     }
                     elseif($height > $section->triangleHeight){
                         //change to height from device
-                        $area = ((0.5 * $section->$width * $section->triangleHeight) + ($waterLevel->field2 * $width))- ($section->triangleHeight + $section->vertical_distance);
+                        $area = ((0.5 * $section->$width * $section->triangleHeight) + ($waterLevel->field2 * $section->width))- ($section->triangleHeight + $section->vertical_distance);
+                        // dump($area);
                         $discharge = $area * $section->coefficient * $waterLevel->field1;
                     }
                 }

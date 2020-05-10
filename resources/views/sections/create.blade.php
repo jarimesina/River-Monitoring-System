@@ -39,10 +39,10 @@
 
         <div class="form-group">    
             <label for="shape">Shape:</label>
-            <select id = "shapeList" name="shapes">
+            <select id = "shapeList" name="shape">
                 
                 @for($i = 0; $i<count($shapes); $i++)
-                    <option name="shapes" value = "{{$i + 1}}" required>{{$shapes[$i]}}</option>
+                    <option name="shape" value = "{{$i}}" required>{{$shapes[$i]}}</option>
                 @endfor
             </select>
         </div>

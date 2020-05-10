@@ -21,6 +21,7 @@
           <td>Width (m)</td>
           <td>River</td>
           <td>Vertical Distance (m)</td>
+          <td>Triangle Height (m)</td>
           <td>Actions</td>
         </tr>
     </thead>
@@ -29,16 +30,17 @@
         <tr>
             <td>{{$section->id}}</td>
             <td>{{$section->coefficient}}</td>
-            @if($section->shape == 1)
+            @if($section->shape == 0)
             <td>Triangle</td>
-            @elseif($section->shape == 2)
+            @elseif($section->shape == 1)
             <td>Rectangle</td>
-            @elseif($section->shape == 3)
+            @elseif($section->shape == 2)
             <td>Trapezoid</td>
             @endif
             <td>{{$section->width}}</td>
             <td>{{$section->river->name}}</td>
             <td>{{$section->vertical_distance}}</td>
+            <td>{{$section->triangleHeight}}</td>
             <td>
               <a href="{{ route('sections.edit',$section->id)}}" class="btn btn-primary">Edit</a>
             </td>

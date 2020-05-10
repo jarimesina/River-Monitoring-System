@@ -71,7 +71,7 @@ class SectionsController extends Controller
         $section->river_id = $request->sections;
         $section->coefficient = $request->coefficient;
         $section->width = $request->width;
-        $section->shape = $request->shapes;
+        $section->shape = $request->shape;
         $section->vertical_distance = $request->vertical_distance;
         $section->triangleHeight = $request->triangleHeight;
         $section->save();
@@ -87,8 +87,6 @@ class SectionsController extends Controller
      */
     public function show($id)
     {
-        $riverId = $id;
-        $sections = Sections::where('river_id','=',$id)->get();
         // $labels = array();
         // $dischargeArray = array();
         // $temp = River::where('id','=',$id)->first();
@@ -98,77 +96,62 @@ class SectionsController extends Controller
         // $waterLevels = $client->request('GET','https://api.thingspeak.com/channels/' . $temp->channel . '/feeds.json?api_key=' . $temp->key . '&results=30');
         // $waterLevels = json_decode($waterLevels->getBody()->getContents()); 
         // $waterLevels = $waterLevels->feeds;
-        // dump($waterLevels);
+        // // dd($waterLevels);
         // $discharge = 0.00;
         // $totalDischarge = 0.00;
+        // $sections = Sections::where('river_id','=',$id)->get();
         // $count = $sections->count();
-        // //get height of the river
         // $width = $temp->width;
         // $height = $temp->height;
-        
-        // //store in an array the totaldischarge
-
         // $counter = 0; 
 
-        // // for($i =0;$i<$count;$i++){
-
-        // // }
         // foreach($waterLevels as $waterLevel){
         //     foreach ($sections as $section){
-        //         if ($section->shape==1){
+        //         if ($section->shape==0){
         //             $ratio = $section->width*($height - $section->vertical_distance);
-        //             // dump($ratio);
         //             //change to height from device?
-        //             // dump($waterLevel->field2);
         //             $area = (($ratio * $waterLevel->field2 * $waterLevel->field2 ) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
-        //             dump($area);
         //             // $discharge = $area * $section->coefficient * $section->velocity;
         //             $discharge = $area * $section->coefficient * $waterLevel->field1;
-        //             // dump($discharge);
+        //             // dd($discharge);
         //         }
-        //         elseif($section->shape==2){
+        //         elseif($section->shape==1){
         //             $area = ($section->width * $waterLevel->field2 ) - ($section->width * $section->vertical_distance);
         //             // $discharge = $area * $section->coefficient * $section->velocity;
         //             $discharge = $area * $section->coefficient * $waterLevel->field1;
-        //             // dump($discharge);
         //         }
-        //         elseif($section->shape==3){
+        //         elseif($section->shape==2){
+        //             // dump("HI");
         //             if($height <= $section->triangleHeight){
-        //                 // $ratio = $width/$waterLevel->field2;
-        //                 $ratio = $width * ($section->triangleHeight - $section->vertical_distance);
-        //                 $area = (($ratio * $waterLevel->field2 * $waterLevel->field2) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
-                        
+        //                 $ratio = ($section->triangleHeight - $section->vertical_distance)* $section->width;
+        //                 $area = (($ratio * pow($waterLevel->field2,2)) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
         //                 $discharge = $area * $section->coefficient * $waterLevel->field1;
-        //                 // dump($discharge);
         //             }
         //             elseif($height > $section->triangleHeight){
-        //                 //change to height from device
-        //                 $area = ((0.5 * $section->$width * $section->triangleHeight) + ($waterLevel->field2 * $width))- ($section->triangleHeight + $section->vertical_distance);
+        //                 // dump("HI");
+        //                 $area = ((0.5 * $section->$width * $section->triangleHeight) + ($waterLevel->field2 * $section->width))- ($section->triangleHeight + $section->vertical_distance);
+        //                 // dump($area);
         //                 $discharge = $area * $section->coefficient * $waterLevel->field1;
-        //                 // dump($discharge);
         //             }
         //         }
                 
         //         $counter = $counter + 1;
         //         $totalDischarge = $totalDischarge + $discharge;
         //         if($counter == $count){
-                    
-        //             dump("HELLO");
-        //             dump($totalDischarge);
         //             array_push($dischargeArray, (float)$totalDischarge);
         //             $counter = 0;
         //             $totalDischarge = 0.0;
         //         }
                 
         //     }
-        //     // dump("HI");
         //     array_push($labels, $waterLevel->entry_id);
         // }
         // $data = collect($dischargeArray);
         // $labels = collect($labels);
-        // dump($data);
-        // dd($labels);
-        // dd($riverId);
+        // -------original code---------//
+        $riverId = $id;
+        $sections = Sections::where('river_id','=',$id)->get();
+        // -------original code---------//
         return view('sections.index', compact('sections','riverId'));
     }
 
@@ -197,7 +180,7 @@ class SectionsController extends Controller
     {
         $request->validate([
             'coefficient'=>'required',
-            'shapes'=>'required',
+            'shape'=>'required',
             'width'=>'required',
             'verticalDistance'=>'required',
         ]);
@@ -205,9 +188,10 @@ class SectionsController extends Controller
         //check if input is not redundant
         $section = Sections::find($id);
         $section->coefficient = $request->get('coefficient');
-        $section->shapes =  $request->get('shapes');
+        $section->shape =  $request->get('shape');
         $section->width = $request->get('width');
         $section->vertical_distance =  $request->get('verticalDistance');
+        $section->triangleHeight =  $request->get('triangleHeight');
         $section->save();
 
         return redirect('/rivers')->with('success', 'River updated!');
