@@ -20,36 +20,42 @@
             @csrf
             <div class="form-group">
           
-                <label for="id">Section Name:</label>
-                <input type="text" class="form-control" name="name" value={{ $sections->id }} />
+                <label for="id">Section Id:</label>
+                <input type="text" class="form-control" name="name" value={{ $sections->id }} disabled/>
             </div>
 
             <div class="form-group">
-                <label for="width">Width:</label>
-                <input type="text" class="form-control" name="width" value={{ $sections->width }} />
+                <label for="width">Width (m):</label>
+                <input type="text" class="form-control" name="width" value={{ $sections->width }} required/>
             </div>
 
             <div class="form-group">
                 <label for="coefficient">Coefficient:</label>
-                <input type="text" class="form-control" name="coefficient" value={{ $sections->coefficient }} />
+                <input type="text" class="form-control" name="coefficient" value={{ $sections->coefficient }} required/>
             </div>
 
             <div class="form-group">
-                <label for="verticalDistance">Vertical Distance:</label>
-                <input type="text" class="form-control" name="verticalDistance" value={{ $sections->vertical_distance }} />
+                <label for="verticalDistance">Vertical Distance (m):</label>
+                <input type="text" class="form-control" name="verticalDistance" value={{ $sections->vertical_distance }} required/>
             </div>
 
             <div class="form-group">
                 <label for="shapes">Shapes:</label>
-                <select id = "shapeList" name="shapes">
-                    @for($i = 0; $i<count($shapes); $i++)
-                        <option name="shapes" value = "{{ $sections->shape }}" required>
-                        {{$shapes[$i]}}
-                        </option>
-                    @endfor
-                </select>
+                <br>
+                <input type="hidden" class="form-control" name="shape" value="{{ $sections->shape }}"/>
+                <input type="radio" id="triangle" name="shape" value="0">
+                <label for="shapes">triangle</label><br>
+                <input type="radio" id="rectangle" name="shape" value="1">
+                <label for="shapes">rectangle</label><br>
+                <input type="radio" id="trapezoid" name="shape" value="2">
+                <label for="shapes">trapezoid</label>
             </div>
 
+            <div class="form-group">    
+                <label for="triangleHeight">If Trapezoid, please input Triangle Height (m):</label>
+                <input type="hidden" class="form-control" name="triangleHeight"/>
+                <input type="text" class="form-control" name="triangleHeight" value = {{ $sections->triangleHeight }} required/>
+            </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>

@@ -44,3 +44,4 @@ Route::get('/sample', function(){
 
 Route::post('/webhook', 'WaterLevelController@store');
 Route::get('/rivers/{id}/levels', 'WaterLevelController@getWaterLevel')->name('meta');
+Route::get('sections/add/{riverId}', 'SectionsController@add')->name('sections.add');
