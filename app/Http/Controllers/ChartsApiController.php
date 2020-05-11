@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use App\River;
-use App\Field;
 use App\Sections;
 use App\Http\Controllers\Controller;
-use App\Speed;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 
@@ -79,19 +77,6 @@ class ChartsApiController extends Controller
         $data = collect($cart);
         return response()->json(compact('data'));
         // return response()->json(compact('field1','field2','field3','field4'));
-    }
-
-    public function getFields()
-    {
-        $client = new Client();
-        //change to allow different channel and apikey
-        $res = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7');
-
-        $temp = json_decode($res->getBody()->getContents()); //--original
-
-        $temp = $temp->feeds;
-        
-        return response()->json(compact('temp'));
     }
 
     public function getFlowRate($id)

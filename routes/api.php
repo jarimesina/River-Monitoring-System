@@ -15,10 +15,7 @@ use Illuminate\Http\Request;
 Route::get('chart/{id}', 'ChartsApiController@index')->name('api.chart');
 Route::get('getFlowRate/{id}', 'ChartsApiController@getFlowRate')->name('api.getFlowRate');
 Route::get('chartDetails/{id}', 'ChartsApiController@getDetails')->name('api.chartDetails');
-Route::get('getFields', 'ChartsApiController@getFields')->name('api.getFields');
 Route::get('dataRange', 'ChartsApiController@getDataRange')->name('api.getDataRange');
-
-Route::post('process', 'apiController@process')->name('api.process');
 
 Route::get('/rivers/{id}/levels', 'WaterLevelController@getWaterLevel');
 

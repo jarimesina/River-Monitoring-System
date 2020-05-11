@@ -1,6 +1,5 @@
 <?php
 
-use App\Dates;
 use App\WaterLevel;
 use App\Events\WaterLevel as LevelNotification;
 use Carbon\Carbon;

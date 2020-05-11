@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use App\River;
-use App\Field;
+// use App\Field;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use App\Days;
+// use App\Days;
 use DB;
 
 class RiverController extends Controller
@@ -173,7 +173,7 @@ class RiverController extends Controller
         // $start = "2020-02-22";
         // $end = "2020-02-25";
         // //get all days in db
-        $days = Days::all();
+        // $days = Days::all();
         // //check if start date or end date are in database
         // if($days->contains('date',$start)!=true)
         // {
@@ -226,28 +226,28 @@ class RiverController extends Controller
 
         //-----------------------------------------------//
 
-        $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30
-        '); //<=== fix this!!!
-        $temp = json_decode($res2->getBody()->getContents()); //--original
-        $temp=$temp->feeds;
-        $results = $temp;
+        // $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=30
+        // '); //<=== fix this!!!
+        // $temp = json_decode($res2->getBody()->getContents()); //--original
+        // $temp=$temp->feeds;
+        // $results = $temp;
       
-        // foreach($results as $result){
-        //     Field::create(['field1' =>$result->field1,'field2' =>$result->field2,'field3' =>$result->field3,'field4' =>$result->field4]);
-        // }
+        // // foreach($results as $result){
+        // //     Field::create(['field1' =>$result->field1,'field2' =>$result->field2,'field3' =>$result->field3,'field4' =>$result->field4]);
+        // // }
 
-        if(request()->ajax()){
-            if(!empty($request->from_date)){
-                $data = DB::table('fields')
-                        ->whereBetween('order_date', array($request->from_date, $request->to_date))
-                        ->get();
-                Days::create(['date' => $request->from_date]);
-            }
-            else{
-                $data = DB::table('fields')->get();
-            }
-            return datatables()->of($data)->make(true);
-        }
+        // if(request()->ajax()){
+        //     if(!empty($request->from_date)){
+        //         $data = DB::table('fields')
+        //                 ->whereBetween('order_date', array($request->from_date, $request->to_date))
+        //                 ->get();
+        //         Days::create(['date' => $request->from_date]);
+        //     }
+        //     else{
+        //         $data = DB::table('fields')->get();
+        //     }
+        //     return datatables()->of($data)->make(true);
+        // }
         return view('rivers.riverDetails',compact('river'));
         //-----------------------------------------------//
     }
