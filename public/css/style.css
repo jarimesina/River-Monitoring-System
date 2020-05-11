@@ -31,11 +31,16 @@ footer{
     width: 100%;
 }
 /*Content*/
-
-.paracont{
-    text-align: justify;
+.cont .para{
+    font-size: 18px;
+    text-indent: 35px;
 }
 
-.paracont img{
-    max-width: 70%;
+.cont .devicename{
+    font-size: 25px;
+    color: #003Ac3;
+}
+
+.cont img{
+    max-width: 30%;
 }
