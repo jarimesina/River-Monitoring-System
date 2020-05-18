@@ -195,47 +195,47 @@
 
 <script>
   $(document).ready(function(){
-  $('.input-daterange').datepicker({
-    todayBtn:'linked',
-    format:'yyyy-mm-dd',
-    autoclose:true,
-  });
-
-  load_data();
-
-  function load_data(from_date = '', to_date = '')
-  {
-    $('#order_table').DataTable({
-      dom: 'Bfrtip',
-      buttons: [
-          'copy', 'excel', 'pdf','csv', 'print'
-      ],
-      processing: true,
-      serverSide: true,
-      ajax: {
-        url:'{{ route("meta",$river->id) }}',
-        data:{from_date:from_date, to_date:to_date}
-      },
-      columns: [
-        {
-        data:'date_taken',
-        name:'date_taken'
-        },
-        {
-        data:'level',
-        name:'level'
-        },
-        {
-        data:'velocity',
-        name:'velocity'
-        },
-        {
-        data:'temperature',
-        name:'temperature'
-        }
-      ]
+    $('.input-daterange').datepicker({
+      todayBtn:'linked',
+      format:'yyyy-mm-dd',
+      autoclose:true,
     });
-  }
+
+    load_data();
+
+    function load_data(from_date = '', to_date = '')
+    {
+      $('#order_table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'excel', 'pdf','csv', 'print'
+        ],
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url:'{{ route("meta",$river->id) }}',
+          data:{from_date:from_date, to_date:to_date}
+        },
+        columns: [
+          {
+          data:'date_taken',
+          name:'date_taken'
+          },
+          {
+          data:'level',
+          name:'level'
+          },
+          {
+          data:'velocity',
+          name:'velocity'
+          },
+          {
+          data:'temperature',
+          name:'temperature'
+          }
+        ]
+      });
+    }
 
     $('#filter').click(function(){
     var from_date = $('#from_date').val();

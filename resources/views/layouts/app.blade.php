@@ -59,7 +59,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('rivers.store') }}">Features</a>
-                       
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">The Device</a>
@@ -115,7 +114,5 @@
         </div>
         </footer>
     </div>
-
-
 </body>
 </html>

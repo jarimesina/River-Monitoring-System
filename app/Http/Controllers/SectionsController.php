@@ -75,6 +75,8 @@ class SectionsController extends Controller
         $section->vertical_distance = $request->vertical_distance;
         $section->triangleHeight = $request->triangleHeight;
         $section->save();
+
+        //insert algorithm for calculating discharge for 
         return redirect('/rivers')->with('success', 'Section saved!');
 
     }
@@ -109,8 +111,10 @@ class SectionsController extends Controller
         //     foreach ($sections as $section){
         //         if ($section->shape==0){
         //             $ratio = $section->width*($height - $section->vertical_distance);
+        //             // dump($ratio);
         //             //change to height from device?
         //             $area = (($ratio * $waterLevel->field2 * $waterLevel->field2 ) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
+        //             // dump($area);
         //             // $discharge = $area * $section->coefficient * $section->velocity;
         //             $discharge = $area * $section->coefficient * $waterLevel->field1;
         //             // dd($discharge);
@@ -141,7 +145,7 @@ class SectionsController extends Controller
         //             array_push($dischargeArray, (float)$totalDischarge);
         //             $counter = 0;
         //             $totalDischarge = 0.0;
-        //         }
+        //         }   
                 
         //     }
         //     array_push($labels, $waterLevel->entry_id);

@@ -16,6 +16,10 @@ class CreateDischargesTable extends Migration
         Schema::create('discharges', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->double('dischargeValue',15,8);
+            $table->unsignedBigInteger('river_id')
+                  ->references('id')
+                  ->on('rivers')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
