@@ -30,3 +30,12 @@ footer{
     padding: 60px 0px;
     width: 100%;
 }
+/*Content*/
+
+.paracont{
+    text-align: justify;
+}
+
+.paracont img{
+    max-width: 70%;
+}

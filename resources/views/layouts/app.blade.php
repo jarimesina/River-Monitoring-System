@@ -58,10 +58,10 @@
                             @endif
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('rivers.store') }}">Features</a>
+                            <a class="nav-link" href="{{ route('rivers.store') }}">Locations</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">The Device</a>
+                            <a class="nav-link" href="{{ url('/device') }}">The Device</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">The Team</a>
