@@ -54,7 +54,7 @@
             <div class="form-group">    
                 <label for="triangleHeight">If Trapezoid, please input Triangle Height (m):</label>
                 <input type="hidden" class="form-control" name="triangleHeight"/>
-                <input type="text" class="form-control" name="triangleHeight" value = {{ $sections->triangleHeight }} required/>
+                <input type="text" class="form-control" name="triangleHeight" value = {{ $sections->triangleHeight }}>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>

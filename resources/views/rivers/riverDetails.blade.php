@@ -34,7 +34,6 @@
         <div class="col-lg-12 d-flex flex-column text-center">
           <script>
             async function getData() {
-              // console.log("HI");
               var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
               var table = document.getElementById("myTable");
               console.log(data.data);
@@ -52,7 +51,6 @@
           <h2>Water Level:&nbsp;<span id="waterLevel">0</span> m</h2>
           <h2>Water Current Velocity:&nbsp;<span id="waterCurrent"> 0 </span> m/s</h2>
           <h2>Water Temperature:&nbsp;<span id="waterTemp"> 0 </span> &#x2103;</h2>
-          <!-- <button onclick="refresh()">Refresh</button> -->
         </div>
       </div>
     </br>
@@ -82,10 +80,6 @@
     updateChart();
     updateChart2();
   }
-
-  // function processInput(){
-  //   updateChart3();
-  // }
 
   var ctx = document.getElementById("myChart");
   var ctx2 = document.getElementById("myChart2");
@@ -158,30 +152,6 @@
       console.error(e);
     }
   }
-
-  // var updateChart3 = function() {
-
-  //   var start= document.getElementById("start").value;
-  //   var end= document.getElementById("end").value;
-
-  //   $.ajax({
-  //     url: "{{ route('api.process')}}",
-  //     type: 'POST',
-  //     dataType: 'json',
-  //     data: { start: start, end : end,id: {{$river->id}}},
-  //     headers: {
-  //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //     },
-  //     success: function(data) {
-  //       myChart3.data.labels = data.labels;
-  //       myChart3.data.datasets[0].data = data.data;
-  //       myChart3.update();
-  //     },
-  //     error: function(data){
-  //       console.log("ERROR3");
-  //     }
-  //   });
-  // }
   
   updateChart();
   updateChart2();
@@ -225,47 +195,47 @@
 
 <script>
   $(document).ready(function(){
-  $('.input-daterange').datepicker({
-    todayBtn:'linked',
-    format:'yyyy-mm-dd',
-    autoclose:true,
-  });
-
-  load_data();
-
-  function load_data(from_date = '', to_date = '')
-  {
-    $('#order_table').DataTable({
-      dom: 'Bfrtip',
-      buttons: [
-          'copy', 'excel', 'pdf','csv', 'print'
-      ],
-      processing: true,
-      serverSide: true,
-      ajax: {
-        url:'{{ route("meta",$river->id) }}',
-        data:{from_date:from_date, to_date:to_date}
-      },
-      columns: [
-        {
-        data:'date_taken',
-        name:'date_taken'
-        },
-        {
-        data:'level',
-        name:'level'
-        },
-        {
-        data:'velocity',
-        name:'velocity'
-        },
-        {
-        data:'temperature',
-        name:'temperature'
-        }
-      ]
+    $('.input-daterange').datepicker({
+      todayBtn:'linked',
+      format:'yyyy-mm-dd',
+      autoclose:true,
     });
-  }
+
+    load_data();
+
+    function load_data(from_date = '', to_date = '')
+    {
+      $('#order_table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'excel', 'pdf','csv', 'print'
+        ],
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url:'{{ route("meta",$river->id) }}',
+          data:{from_date:from_date, to_date:to_date}
+        },
+        columns: [
+          {
+          data:'date_taken',
+          name:'date_taken'
+          },
+          {
+          data:'level',
+          name:'level'
+          },
+          {
+          data:'velocity',
+          name:'velocity'
+          },
+          {
+          data:'temperature',
+          name:'temperature'
+          }
+        ]
+      });
+    }
 
     $('#filter').click(function(){
     var from_date = $('#from_date').val();

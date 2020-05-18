@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 <label for="height">Height (m):</label>
-                <input type="text" class="form-control" name="hegiht" value={{ $rivers->height }} />
+                <input type="text" class="form-control" name="height" value={{ $rivers->height }} />
             </div>
 
             <button type="submit" class="btn btn-primary">Update</button>

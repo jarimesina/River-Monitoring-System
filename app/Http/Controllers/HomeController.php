@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Field;
 
 class HomeController extends Controller
 {
@@ -38,7 +37,6 @@ class HomeController extends Controller
      */
     public function adminHome()
     {
-        $fields = Field::all();
-        return view('adminHome',compact('fields'));
+        return view('adminHome');
     }
 }

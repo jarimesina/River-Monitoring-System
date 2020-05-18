@@ -28,4 +28,9 @@ class River extends Authenticatable
     {
         return $this->hasMany('App\Sections');
     }
+
+    public function discharge()
+    {
+        return $this->hasMany('App\Discharge');
+    }
 }

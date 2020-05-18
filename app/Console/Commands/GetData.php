@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Dates;
 use DB;
 
 
@@ -40,9 +39,9 @@ class GetData extends Command
      */
     public function handle()
     {
-        // DB::table('dates')->delete();
-        DB::table('dates')->insert(['start' => "2020-12-01",'end' =>"2020-12-02"]);
-        // Dates::create(['start' => "2020-12-01",'end' =>"2020-12-02"]);
-        echo "Operation executed";
+        // // DB::table('dates')->delete();
+        // DB::table('dates')->insert(['start' => "2020-12-01",'end' =>"2020-12-02"]);
+        // // Dates::create(['start' => "2020-12-01",'end' =>"2020-12-02"]);
+        // echo "Operation executed";
     }
 }
