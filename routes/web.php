@@ -34,6 +34,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/device', 'HomeController@about')->name('device');
+Route::get('/team', 'HomeController@scorpion')->name('team');
 // Route::group(['middleware'=>['preventbackbutton']], function(){
 //     Auth::routes();
 //     Route::get('/home', 'HomeController@index')->name('home');

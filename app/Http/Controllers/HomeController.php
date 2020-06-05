@@ -31,6 +31,11 @@ class HomeController extends Controller
         return view('device');
     }
 
+    public function scorpion()
+    {
+        return view('team');
+    }
+
     /**
      * Show the application dashboard.
      *

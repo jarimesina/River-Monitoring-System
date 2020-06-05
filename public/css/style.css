@@ -1,3 +1,9 @@
+/*General*/
+
+.font-bold{
+    font-weight: bold;
+}
+
 /* Headers, Titles */
 
 .page-title{
@@ -16,11 +22,6 @@
     width: 100%;
 }
 
-/* body{
-    position: relative !important;
-    width: 100% !important;
-} */
-
 #row1{
     padding-bottom: 120px;
 }
@@ -30,7 +31,9 @@ footer{
     padding: 60px 0px;
     width: 100%;
 }
+
 /*Content*/
+
 .cont .para{
     font-size: 18px;
     text-indent: 35px;
@@ -43,4 +46,12 @@ footer{
 
 .cont img{
     max-width: 30%;
+}
+
+.profiles img{
+    max-width: 50%;
+}
+
+.profiles .para{
+    font-size: 16px;
 }

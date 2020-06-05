@@ -65,7 +65,7 @@
                             <a class="nav-link" href="{{ url('/device') }}">The Device</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">The Team</a>
+                            <a class="nav-link" href="{{ url('/team') }}">The Team</a>
                         </li>
                     </ul>
                     @endauth
