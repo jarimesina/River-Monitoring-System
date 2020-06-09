@@ -111,8 +111,16 @@
             <div class="wrapper">
                 <h1 align="center">made with &hearts; by Scorpion</h1>
             </div>
-        </div>
         </footer>
+        <section id="bottom">
+            <h5>
+            &#169;2019<br/>
+            
+            Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+            <br/>           
+
+            </h5>
+        </section>
     </div>
 </body>
 </html>

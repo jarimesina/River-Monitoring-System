@@ -5,14 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 
-<div class="row">
 <style>
-   body
-   {
-    margin:0;
-    padding:0;
-    background-color:#f1f1f1;
-   }
    .box
    {
     width:900px;
@@ -26,54 +19,86 @@
     width: 200px;
    }
 </style>
-<div class="col-sm-12">
-    <h1 class="display-3">{{$river->name}}</h1> 
-    <section id="contact">
-    <div class="container d-flex flex-column text-center">
-      <div class="row">
-        <div class="col-lg-12 d-flex flex-column text-center">
-          <script>
-            async function getData() {
-              var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
-              var table = document.getElementById("myTable");
-              console.log(data.data);
-              document.getElementById('waterLevel').innerHTML = data.data.data[1];
-              document.getElementById('waterCurrent').innerHTML = data.data.data[0];
-              document.getElementById('waterTemp').innerHTML = data.data.data[3];
-            }
 
-            getData();
-            setInterval(() => {
-              getData();
-            }, 60000);
-
-          </script>
-          <h2>Water Level:&nbsp;<span id="waterLevel">0</span> m</h2>
-          <h2>Water Current Velocity:&nbsp;<span id="waterCurrent"> 0 </span> m/s</h2>
-          <h2>Water Temperature:&nbsp;<span id="waterTemp"> 0 </span> &#x2103;</h2>
-        </div>
+<div class="row">
+  <div class="col">
+    <div class="card" id="name">
+      <div class="container">
+        <h1 class="display-3">{{$river->name}}</h1> 
+        <div class="line"></div>
+        <h3>Location: {{$river->location}}</h3> 
       </div>
-    </br>
-    </br>
-      <div class="row">
-          <div class="col-6 text-center">
-            <h2>Water Level vs. Time</h2>            
-            <canvas id="myChart"></canvas>
-            <!-- <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/1?days=3&bgcolor=%23ffc0cb&color=%23add8e6&dynamic=true&results=1440&title=Water+Velocity+%28m%2Fs%29&type=line&xaxis=Date&yaxis=Velocity+%28m%2Fs%29&update=60"></iframe>
-            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&title=Water+Level+%28m%29&type=line&xaxis=Date&yaxis=Water+Level+%28m%29&start=2019-12-29&end=2020-02-04"></iframe>
-            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/329340"></iframe> -->
-
-          </div>
-          <div class="col-6 text-center">
-            <h2>Hydrograph</h2>            
-            <canvas id="myChart2"></canvas>
-          </div>
-      </div>
-    <br>
     </div>
-  </section>
-<div>
+  </div>
+
+  <div class="col text-center" id ="chart1">
+    <h2>Water Level vs. Time</h2>            
+    <canvas id="myChart"></canvas>
+    <!-- <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/1?days=3&bgcolor=%23ffc0cb&color=%23add8e6&dynamic=true&results=1440&title=Water+Velocity+%28m%2Fs%29&type=line&xaxis=Date&yaxis=Velocity+%28m%2Fs%29&update=60"></iframe>
+    <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/952196/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&title=Water+Level+%28m%29&type=line&xaxis=Date&yaxis=Water+Level+%28m%29&start=2019-12-29&end=2020-02-04"></iframe>
+    <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/329340"></iframe> -->
+
+  </div>
 </div>
+
+<br/>
+
+<div class="row" style="display-flex">
+  <div class="col text-center">
+    <script>
+      async function getData() {
+        var data = await axios.get("{{ route('api.chartDetails',$river->id) }}");
+        var table = document.getElementById("myTable");
+        console.log(data.data);
+        document.getElementById('waterLevel').innerHTML = data.data.data[1];
+        document.getElementById('waterCurrent').innerHTML = data.data.data[0];
+        document.getElementById('waterTemp').innerHTML = data.data.data[3];
+      }
+
+      getData();
+      setInterval(() => {
+        getData();
+      }, 60000);
+    </script>
+
+    <div id="display">
+      <h2>
+        River Info
+      </h2>
+      <div class="hint  hint--top" data-hint="Water Level" style="display:inline-block;vertical-align:bottom;">
+        <img src='/images/arrow.png' width="50px" id="arrow">
+      </div>
+
+      <div style="display:inline-block;">
+        <h2>&nbsp;<span id="waterLevel">0</span> m</h2>
+      </div>
+
+      <br/>
+      <div class="hint  hint--top" data-hint="Water Velocity" style="display:inline-block;vertical-align:bottom;">
+        <img src='/images/wave.png' width="50px" id="wave">
+      </div>
+      <div style="display:inline-block;">
+        <h2>&nbsp;<span id="waterCurrent"> 0 </span> m/s</h2>
+      </div>
+
+      <br/>
+      <div class="hint  hint--top" data-hint="Water Temperature" style="display:inline-block;vertical-align:bottom;">
+        <img src='/images/thermometer.png' width="50px" id="thermometer">
+      </div>
+      <div style="display:inline-block;">
+        <h2>&nbsp;<span id="waterTemp"> 0 </span> &#x2103;</h2>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col text-center" id ="chart2">
+    <h2>Hydrograph</h2>            
+    <canvas id="myChart2"></canvas>
+  </div>
+  
+</div>
+
 <script>
   function refresh(){
     getData();
@@ -161,8 +186,8 @@
   }, 60000);
 
 </script>
-<div class="container box">    
-  <br />
+<br/>
+<div class="container box">
   <h3 align="center">Data in Table Format</h3>
   <br/>
   <div class="row input-daterange" style="width:100%">
