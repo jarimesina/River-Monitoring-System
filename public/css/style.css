@@ -1,3 +1,9 @@
+/*General*/
+
+.font-bold{
+    font-weight: bold;
+}
+
 /* Headers, Titles */
 
 .page-title{
@@ -16,6 +22,7 @@
     width: 100%;
 }
 
+
 body{
     background-color: #eff0eb;
 }
@@ -29,11 +36,27 @@ footer{
     padding: 60px 0px;
     width: 100%;
 }
+
 /*Content*/
 
-.paracont{
-    text-align: justify;
+.cont .para{
+    font-size: 18px;
+    text-indent: 35px;
 }
+
+.cont .devicename{
+    font-size: 25px;
+    color: #003Ac3;
+}
+
+.cont img{
+    max-width: 30%;
+}
+
+.profiles img{
+    max-width: 50%;
+}
+
 
 .paracont img{
     max-width: 70%;
@@ -191,4 +214,8 @@ img{
 
 .hint--top:hover:after {
 	margin-bottom: 2px;
+
+.profiles .para{
+    font-size: 16px;
+
 }
