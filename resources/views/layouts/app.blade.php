@@ -28,10 +28,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css"> -->
     <!-- Styles -->
-    <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" /> -->
-    <link href="/public/css/app.css" rel="stylesheet" />
-    <link href="\css\style.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
+    <!-- <link href="\public\css\app.css" rel="stylesheet" />
+    <link href="\css\style.css" rel="stylesheet"/> -->
 </head>
 <body>
     <div id="app">
