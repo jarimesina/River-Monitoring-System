@@ -37,30 +37,6 @@ footer{
     width: 100%;
 }
 
-/*Content*/
-
-.cont .para{
-    font-size: 18px;
-    text-indent: 35px;
-}
-
-.cont .devicename{
-    font-size: 25px;
-    color: #003Ac3;
-}
-
-.cont img{
-    max-width: 30%;
-}
-
-.profiles img{
-    max-width: 50%;
-}
-
-
-.paracont img{
-    max-width: 70%;
-}
 
 #bottom{
     padding-top: 20px;
@@ -214,8 +190,34 @@ img{
 
 .hint--top:hover:after {
 	margin-bottom: 2px;
+}
 
-.profiles .para{
+/*Content*/
+
+.cont .para{
+    font-size: 18px;
+    text-indent: 35px;
+}
+
+.cont .devicename{
+    font-size: 25px;
+    color: #003Ac3;
+}
+
+.cont img{
+    max-width: 30%;
+}
+
+.profiles img{
+    max-width: 50%;
+}
+
+
+.paracont img{
+    max-width: 70%;
+}
+
+/* .profiles .para{
     font-size: 16px;
 
-}
+} */
