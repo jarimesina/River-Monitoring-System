@@ -4,6 +4,11 @@
     background-size: cover;
 }
 
+.bod2 {
+    background-image: url("https://images.unsplash.com/photo-1503891617560-5b8c2e28cbf6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80");
+    background-size: cover;
+}
+
 .font-bold{
     font-weight: bold;
 }
@@ -27,8 +32,8 @@
 }
 
 footer{
-    background-color: #a1a092;
-    padding: 60px 0px;
+    background-color: #a1a092B3;
+    padding: 50px 0px;
     width: 100%;
 }
 
@@ -36,7 +41,22 @@ footer{
 
 .tablehead {
     font-size: 30px;
-    background-color: #06B10099;
+    background-color: #00000099;
+    color: #FFFFFF;
+}
+
+.loginform {
+    color: #FFFFFF;
+    background-color: #00000080;
+}
+
+.loginform a{
+    color: #BCBCBC;
+}
+
+.loginform a:hover{
+    text-decoration: none;
+    color: #000000;
 }
 
 /*Content*/
@@ -61,4 +81,9 @@ footer{
 
 .profiles .para{
     font-size: 16px;
+}
+
+.frame {
+    background-color: #FFFFFF99;
+    padding: 30px;
 }
