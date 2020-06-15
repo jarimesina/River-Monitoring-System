@@ -1,4 +1,8 @@
 /*General*/
+.bod {
+    background-image: url("https://66.media.tumblr.com/57be6bc2ad5acd652c5b6b84dc024b80/48b79ea402b0ee70-ec/s1280x1920/4cd45b8694849496062a7bc1d9197c1cabcafbc5.jpg");
+    background-size: cover;
+}
 
 .font-bold{
     font-weight: bold;
@@ -8,10 +12,6 @@
 
 .page-title{
     font-size: 45px;
-}
-
-.font-bold{
-    font-weight: bold;
 }
 
 .table-responsive{
@@ -30,6 +30,13 @@ footer{
     background-color: #a1a092;
     padding: 60px 0px;
     width: 100%;
+}
+
+/*Login Reg*/
+
+.tablehead {
+    font-size: 30px;
+    background-color: #06B10099;
 }
 
 /*Content*/

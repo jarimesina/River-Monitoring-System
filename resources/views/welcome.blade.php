@@ -12,7 +12,8 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
+                background-image: url("https://66.media.tumblr.com/a9c6c1b3d80e08b06069f8b7ed88d6b6/508c49d4521fd201-c0/s2048x3072/e73b44f8eeb8e10d0b575535b2a36db4b3f49e24.jpg");
+                background-size: cover;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
@@ -42,6 +43,8 @@
 
             .content {
                 text-align: center;
+                background-color: #FFFFFFB3;
+                width: 100%;
             }
 
             .title {
@@ -58,8 +61,20 @@
                 text-transform: uppercase;
             }
 
-            .m-b-md {
-                margin-bottom: 30px;
+            .credits {
+                color: #FFFFFF;
+                position: absolute;
+                right: 30px;
+                bottom: 30px;
+            }
+
+            .credits a{
+                color: #FFFFFF;
+                text-decoration: none;
+            }
+
+            .credits a:hover {
+                color: #000000;
             }
         </style>
     </head>
@@ -80,21 +95,13 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                <div class="title">
                     River Monitoring System
                 </div>
-
-                <!-- <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div> -->
             </div>
+        </div>
+        <div class="credits">
+            Photo by <a href="https://unsplash.com/@martinsanchez">Martin Sanchez</a>
         </div>
     </body>
 </html>
