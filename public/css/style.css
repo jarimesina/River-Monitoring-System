@@ -1,4 +1,13 @@
 /*General*/
+.bod {
+    background-image: url("https://66.media.tumblr.com/57be6bc2ad5acd652c5b6b84dc024b80/48b79ea402b0ee70-ec/s1280x1920/4cd45b8694849496062a7bc1d9197c1cabcafbc5.jpg");
+    background-size: cover;
+}
+
+.bod2 {
+    background-image: url("https://images.unsplash.com/photo-1503891617560-5b8c2e28cbf6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80");
+    background-size: cover;
+}
 
 .font-bold{
     font-weight: bold;
@@ -8,10 +17,6 @@
 
 .page-title{
     font-size: 45px;
-}
-
-.font-bold{
-    font-weight: bold;
 }
 
 .table-responsive{
@@ -32,9 +37,31 @@ body{
 }
 
 footer{
-    background-color: #eacb48;
-    padding: 60px 0px;
+    background-color: #a1a092B3;
+    padding: 50px 0px;
     width: 100%;
+}
+
+/*Login Reg*/
+
+.tablehead {
+    font-size: 30px;
+    background-color: #00000099;
+    color: #FFFFFF;
+}
+
+.loginform {
+    color: #FFFFFF;
+    background-color: #00000080;
+}
+
+.loginform a{
+    color: #BCBCBC;
+}
+
+.loginform a:hover{
+    text-decoration: none;
+    color: #000000;
 }
 
 /*Content*/
@@ -218,4 +245,9 @@ img{
 
 .profiles .para{
     font-size: 16px;
+}
+
+.frame {
+    background-color: #FFFFFF99;
+    padding: 30px;
 }
