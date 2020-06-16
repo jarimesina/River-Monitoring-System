@@ -22,7 +22,7 @@
 
 <div class="row">
   <div class="col">
-    <div class="card" id="name">
+    <div class="card" id="rname">
       <div class="container">
         <h1 class="display-3">{{$river->name}}</h1> 
         <div class="line"></div>

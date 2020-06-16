@@ -95,7 +95,11 @@ img{
     padding: 20px;
 }
 
-#name{
+.pic{
+    border-radius: 0px;
+}
+
+#rname{
     background-color:rgba(0, 0, 0, .6);
     color: white;
     width: 400px;
