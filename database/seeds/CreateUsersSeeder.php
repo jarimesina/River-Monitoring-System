@@ -12,23 +12,27 @@ class CreateUsersSeeder extends Seeder
      */
     public function run()
     {
-        $user = [
+        $users = [
             [
                'name'=>'Admin',
                'email'=>'admin@itsolutionstuff.com',
-                'is_admin'=>'1',
+                'is_admin'=>'true',
                'password'=> bcrypt('123456'),
             ],
             [
                'name'=>'User',
                'email'=>'user@itsolutionstuff.com',
-                'is_admin'=>'0',
+                'is_admin'=>'false',
                'password'=> bcrypt('123456'),
             ],
         ];
   
-        foreach ($user as $key => $value) {
-            User::create($value);
+        // foreach ($user as $key => $value) {
+        //     User::create($value);
+        // }
+
+        foreach ($users as $user) {
+            User::create($user);
         }
     }
 }

@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "postinstall": "npm run prod",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
@@ -24,5 +25,13 @@
     },
     "dependencies": {
         "vanilla-datatables": "^1.6.16"
+    },
+    "engines": {
+        "name": "myapp",
+        "description": "a really cool app",
+        "version": "1.0.0",
+        "engines": {
+          "node": "12.x"
+        }
     }
 }
