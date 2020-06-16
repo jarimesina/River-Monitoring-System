@@ -11,7 +11,7 @@
                 <img src="https://scontent.fceb1-1.fna.fbcdn.net/v/t1.15752-9/103675139_184026786375738_4713738161492128007_n.jpg?_nc_cat=100&_nc_sid=b96e70&_nc_eui2=AeG5_UY87t3aQOIeuIbyyJQ1ZcHYXjS82dZlwdheNLzZ1tsXWRCd4lzx65JOHQs-TBxYEpc1NXvTiR7jhk8o6KQh&_nc_ohc=NCSLsafaVsIAX_jfNPx&_nc_ht=scontent.fceb1-1.fna&oh=141ef04e7d2594c8c2da494e5d024c66&oe=5F0D034A">
                 <p class="font-bold"> Jari Sebastian Mesina </p>
             </div>
-            <div class="col-8 text-center d-flex">
+            <div class="col-6 text-center d-flex">
                 <p class="para text-left align-self-center">  Jari is the Project Manager of Scorpion and 
                     facilitates the work in the group. 
                     He spearheads the web development; specifically, in the backend and database. 
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-8 text-center d-flex">
+            <div class="col-6 text-center d-flex">
                 <p class="para text-left align-self-center">Vanessa is the group's treasurer, making sure that the group
                     always have funds for when materials (and snacks) need to be purchased. She also helps Jari in the web development,
                     specifically in the front-end.</p>
@@ -35,13 +35,13 @@
                 <img src="https://scontent.fceb1-1.fna.fbcdn.net/v/t1.15752-9/103432554_573925783314652_638732718203913445_n.jpg?_nc_cat=101&_nc_sid=b96e70&_nc_eui2=AeETIAbcFjVB3tlnz7KdM33eN-hoDitJyg836GgOK0nKDxWvyJDsi8UIs5O7rqpFqrEd4e1Zj7X-JAAeEnN9caox&_nc_ohc=k7gKHCIKTSQAX9lcTsS&_nc_ht=scontent.fceb1-1.fna&oh=033c89dbbd620d3553261bab864c114e&oe=5F0CE3D6">
                 <p class="font-bold"> Ergie Empuerto </p>
             </div>
-            <div class="col-8 text-center d-flex">
+            <div class="col-6 text-center d-flex">
                 <p class="para text-left align-self-center"> Ergie works on the documents required for submission by the research course.
                     She also aids in the development of the water level sensor and water velocity meter.</p>
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-8 text-center d-flex">
+            <div class="col-6 text-center d-flex">
                 <p class="para text-left align-self-center">Kristal is in-charge of communications. She makes sure the group gets
                     everything we need, from materials and professional aid to support. Kristal also helps in the calculations to obtain the 
                     river volumetric flow rate from the data gathered by the device.</p>

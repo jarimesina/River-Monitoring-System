@@ -18,8 +18,8 @@
         <p class="devicename text-left mt-5">Water Velocity Meter</p>
         <p class="para text-justify">A propeller is attached to (an encoder?). When spinning, the propeller will output electrical voltage. This voltage will determine the speed of the propeller's turn. It will be connected to the Microcontroller Unit (MCU) and will enable the MCU to record its current speed. The water velocity of the river passing through the turbine is directly proportional to the velocity of the turbine. </p>
         <div class="pictray d-lg-inline-flex justify-content-around">
-            <img src="https://66.media.tumblr.com/9c64137d33c6919e52f7b3886271ea5b/tumblr_nodjxfdcDg1shl98bo2_1280.png">
-            <img src="https://66.media.tumblr.com/9c64137d33c6919e52f7b3886271ea5b/tumblr_nodjxfdcDg1shl98bo2_1280.png">
+            <img class="pic" src="https://66.media.tumblr.com/9c64137d33c6919e52f7b3886271ea5b/tumblr_nodjxfdcDg1shl98bo2_1280.png">
+            <img class="pic" src="https://66.media.tumblr.com/9c64137d33c6919e52f7b3886271ea5b/tumblr_nodjxfdcDg1shl98bo2_1280.png">
         </div>
     </div>
 </div>
