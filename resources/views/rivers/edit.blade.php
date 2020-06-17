@@ -1,5 +1,6 @@
 @extends('layouts.app') 
 @section('content')
+<a href="{{ route('rivers.index')}}">Back</a>
 <div class="row">
     <div class="col-sm-8 offset-sm-2">
         <h1 class="display-3">Update a river</h1>
@@ -21,12 +22,12 @@
             <div class="form-group">
           
                 <label for="name">River Name:</label>
-                <input type="text" class="form-control" name="name" value={{ $rivers->name }} />
+                <input type="text" class="form-control" name="name" value="{{ $rivers->name }}"/>
             </div>
 
             <div class="form-group">
                 <label for="location">Location:</label>
-                <input type="text" class="form-control" name="location" value={{ $rivers->location }} />
+                <input type="text" class="form-control" name="location" value="{{ $rivers->location }}"/>
             </div>
 
             <div class="form-group">
