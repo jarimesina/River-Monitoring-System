@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use App\River;
 // use App\Field;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 // use App\Days;
@@ -25,17 +26,31 @@ class RiverController extends Controller
 
     public function store(Request $request)
     {
-        //check first if the information entered is not redundant
-        $river = new River;
-        $river->name = $request->name;
-        $river->location = $request->location;
-        $river->key = $request->key;
-        $river->channel = $request->channel;
-        $river->width = $request->width;
-        $river->height = $request->height;
-        $river->save();
-        // return redirect('admin/home')->with('success', 'River saved!');
-        return redirect('/rivers')->with('success', 'River saved!');
+        $validatedData = Validator::make($request->all(), [
+            'name'=>'required', //should allow alphabet, dashes, spaces
+            'location'=>'required',//should allow alphabet, positive numbers, symbols
+            'key'=>'required|regex:/^[\w-]*$/',//should allow alphabet, positive numbers,
+            'channel'=>'required|digits:6',//no symbols
+            'width'=>'required|between:0,99.99',//allow positive numbers and decimal points
+            'height'=>'required|between:0,99.99',//allow positive numbers and decimal points
+        ]);
+        
+        if ($validatedData->fails()) {
+            return redirect('rivers/create')->withErrors($validatedData)->withInput();
+        }
+        else{
+            $river = new River;
+            $river->name = $request->name;
+            $river->location = $request->location;
+            $river->key = $request->key;
+            $river->channel = $request->channel;
+            $river->width = $request->width;
+            $river->height = $request->height;
+            $river->save();
+            // return redirect('admin/home')->with('success', 'River saved!');
+            return redirect('/rivers')->with('success', 'River saved!');
+        }
+
     }
 
     public function show(Request $request)
@@ -53,26 +68,32 @@ class RiverController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name'=>'required',
-            'location'=>'required',
-            'key'=>'required',
-            'channel'=>'required',
-            'width'=>'required',
-            'height'=>'required'
+        $validatedData = Validator::make($request->all(), [
+            'name'=>'required|regex:/(^[\pL0-9 ]+)$/u', //should allow alphabet, dashes, spaces
+            'location'=>'required',//should allow alphabet, positive numbers, symbols
+            'key'=>'required|regex:/^[\w-]*$/',//should allow alphabet, positive numbers,
+            'channel'=>'required|digits:6',//no symbols
+            'width'=>'required|between:0,99.99|numeric',//allow positive numbers and decimal points
+            'height'=>'required|between:0,99.99|numeric',//allow positive numbers and decimal points
         ]);
 
-        //check if input is not redundant
-        $river = River::find($id);
-        $river->name =  $request->get('name');
-        $river->location = $request->get('location');
-        $river->key =  $request->get('key');
-        $river->channel = $request->get('channel');
-        $river->width = $request->get('width');
-        $river->height = $request->get('height');
-        $river->save();
+        if ($validatedData->fails()){
+            // return redirect('rivers/edit')->withErrors($validatedData)->withInput();
+            return back()->withErrors($validatedData)->withInput();
 
-        return redirect('/rivers')->with('success', 'River updated!');
+        }
+        else{
+            $river = River::find($id);
+            $river->name =  $request->get('name');
+            $river->location = $request->get('location');
+            $river->key =  $request->get('key');
+            $river->channel = $request->get('channel');
+            $river->width = $request->get('width');
+            $river->height = $request->get('height');
+            $river->save();
+            return redirect('/rivers')->with('success', 'River saved!');
+        }
+
     }
 
     public function destroy($id)

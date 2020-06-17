@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Sections;
 use App\River;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
 
 class SectionsController extends Controller
 {
@@ -67,18 +68,30 @@ class SectionsController extends Controller
      */
     public function store(Request $request)
     {
-        $section = new Sections;
-        $section->river_id = $request->sections;
-        $section->coefficient = $request->coefficient;
-        $section->width = $request->width;
-        $section->shape = $request->shape;
-        $section->vertical_distance = $request->vertical_distance;
-        $section->triangleHeight = $request->triangleHeight;
-        $section->save();
+        $validatedData = Validator::make($request->all(), [
+            'sections'=>'required',
+            'coefficient'=>'required|between:0,1.00|numeric',
+            'width'=>'required|between:0,99.99|numeric',
+            'vertical_distance'=>'required|between:0,99.99|numeric',
+            'triangleHeight'=>'between:0,99.99|numeric',
+        ]);
 
-        //insert algorithm for calculating discharge for 
-        return redirect('/rivers')->with('success', 'Section saved!');
+        if ($validatedData->fails()){
+            // return redirect('rivers/edit')->withErrors($validatedData)->withInput();
+            return back()->withErrors($validatedData)->withInput();
 
+        }
+        else{
+            $section = new Sections;
+            $section->river_id = $request->sections;
+            $section->coefficient = $request->coefficient;
+            $section->width = $request->width;
+            $section->shape = $request->shape;
+            $section->vertical_distance = $request->vertical_distance;
+            $section->triangleHeight = $request->triangleHeight;
+            $section->save();
+            return redirect('rivers')->with('success', 'Section saved!');
+        }
     }
 
     /**
@@ -198,7 +211,7 @@ class SectionsController extends Controller
         $section->triangleHeight =  $request->get('triangleHeight');
         $section->save();
 
-        return redirect('/rivers')->with('success', 'River updated!');
+        return redirect('/rivers')->with('success', 'Section updated!');
 
     }
 
@@ -213,6 +226,6 @@ class SectionsController extends Controller
         $sections = Sections::find($id);
         $sections->delete();
 
-        return redirect('/rivers')->with('success', 'Section deleted!');
+        return back()->with('success', 'Section deleted!');
     }
 }

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<a href="{{ url()->previous() }}">Back</a>
 <div class="row" id="row1">
 <div class="col-sm-12">
     <h1 class="page-title">Sections</h1> 
