@@ -45,11 +45,11 @@
                 <br>
                 <input type="hidden" class="form-control" name="shape" value="{{ $sections->shape }}"/>
                 <input type="radio" id="triangle" name="shape" value="0">
-                <label for="shapes">triangle</label><br>
+                <label for="shapes">Triangle</label><br>
                 <input type="radio" id="rectangle" name="shape" value="1">
-                <label for="shapes">rectangle</label><br>
+                <label for="shapes">Rectangle</label><br>
                 <input type="radio" id="trapezoid" name="shape" value="2">
-                <label for="shapes">trapezoid</label>
+                <label for="shapes">Trapezoid</label>
             </div>
 
             <div class="form-group">    

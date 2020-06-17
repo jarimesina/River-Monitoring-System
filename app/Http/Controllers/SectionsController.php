@@ -72,8 +72,8 @@ class SectionsController extends Controller
             'sections'=>'required',
             'coefficient'=>'required|between:0,1.00|numeric',
             'width'=>'required|between:0,99.99|numeric',
+            'shape'=>'required',
             'vertical_distance'=>'required|between:0,99.99|numeric',
-            'triangleHeight'=>'between:0,99.99|numeric',
         ]);
 
         if ($validatedData->fails()){
@@ -196,19 +196,19 @@ class SectionsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'coefficient'=>'required',
+            'coefficient'=>'required|between:0,1.00|numeric',
             'shape'=>'required',
-            'width'=>'required',
-            'verticalDistance'=>'required',
+            'width'=>'required|between:0,99.99|numeric',
+            'verticalDistance'=>'required|between:0,99.99|numeric',
         ]);
 
         //check if input is not redundant
         $section = Sections::find($id);
         $section->coefficient = $request->get('coefficient');
-        $section->shape =  $request->get('shape');
+        $section->shape = $request->get('shape');
         $section->width = $request->get('width');
-        $section->vertical_distance =  $request->get('verticalDistance');
-        $section->triangleHeight =  $request->get('triangleHeight');
+        $section->vertical_distance = $request->get('verticalDistance');
+        $section->triangleHeight = $request->get('triangleHeight');
         $section->save();
 
         return redirect('/rivers')->with('success', 'Section updated!');
