@@ -104,23 +104,27 @@
             </div>
         </nav>
 
-        <main class="container py-4">
+        <main class="container" id="whole">
             @yield('content')
         </main>
         <footer>
             <div class="wrapper">
-                <h1 align="center">made with &hearts; by Scorpion</h1>
+                <h1>made with &hearts; by Scorpion</h1>
+                <h5 class="sm">
+                    &#169;2019 Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>        
+                </h5>
             </div>
         </footer>
+        <!--
         <section id="bottom">
             <h5>
             &#169;2019<br/>
-            
             Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
             <br/>           
 
             </h5>
         </section>
+        -->
     </div>
 </body>
 </html>
