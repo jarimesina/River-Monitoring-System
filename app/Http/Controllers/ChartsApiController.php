@@ -8,47 +8,53 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\Discharge;
+use App\WaterLevel;
 
 class ChartsApiController extends Controller
 {
     public function index($id)
     {
-        $river = River::find($id);
-        $client = new Client();
-        // $res2 = $client->request('GET','https://api.thingspeak.com/channels/952196/feeds.json?api_key=RGBK34NEJJV41DY7&results=5
-        // '); //--original
-        // $temp = json_decode($res2->getBody()->getContents()); //--original
-        // $temp=$temp->feeds;
-        // $result = end($temp);
-      
-        // Field::create(['field1' =>$result->field1,'field2' =>$result->field2,'field3' =>$result->field3,'field4' =>$result->field4]);
-
-        // $fields = Field::latest()->take(30)->get()->sortBy('id');
-        // $labels = $fields->pluck('id');
-        // $data = $fields->pluck("field2");
+        //------------------------------------------------//
+        // $river = River::find($id);
+        // $client = new Client();
         
-        $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/fields/2.json?api_key=' . $river->key . '&results=30');
-        $temp2 = json_decode($res2->getBody()->getContents()); 
-        $temp2=$temp2->feeds;
-        // dump($temp2);
+        // $res2 = $client->request('GET','https://api.thingspeak.com/channels/' . $river->channel . '/fields/2.json?api_key=' . $river->key . '&results=30');
+        // $temp2 = json_decode($res2->getBody()->getContents()); 
+        // $temp2=$temp2->feeds;
+        // // dump($temp2);
 
-        $cart = array();
-        $id = array();
+        // $cart = array();
+        // $id = array();
 
-        foreach($temp2 as $element){
-            array_push($cart, (float)$element->field2);
-            array_push($id, $element->entry_id);
+        // foreach($temp2 as $element){
+        //     array_push($cart, (float)$element->field2);
+        //     array_push($id, $element->entry_id);
+        // }
+
+        // // dump($cart);
+        // // dd($id);
+        // $cart2 = new Collection();
+        // $id2 = new Collection();
+        // $data = collect($cart);
+        // $labels = collect($id);
+        // // dump($cart2);
+        // // dd($id2);
+        // return response()->json(compact('labels', 'data'));
+
+        //------------------------------------------------//
+        $array1 = array();
+        $array2 = array();
+
+        //get last 30 only
+        $waterLevels = WaterLevel::latest()->take(30)->where('river_id', '=', $id)->get();
+        $waterLevels = $waterLevels->reverse();
+        foreach($waterLevels as $waterLevel){
+            array_push($array1, $waterLevel->level);
+            array_push($array2, $waterLevel->id);
         }
-
-        // dump($cart);
-        // dd($id);
-        $cart2 = new Collection();
-        $id2 = new Collection();
-        $data = collect($cart);
-        $labels = collect($id);
-        // dump($cart2);
-        // dd($id2);
-        return response()->json(compact('labels', 'data'));
+        $data = collect($array1);
+        $labels = collect($array2);
+        return response()->json(compact('data','labels'));
     }
 
     public function getDetails($id)
@@ -149,7 +155,7 @@ class ChartsApiController extends Controller
         $array2 = array();
 
         //get last 30 only
-        $discharges = Discharge::latest()->take(30)->get();
+        $discharges = Discharge::latest()->take(30)->where('river_id', '=', $id)->get();
         $discharges = $discharges->reverse();
         foreach($discharges as $discharge){
             array_push($array1, $discharge->dischargeValue);
