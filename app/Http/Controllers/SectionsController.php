@@ -196,7 +196,7 @@ class SectionsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'coefficient'=>'required|between:0,1.00|numeric',
+            'coefficient'=>'required|numeric',
             'shape'=>'required',
             'width'=>'required|between:0,99.99|numeric',
             'verticalDistance'=>'required|between:0,99.99|numeric',
