@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 // use App\Days;
+use App\Sections;
 use DB;
 
 class RiverController extends Controller
@@ -269,6 +270,77 @@ class RiverController extends Controller
         //     }
         //     return datatables()->of($data)->make(true);
         // }
+        //-----------------------------------------------//
+        // $channel = 952196;
+
+        // $river = River::whereChannel($channel)->first();
+
+
+
+        // $labels = array();
+        // $dischargeArray = array();
+        // // $temp = River::where('id','=',$id)->first();
+        // $temp = River::whereChannel($channel)->first();
+        // $client = new Client();
+
+        // //query the water levels and velocities
+        // $waterLevels = $client->request('GET','https://api.thingspeak.com/channels/' . $temp->channel . '/feeds.json?api_key=' . $temp->key . '&results=1');
+        // $waterLevels = json_decode($waterLevels->getBody()->getContents()); 
+        // $waterLevels = $waterLevels->feeds;
+        // // dd($waterLevels);
+        // $discharge = 0.00;
+        // $totalDischarge = 0.00;
+        // // $sections = Sections::where('river_id','=',$id)->get();
+        // $sections = Sections::where('river_id','=',$river->id)->get();
+
+        // $count = $sections->count();
+        // $width = $temp->width;
+        // $height = $temp->height;
+        // $counter = 0; 
+
+        // foreach($waterLevels as $waterLevel){
+        //     foreach ($sections as $section){
+        //         if ($section->shape==0){
+        //             $ratio = $section->width*($height - $section->vertical_distance);
+        //             $area = (($ratio * $waterLevel->field2 * $waterLevel->field2 ) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
+        //             // $discharge = $area * $section->coefficient * $waterLevel->field1;
+        //             $discharge = $area * $ratio * $waterLevel->field1;
+        //         }
+        //         elseif($section->shape==1){
+        //             $area = ($section->width * $waterLevel->field2 ) - ($section->width * $section->vertical_distance);
+                    
+        //             $discharge = $area * $waterLevel->field1;
+        //         }
+        //         elseif($section->shape==2){
+        //             $ratio = $section->width*($height - $section->vertical_distance);
+        //             if($waterLevel->field2  <= $section->triangleHeight + $section->vertical_distance){
+        //                 $area = (($ratio * pow($waterLevel->field2,2)) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
+        //                 // $discharge = $area * $section->coefficient * $waterLevel->field1;
+        //                 // $discharge = $area * $ratio * $waterLevel->field1;
+        //             }
+        //             elseif($waterLevel->field2 > $section->triangleHeight + $section->vertical_distance){
+        //                 $area = ((0.5 * $section->width * $section->triangleHeight) + ($section->$width*$waterLevel->field2)) - ($section->$width*$section->triangleHeight) - ($section->$width*$section->vertical_distance);
+        //                 // $area = $section->width * $section->triangleHeight;
+        //                 dump("Area" . $counter . ":" . $area);
+        //                 // dump("width" . $section->width);
+        //                 // dump("triangleHeight" . $section->triangleHeight);
+        //                 // $discharge = $area * $ratio * $waterLevel->field1;
+        //             }
+        //             // dump("ratio" . $ratio);
+        //             $discharge = $area * $ratio * $waterLevel->field1;
+        //         }
+        //         dump($discharge);
+        //         $counter = $counter + 1;
+        //         $totalDischarge = $totalDischarge + $discharge;
+        //         if($counter == $count){
+        //             dump($totalDischarge);
+        //             // Discharge::create(['dischargeValue' =>$totalDischarge,'river_id'=>$river->id]);
+        //             $counter = 0;
+        //             $totalDischarge = 0.0;
+        //         }
+        //     }
+        // } 
+
         return view('rivers.riverDetails',compact('river'));
         //-----------------------------------------------//
     }
