@@ -51,24 +51,24 @@ class WaterLevelController extends Controller
                 if ($section->shape==0){
                     $ratio = $section->width*($height - $section->vertical_distance);
                     $area = (($ratio * $waterLevel->field2 * $waterLevel->field2 ) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
-                    $discharge = $area * $section->coefficient * $waterLevel->field1;
+                    // $discharge = $area * $section->coefficient * $waterLevel->field1;
+                    $discharge = $area * $ratio * $waterLevel->field1;
                 }
                 elseif($section->shape==1){
                     $area = ($section->width * $waterLevel->field2 ) - ($section->width * $section->vertical_distance);
-                    $discharge = $area * $section->coefficient * $waterLevel->field1;
+                    
+                    $discharge = $area * $waterLevel->field1;
                 }
                 elseif($section->shape==2){
-                    if($height <= $section->triangleHeight){
-                        $ratio = ($section->triangleHeight - $section->vertical_distance)* $section->width;
+                    $ratio = $section->width*($height - $section->vertical_distance);
+                    if($waterLevel->field2  <= $section->triangleHeight + $section->vertical_distance){
                         $area = (($ratio * pow($waterLevel->field2,2)) - ($ratio * $waterLevel->field2  * $section->vertical_distance))/2;
-                        $discharge = $area * $section->coefficient * $waterLevel->field1;
                     }
-                    elseif($height > $section->triangleHeight){
-                        $area = ((0.5 * $section->$width * $section->triangleHeight) + ($waterLevel->field2 * $section->width))- ($section->triangleHeight + $section->vertical_distance);
-                        $discharge = $area * $section->coefficient * $waterLevel->field1;
+                    elseif($waterLevel->field2 > $section->triangleHeight + $section->vertical_distance){
+                        $area = ((0.5 * $section->width * $section->triangleHeight) + ($section->$width*$waterLevel->field2)) - ($section->$width*$section->triangleHeight) - ($section->$width*$section->vertical_distance);
                     }
+                    $discharge = $area * $ratio * $waterLevel->field1;
                 }
-                
                 $counter = $counter + 1;
                 $totalDischarge = $totalDischarge + $discharge;
                 if($counter == $count){

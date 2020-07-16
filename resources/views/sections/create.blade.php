@@ -28,7 +28,7 @@
         </div>
 
         <div class="form-group">
-            <label for="coefficient">Coefficient:</label>
+            <label for="coefficient">Coefficient(If rectangle, then no need to input):</label>
             <input type="text" class="form-control" name="coefficient" required/>
         </div>
 
@@ -53,7 +53,7 @@
         </div>
 
         <div class="form-group">    
-            <label for="triangleHeight">If Trapezoid, please inpput Triangle Height (m):</label>
+            <label for="triangleHeight">If Trapezoid, please input Triangle Height (m):</label>
             <input type="hidden" class="form-control" name="triangleHeight" value='null'/>
             <input type="text" class="form-control" name="triangleHeight"/>
         </div>
