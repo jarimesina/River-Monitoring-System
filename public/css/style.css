@@ -255,3 +255,30 @@ img{
     background-color: #FFFFFF99;
     padding: 30px;
 }
+
+#addBtn{
+    background-color: #ffff66;
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         2px 2px 4px 3px #ccc;
+}
+
+#editBtn{
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         2px 2px 4px 3px #ccc;
+}
+
+#infoBtn{
+    background-color: #1ac6ff;
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         2px 2px 4px 3px #ccc;
+}
+
+#dltBtn{
+    background-color: #ff4d4d;
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         2px 2px 4px 3px #ccc;
+}

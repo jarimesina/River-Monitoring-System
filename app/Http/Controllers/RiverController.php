@@ -297,6 +297,7 @@ class RiverController extends Controller
         // $width = $temp->width;
         // $height = $temp->height;
         // $counter = 0; 
+        // $totalArea = 0.00;
 
         // foreach($waterLevels as $waterLevel){
         //     foreach ($sections as $section){
@@ -321,7 +322,7 @@ class RiverController extends Controller
         //             elseif($waterLevel->field2 > $section->triangleHeight + $section->vertical_distance){
         //                 $area = ((0.5 * $section->width * $section->triangleHeight) + ($section->$width*$waterLevel->field2)) - ($section->$width*$section->triangleHeight) - ($section->$width*$section->vertical_distance);
         //                 // $area = $section->width * $section->triangleHeight;
-        //                 dump("Area" . $counter . ":" . $area);
+        //                 // dump("Area" . $counter . ":" . $area);
         //                 // dump("width" . $section->width);
         //                 // dump("triangleHeight" . $section->triangleHeight);
         //                 // $discharge = $area * $ratio * $waterLevel->field1;
@@ -329,17 +330,20 @@ class RiverController extends Controller
         //             // dump("ratio" . $ratio);
         //             $discharge = $area * $ratio * $waterLevel->field1;
         //         }
-        //         dump($discharge);
+        //         $totalArea = $totalArea + $area; 
+
         //         $counter = $counter + 1;
         //         $totalDischarge = $totalDischarge + $discharge;
         //         if($counter == $count){
-        //             dump($totalDischarge);
+        //             // dump($totalDischarge);
+        //             dump("Total Area:" . $totalArea);
+
         //             // Discharge::create(['dischargeValue' =>$totalDischarge,'river_id'=>$river->id]);
         //             $counter = 0;
         //             $totalDischarge = 0.0;
         //         }
         //     }
-        // } 
+        // }
 
         return view('rivers.riverDetails',compact('river'));
         //-----------------------------------------------//
