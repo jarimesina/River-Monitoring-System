@@ -30,6 +30,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
+    <!-- <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet"> -->
 </head>
 <body>
     <div id="app">
