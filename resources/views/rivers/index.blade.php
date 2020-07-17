@@ -33,20 +33,20 @@
               <td>{{$river->height}}</td>
               @if(auth()->user()->is_admin==1)
                 <td>
-                  <a href="{{ route('sections.show',$river->id)}}" class="btn btn-primary">Add Sections</a>
+                  <a href="{{ route('sections.show',$river->id)}}" id = "addBtn" class="btn">Add or View Sections</a>
                 </td>
                 <td>
-                  <a href="{{ route('rivers.edit',$river->id)}}" class="btn btn-primary">Edit</a>
+                  <a href="{{ route('rivers.edit',$river->id)}}" id = "editBtn" class="btn default">Edit</a>
                 </td>
                 <td>
                   <form class="delete" action="{{ route('rivers.destroy', $river->id)}}" method="post">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                    <button id = "dltBtn" class="btn" type="submit">Delete</button>
                   </form>
                 </td>
                 <td>
-                  <button onclick="window.location='{{ url("/rivers/{$river->id}/details") }}'" class="btn btn-success" type="submit">View Properties</button>
+                  <button id = "infoBtn" onclick="window.location='{{ url("/rivers/{$river->id}/details") }}'" class="btn" type="submit">View Properties</button>
                 </td>
               @else
                 <td>

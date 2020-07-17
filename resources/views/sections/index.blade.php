@@ -43,13 +43,13 @@
             <td>{{$section->vertical_distance}}</td>
             <td>{{$section->triangleHeight}}</td>
             <td>
-              <a href="{{ route('sections.edit',$section->id)}}" class="btn btn-primary">Edit</a>
+              <a id ="editBtn" href="{{ route('sections.edit',$section->id)}}" class="btn">Edit</a>
             </td>
             <td>
               <form class="delete" action="{{ route('sections.destroy', $section->id)}}" method="post">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger" type="submit">Delete</button>
+                <button id ="dltBtn" class="btn btn-danger" type="submit">Delete</button>
               </form>
             </td>
         </tr>
