@@ -4,28 +4,31 @@
 <div class="container cont">
 <div class="row">
 <h1 class="page-title font-bold mt-3">About the Device</h1> 
-    <div class="text-center">
+    <div class="text-center wht">
         <p class="devicename text-left">Water Level Meter</p>
-        <p class="para text-justify px-4 pt-3">This water level meter was designed using the concept of Boyle's Law. 
-            A barometric pressure sensor is attached to a 2-inch diameter pipe with an opening facing downward. 
-            Temperature and pressure sensors are attached inside and outside the pipe. 
-            These parameters are used to calculate for the water level. 
-            Data is sent from the Arduino in the site to the Raspberry pi in the base station using GSM module.</p>
+        <p class="para text-justify px-4 pt-3"> 
+        The device collects the water level data by comparing the pressure outside the tube and the 
+        pressure inside the tube. The pressure sensors are connected to the Arduino. As the water 
+        level rises, the pressure inside the tube also rises. Every minute, the Arduino collects 
+        the current data needed and sends them in SMS format by the GSM module to the base station module.</p>
         <div class="pictray d-lg-inline-flex justify-content-around">
-            <img class="pic" src="https://66.media.tumblr.com/9c64137d33c6919e52f7b3886271ea5b/tumblr_nodjxfdcDg1shl98bo2_1280.png">
-            <img class="pic" src="https://66.media.tumblr.com/9c64137d33c6919e52f7b3886271ea5b/tumblr_nodjxfdcDg1shl98bo2_1280.png">
+            <img class="pic" src="{{asset('/images/wl2.png')}}">
+            <img class="pic" src="{{asset('/images/wl1.png')}}">
         </div>
         <p class="devicename text-left mt-3">Water Velocity Meter</p>
-        <p class="para text-justify px-4 pt-3">A propeller is attached to (an encoder?). When spinning, the propeller will output electrical voltage. This voltage will determine the speed of the propeller's turn. It will be connected to the Microcontroller Unit (MCU) and will enable the MCU to record its current speed. The water velocity of the river passing through the turbine is directly proportional to the velocity of the turbine. </p>
-        <div class="pictray d-lg-inline-flex justify-content-around">
-            <img class="pic" src="https://66.media.tumblr.com/9c64137d33c6919e52f7b3886271ea5b/tumblr_nodjxfdcDg1shl98bo2_1280.png">
-            <img class="pic" src="https://66.media.tumblr.com/9c64137d33c6919e52f7b3886271ea5b/tumblr_nodjxfdcDg1shl98bo2_1280.png">
+        <p class="para text-justify px-4 pt-3">
+        The water velocity meter uses a rotary encoder to count the rpm of the propeller. 
+        The system rotates through magnetism, to make the device waterproof. As the propeller spins, 
+        the encoder shaft also spins giving us a 1:1 ratio. The rotary encoder is connected to the Arduino. </p>
+        <div class="pictray d-lg-inline-flex justify-content-around">        
+            <img class="pic" src="{{asset('/images/wv1.png')}}">       
+            <img class="pic" src="{{asset('/images/wv2.png')}}">
         </div>
     </div>
 </div>
 </div>
 <div class="credits">
-    Background Photo by <a href="https://unsplash.com/@m______________e">Mark Eder</a>
+    Background Photo by <a href="https://unsplash.com/@paulberthelon">Paul Berthelon Bravo</a>
 </div>
 </body>
 @endsection

@@ -4,8 +4,8 @@
     background-size: cover;
 }
 
-.bod2 {
-    background-image: url("https://images.unsplash.com/photo-1499988921418-b7df40ff03f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80");
+.bod2 {    
+    background-image: url("https://images.unsplash.com/photo-1517495306984-f84210f9daa8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80");
     background-size: cover;
 }
 
@@ -115,7 +115,11 @@ footer a{
 }
 
 .cont img{
-    max-width: 40%;
+    max-width: 30%;
+}
+
+.wht{
+    background-color: #FFFFFF66;
 }
 
 .profiles img{
@@ -129,7 +133,6 @@ footer a{
 
 .profiles .nxtblck{
     background-color: #FFFFFF80;
-    
 }
 
 .profiles .row{
@@ -141,13 +144,13 @@ footer a{
 }
 
 .credits {
-    color: #FFFFFF;
+    color: #CECECE;
     margin-top: 30px;
     font-size: 10px;
 }
 
 .credits a{
-    color: #FFFFFF;
+    color: #CECECE;
     text-decoration: none;
 }
 
