@@ -22,17 +22,34 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (auth()->check()) {
+            return view('home');
+        }
+        else{
+            echo "<h2>I should redirect you somewhere else now.</h2>";
+        }
     }
 
     public function about()
     {
-        return view('device');
+        if (auth()->check()) {
+            return view('device');
+        }
+        else{
+            return redirect('home');
+        }   
+
     }
 
     public function scorpion()
     {
-        return view('team');
+        if (auth()->check()) {
+            return view('team');
+        }
+        else{
+            return redirect('home');
+        }   
+
     }
 
     /**
@@ -42,6 +59,12 @@ class HomeController extends Controller
      */
     public function adminHome()
     {
-        return view('adminHome');
+        if (auth()->check()) {
+            return view('adminHome');
+        }
+        else{
+            return redirect('home');
+        }   
+
     }
 }

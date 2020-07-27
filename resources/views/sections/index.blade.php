@@ -17,12 +17,12 @@
     <thead class="font-bold">
         <tr>
           <td>Section ID</td>
-          <td>Coefficient</td>
-          <td>Shape</td>
           <td>Width (m)</td>
+          <td>y1 (m)</td>
+          <td>y2 (m)</td>
+          <td>Shape</td>
+          <td>Multiplier</td>
           <td>River</td>
-          <td>Vertical Distance (m)</td>
-          <td>Triangle Height (m)</td>
           <td>Actions</td>
         </tr>
     </thead>
@@ -30,7 +30,9 @@
       @foreach($sections as $section)
         <tr>
             <td>{{$section->id}}</td>
-            <td>{{$section->coefficient}}</td>
+            <td>{{$section->width}}</td>
+            <td>{{$section->y1}}</td>
+            <td>{{$section->y2}}</td>
             @if($section->shape == 0)
             <td>Triangle</td>
             @elseif($section->shape == 1)
@@ -38,10 +40,8 @@
             @elseif($section->shape == 2)
             <td>Trapezoid</td>
             @endif
-            <td>{{$section->width}}</td>
+            <td>{{$section->multiplier}}</td>
             <td>{{$section->river->name}}</td>
-            <td>{{$section->vertical_distance}}</td>
-            <td>{{$section->triangleHeight}}</td>
             <td>
               <a id ="editBtn" href="{{ route('sections.edit',$section->id)}}" class="btn">Edit</a>
             </td>
