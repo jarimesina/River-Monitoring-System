@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Redirect;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Sections;
@@ -75,7 +76,9 @@ class SectionsController extends Controller
             }
             $section->multiplier = $request->multiplier;
             $section->save();
-            return redirect('rivers')->with('success', 'Section saved!');
+
+            return redirect('/sections/' . $section->river->id);
+
         }
     }
 
@@ -130,7 +133,7 @@ class SectionsController extends Controller
         $request->validate([
             'width'=>'required|between:0,99.99|numeric',
             'y1'=>'required|numeric',
-            'y2'=>'required_if:shape,==,1|required_if:shape,==,2|numeric',
+            'y2'=>'required_if:shape,==,1|required_if:shape,==,2|numeric|nullable',
             'shape'=>'required',
             'multiplier'=>'numeric',
         ]);
@@ -149,7 +152,7 @@ class SectionsController extends Controller
         $section->multiplier = $request->get('multiplier');
         $section->save();
 
-        return redirect('/rivers')->with('success', 'Section updated!');
+        return redirect('/sections/' . $section->river->id);
 
     }
 

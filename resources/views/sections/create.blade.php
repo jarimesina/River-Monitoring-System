@@ -4,7 +4,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<a href="{{ URL::route('rivers.index') }}">Back</a>
+<br/>
+<a href="javascript:history.back()" class="btn btn-danger">Cancel</a>
 <div class="row">
  <div class="col-sm-8 offset-sm-2">
     <h1 class="display-3">Add a Section</h1>

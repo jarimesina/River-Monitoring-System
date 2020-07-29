@@ -1,8 +1,7 @@
 @extends('layouts.app')
-
 @section('content')
-<a href="{{ route('rivers.index')}}">Back</a>
-
+<br/>
+<a href="{{ route('rivers.index')}}"class="btn btn-danger">Cancel</a>
 <div class="row">
  <div class="col-sm-8 offset-sm-2">
     <h1 class="display-3">Add a river</h1>

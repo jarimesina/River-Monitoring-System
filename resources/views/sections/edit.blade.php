@@ -4,7 +4,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<a href="javascript:history.back()" class="btn btn-danger">Cancel</a>
+<br/>
+<a href="{{ route('sections.show',['section' => $sections->river->id])}}" class="btn btn-danger">Cancel</a>
 <div class="row">
     <div class="col-sm-8 offset-sm-2">
         <h1 class="display-3">Update a section</h1>
@@ -51,9 +52,9 @@
                 <label for="shapes">Trapezoid</label> -->
 
                 <select id = "shapeList" class="form-control" name="shape" id="shape">
-                    <option value="0" {{ old('shape',$sections->shape)=="0" ? 'selected' : ''  }}>Triangle</option>
-                    <option value="1"  {{ old('shape',$sections->shape)=="1" ? 'selected' : ''  }}>Rectangle</option>
-                    <option value="2"  {{ old('shape',$sections->shape)=="2" ? 'selected' : ''  }}>Trapezoid</option>
+                    <option value="0" {{ $sections->shape=="0" ? 'selected' : ''  }}>Triangle</option>
+                    <option value="1"  {{ $sections->shape=="1" ? 'selected' : ''  }}>Rectangle</option>
+                    <option value="2"  {{ $sections->shape=="2" ? 'selected' : ''  }}>Trapezoid</option>
                 </select>
             </div>
 

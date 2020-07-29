@@ -19,7 +19,8 @@
     width: 200px;
    }
 </style>
-<a href="{{ route('rivers.index')}}">Back</a>
+<br/>
+<a href="{{ route('rivers.index')}}">&#8592;Back</a>
 <div class="row">
   <div class="col">
     <div class="card" id="rname">
