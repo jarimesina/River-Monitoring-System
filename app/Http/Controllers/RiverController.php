@@ -294,6 +294,127 @@ class RiverController extends Controller
 
         if (auth()->check()) {
             $river = River::find($id);
+            //---------------------------------------------------------//
+            // $channel = 952196;
+
+            // $river = River::whereChannel($channel)->first();
+
+
+            // //initialize array
+            // $labels = array();
+            // $dischargeArray = array();
+            // // $temp = River::where('id','=',$id)->first();
+            // $temp = River::whereChannel($channel)->first();
+            // $client = new Client();
+
+            // //query the water levels and velocities
+            // $waterLevels = $client->request('GET','https://api.thingspeak.com/channels/' . $temp->channel . '/feeds.json?api_key=' . $temp->key . '&results=1');
+            // $waterLevels = json_decode($waterLevels->getBody()->getContents()); 
+            // $waterLevels = $waterLevels->feeds;
+            // // dd($waterLevels);
+
+            // //initialize variables
+            // $discharge = 0;
+            // $totalDischarge = 0;
+            // //query sections from DB
+            // $sections = Sections::where('river_id','=',$river->id)->get();
+
+            // $count = $sections->count();
+            // $width = $temp->width;
+            // $height = $temp->height;
+            // $counter = 0; 
+            // $totalArea = 0;
+
+            // foreach($waterLevels as $waterLevel){
+            //     dump($waterLevel->field2);
+            //     foreach ($sections as $section){
+            //         //triangle
+            //         if ($section->shape==0){
+            //             //compute if max Height - longer side < instantaneous height then compute area else return 0
+            //             if($height - $section->y1 < $waterLevel->field2){
+            //                 // dump("I was computed" . $section->id);
+            //                 $no = (($waterLevel->field2-$height)+ $section->y1);
+            //                 $area = (pow($no,2) * $section->width)/(2*$section->y1);
+            //                 $discharge = $area * $waterLevel->field1 * $section->multiplier;
+            //             }
+            //             else{
+            //                 $area = 0;
+            //                 $discharge = 0;
+            //             }
+
+            //         }
+            //         //rectangle
+            //         elseif($section->shape==1){
+
+            //             if($height - $section->y1 < $waterLevel->field2){
+            //                 // dump("I was computed" . $section->id);
+            //                 $area = $section->width*($waterLevel->field2 - $height + $section->y1);
+            //                 $discharge = $area * $waterLevel->field1 * $section->multiplier;
+            //             }
+            //             else{
+            //                 $area = 0;
+            //                 $discharge = 0;
+            //             }
+            //         }
+            //         //trapezoids
+            //         elseif($section->shape==2){
+            //             $smallerSide = min($section->y1,$section->y2);
+            //             $greaterSide = max($section->y1,$section->y2);
+            //             // dump($smallerSide);
+            //             // dump($greaterSide);
+            //             //height is max height
+            //             //waterLevel->field2 is instantaneous height from sensor
+            //             //$section->y1 is y1 sa kana nga section (always left side)
+            //             //$section->y2 is y2 sa kana nga section (always right side)
+            //             //waterLevel->field1 is velocity from sensor
+            //             //compute max Height - longer side if difference < instantaneous height then compute area else return 0
+            //             // $difference = $height - $smallerSide;
+            //             $difference = $height - $greaterSide;
+            //             // $a = $difference;
+            //             // $b = $waterLevel->field2;
+            //             // $epsilon = 0.00001;
+            //             // dump($difference);
+            //             // if($a<$b) {
+            //             //     dump($difference);
+            //             //     dump("jari");
+            //             // } 
+            //             if(floatVal($waterLevel->field2) > $difference && ($waterLevel->field2)<= $height){
+            //                 if($waterLevel->field2  <= $height - $smallerSide){
+            //                     // dump("I was computed" . $section->id);
+            //                     $no = (($waterLevel->field2-$height)+ $greaterSide);
+            //                     $area = (pow($no,2) * $section->width)/(2*($greaterSide-$smallerSide));
+
+
+            //                     // $area =  (($waterLevel->field2 - $height) + $section->y2 - $section->y1);
+            //                 }
+            //                 elseif($waterLevel->field2 > $height - $smallerSide){
+            //                     // dump("I was computed" . $section->id);
+            //                     $area = (($section->width*($greaterSide-$smallerSide))/2)+($section->width*(($waterLevel->field2)+$smallerSide-$height));
+			// 				//	$area = ($section->width*($section->y1 + $section->y2 + (2*$waterLevel->field2)- (2*$height)))/2;
+            //                 }
+    
+            //                 $discharge = $area * $waterLevel->field1 * $section->multiplier;
+            //             }
+            //             else{
+            //                 $area = 0;
+            //                 $discharge = 0;
+            //             }
+            //         }
+            //         dump($area);
+            //         $totalArea = $totalArea + $area; 
+
+            //         $counter = $counter + 1;
+            //         $totalDischarge = $totalDischarge + $discharge;
+                    
+            //         if($counter == $count){
+            //             dump("Total discharge:" . $totalDischarge);
+            //             // Discharge::create(['dischargeValue' =>$totalDischarge,'river_id'=>$river->id]);
+            //             $counter = 0;
+            //             $totalDischarge = 0;
+            //         }
+            //     }
+            // }
+            //---------------------------------------------------------//
             return view('rivers.riverDetails',compact('river'));
         }
         else{

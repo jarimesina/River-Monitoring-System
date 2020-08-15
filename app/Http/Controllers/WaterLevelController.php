@@ -23,74 +23,103 @@ class WaterLevelController extends Controller
 
         $river = River::whereChannel($channel)->first();
 
+        //stores waterlevel and etc. into database when new data is uploaded into thingspeak every min.
+        if($data[1]<=$river->height){
+            WaterLevel::create([
+                'entry_id' => '1',
+                'level'       => trim(preg_replace('/\s+/', ' ', $data[1])),
+                'temperature' => trim(preg_replace('/\s+/', ' ', $data[2])),
+                'velocity'   => trim(preg_replace('/\s+/', ' ', $data[0])),
+                'date_taken' => $data[3],
+                'river_id'   => $river->id
+            ]);
 
 
-        $labels = array();
-        $dischargeArray = array();
-        // $temp = River::where('id','=',$id)->first();
-        $temp = River::whereChannel($channel)->first();
-        $client = new Client();
+            $labels = array();
+            $dischargeArray = array();
+            // $temp = River::where('id','=',$id)->first();
+            $temp = River::whereChannel($channel)->first();
+            $client = new Client();
 
-        //query the water levels and velocities
-        $waterLevels = $client->request('GET','https://api.thingspeak.com/channels/' . $temp->channel . '/feeds.json?api_key=' . $temp->key . '&results=1');
-        $waterLevels = json_decode($waterLevels->getBody()->getContents()); 
-        $waterLevels = $waterLevels->feeds;
-        // dd($waterLevels);
-        $discharge = 0.00;
-        $totalDischarge = 0.00;
+            //query the water levels and velocities
+            $waterLevels = $client->request('GET','https://api.thingspeak.com/channels/' . $temp->channel . '/feeds.json?api_key=' . $temp->key . '&results=1');
+            $waterLevels = json_decode($waterLevels->getBody()->getContents()); 
+            $waterLevels = $waterLevels->feeds;
+            // dd($waterLevels);
+            $discharge = 0.00;
+            $totalDischarge = 0.00;
 
-        $sections = Sections::where('river_id','=',$river->id)->get();
+            $sections = Sections::where('river_id','=',$river->id)->get();
 
-        $count = $sections->count();
-        $width = $temp->width;
-        $height = $temp->height;
-        $counter = 0; 
-        $totalArea = 0.00;
+            $count = $sections->count();
+            $width = $temp->width;
+            $height = $temp->height;
+            $counter = 0; 
+            $totalArea = 0.00;
 
-        foreach($waterLevels as $waterLevel){
-            foreach ($sections as $section){
-                if ($section->shape==0){
-                    $ratio = $section->width*($height - $section->y1);
-                    $no = (($waterLevel->field2-$height)+ $section->y1);
-                    $area = (pow($no,2) * $section->width)/(2*$section->y1);
-                    $discharge = $area * $waterLevel->field1 * $section->multiplier;
-                }
-                elseif($section->shape==1){
-                    $area = $section->width*($waterLevel->field2 - $height + $section->y1);
-                    $discharge = $area * $waterLevel->field1 * $section->multiplier;
-                }
-                elseif($section->shape==2){
-                    $ratio = $section->width*($height - $section->y2);
-                    if($waterLevel->field2  <= $height - $section->y1){
-                        $area =  $section->width*pow(($waterLevel->field2 - $height + $section->y2 - $section->y1),2)/($section->y2 - $section->y1);
+            foreach($waterLevels as $waterLevel){
+                foreach ($sections as $section){
+                    //triangle
+                    if ($section->shape==0){
+                        //compute if max Height - longer side < instantaneous height then compute area else return 0
+                        if($height - $section->y1 < $waterLevel->field2){
+                            $no = (($waterLevel->field2-$height)+ $section->y1);
+                            $area = (pow($no,2) * $section->width)/(2*$section->y1);
+                            $discharge = $area * $waterLevel->field1 * $section->multiplier;
+                        }
+                        else{
+                            $area = 0;
+                            $discharge = 0;
+                        }
+
                     }
-                    elseif($waterLevel->field2 > $height - $section->y1){
-                        $area = $section->width*($section->y1 + $section->y2 + (2*$waterLevel->field2)- (2*$height))/2;
+                    //rectangle
+                    elseif($section->shape==1){
+                        if($height - $section->y1 < $waterLevel->field2){
+                            $area = $section->width*($waterLevel->field2 - $height + $section->y1);
+                            $discharge = $area * $waterLevel->field1 * $section->multiplier;
+                        }
+                        else{
+                            $area = 0;
+                            $discharge = 0;
+                        }
                     }
+                    //trapezoids
+                    elseif($section->shape==2){
+                        $smallerSide = min($section->y1,$section->y2);
+                        $greaterSide = max($section->y1,$section->y2);
 
-                    $discharge = $area * $waterLevel->field1 * $section->multiplier;
+                        $difference = $height - $greaterSide;
+
+                        if(floatVal($waterLevel->field2) > $difference && ($waterLevel->field2)<= $height){
+                            if($waterLevel->field2  <= $height - $smallerSide){
+                                $no = (($waterLevel->field2-$height)+ $greaterSide);
+                                $area = (pow($no,2) * $section->width)/(2*($greaterSide-$smallerSide));
+                            }
+                            elseif($waterLevel->field2 > $height - $smallerSide){
+                                $area = (($section->width*($greaterSide-$smallerSide))/2)+($section->width*(($waterLevel->field2)+$smallerSide-$height));
+                            }
+    
+                            $discharge = $area * $waterLevel->field1 * $section->multiplier;
+                        }
+                        else{
+                            $area = 0;
+                            $discharge = 0;
+                        }
+                    }
+                    $totalArea = $totalArea + $area; 
+
+                    $counter = $counter + 1;
+                    $totalDischarge = $totalDischarge + $discharge;
+                    
+                    if($counter == $count){
+                        Discharge::create(['dischargeValue' =>$totalDischarge,'river_id'=>$river->id]);
+                        $counter = 0;
+                        $totalDischarge = 0;
+                    }
                 }
-                $totalArea = $totalArea + $area; 
-
-                $counter = $counter + 1;
-                $totalDischarge = $totalDischarge + $discharge;
-                if($counter == $count){
-                    Discharge::create(['dischargeValue' =>$totalDischarge,'river_id'=>$river->id]);
-                    $counter = 0;
-                    $totalDischarge = 0.0;
-                }
-            }
-        }        
-
-
-        WaterLevel::create([
-            'entry_id' => '1',
-            'level'       => trim(preg_replace('/\s+/', ' ', $data[1])),
-            'temperature' => trim(preg_replace('/\s+/', ' ', $data[2])),
-            'velocity'   => trim(preg_replace('/\s+/', ' ', $data[0])),
-            'date_taken' => $data[3],
-            'river_id'   => $river->id
-        ]);
+            }       
+        }
     }
 
     public function getWaterLevel($id, Request $request)
